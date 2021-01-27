@@ -2,7 +2,7 @@
 # file: !my-blog.md
 layout: list
 title: Artificial-Intelligence
-slug: Artificial-Intelligence
+slug: artificial-intelligence
 menu: true
 permalink: /artificial-intelligence/
 order: 1
