@@ -90,7 +90,7 @@ paginate_path:         /blog/:num/
 # Sidebar image and theme color of the site.
 accent_image:          /assets/img/sidebar-bg.jpg
 #accent_color:          rgb(79,177,186)
-accent_color:          rgb(0,0,0)
+accent_color:          rgb(60,160,170)
 
 # This is used for the `theme-color` meta tag,
 # which changes the background color of the browser UI in certain browsers.
