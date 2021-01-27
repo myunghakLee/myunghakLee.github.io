@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: sample_torch
@@ -6,4 +5,4 @@ title: sample_torch
     
 ---
  
-샘플_torch
+샘플
