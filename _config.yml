@@ -52,7 +52,7 @@ menu:
   - title:             Artificial Intelligence
     url:               /artificial-intelligence/
   - title:             Pytorch 
-    url:               /pytorch /
+    url:               /pytorch/
   - title:             Algorithm
     url:               /algorithm/
 # Add links to the footer.
