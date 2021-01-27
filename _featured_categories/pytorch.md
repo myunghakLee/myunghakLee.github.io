@@ -5,7 +5,7 @@ title: pytorch
 slug: pytorch
 menu: true
 permalink: /pytorch/
-order: 6
+order: 2
 sitemap: false
 description: >
      pytorch관련 문법이나 간단한 알고리즘을 업로드할 예정입니다.
