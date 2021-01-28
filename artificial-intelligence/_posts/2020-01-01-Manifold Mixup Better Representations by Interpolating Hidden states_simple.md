@@ -3,7 +3,8 @@ layout: post
 title: "[논문(정리)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states"
 description: > 
 ---
-### 
+
+
 
 참조 링크
 
