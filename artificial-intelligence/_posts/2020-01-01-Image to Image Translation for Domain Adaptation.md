@@ -2,7 +2,6 @@
 layout: post
 title: [논문(번역)/Domain Adaptation] Image to Image Translation for Domain Adaptation
 # description: > 
-https://arxiv.org/abs/1712.00479
 ---
 
 ### 
@@ -10,6 +9,7 @@ https://arxiv.org/abs/1712.00479
 
 
 본 포스팅은 연구노트의 목적을 가지고 작성되었습니다.
+참고 : https://arxiv.org/abs/1712.00479
 
 
 
