@@ -1,6 +1,6 @@
 ---
 layout: post
-title: \[논문(번역)/Domain Adaptation\] Image to Image Translation for Domain Adaptation
+title: [논문(번역)/Domain Adaptation] Image to Image Translation for Domain Adaptation
 # description: > 
     
 ---
