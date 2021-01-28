@@ -3,6 +3,7 @@ layout: post
 title: "[논문(정리)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states"
 description: > 
 ---
+### 
 
 참조 링크
 
@@ -10,7 +11,6 @@ https://arxiv.org/abs/1806.05236
 
 https://github.com/vikasverma1077/manifold_mixup
 
-### 
 
 Manifold Mixup전에 Mixup(https://arxiv.org/abs/1710.09412)부터 다루고 넘어가자.
 
