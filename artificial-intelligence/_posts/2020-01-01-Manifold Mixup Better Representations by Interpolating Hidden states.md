@@ -14,6 +14,7 @@ title: "[논문(번역)/classification, domain adaptation] Manifold Mixup Better
 참조 링크
 
 https://arxiv.org/abs/1806.05236
+
 https://github.com/vikasverma1077/manifold_mixup
 
 
