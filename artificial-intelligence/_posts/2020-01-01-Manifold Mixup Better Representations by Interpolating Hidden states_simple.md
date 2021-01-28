@@ -1,10 +1,14 @@
 ---
 layout: post
-title: [논문(정리)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states
+title: "[논문(정리)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states"
 description: > 
-https://arxiv.org/abs/1806.05236
-https://github.com/vikasverma1077/manifold_mixup
 ---
+
+참조 링크
+
+https://arxiv.org/abs/1806.05236
+
+https://github.com/vikasverma1077/manifold_mixup
 
 ### 
 
