@@ -4,7 +4,7 @@ layout: list
 title: Paper
 slug: paper
 menu: true
-permalink: /artificial-intelligence/
+permalink: /paper/
 order: 2
 sitemap: false
 description: >
