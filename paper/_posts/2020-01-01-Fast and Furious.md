@@ -1,6 +1,6 @@
 ---
 layout: post 
-title: "Fast and Furious: Real Time End-to-End 3D Detection, Tracking and Motion Forecasting with a Single Convolutional Net"
+title: "[논문(번역)/Motion Prediction] Fast and Furious: Real Time End-to-End 3D Detection, Tracking and Motion Forecasting with a Single Convolutional Net"
 # description: > 
 
 ---
@@ -107,7 +107,7 @@ https://openaccess.thecvf.com/content_cvpr_2018/papers/Luo_Fast_and_Furious_CVPR
 
 특히 미리 정의된 각 상자에 대해 네트워크는 해당 정규화 된 위치 offset과 로그 정규화된 크기 및 헤딩 매개변수(sin, cos)를 예측한다.
 
-**Decoding Tracklets**<sup id = "a1">[1](#1)</sup>: 각 time-stamp에서 모델은 n개의 time-stamp에 대한 detection bounding box를 출력한다. 반대로, 각 타임 스탬프에는 현재 detection과 n-1 개의 past prediction이 있다. 따라서 trajectory based optimization 문제를 해결하지 않고도 정확한 tracklets을 생성하기 위해 과거에 대한 정보를 집계할 수 있다. 감지 및 모션 예측이 완벽하다면 완벽한 tracklets을 디코딩 할 수 있다. 실제로 평균을 aggregation function으로 사용한다. 현재와 과거의 future prediction에서 감지된 항목이 겹치는 경우 동일한 개체로 간주되고 bounding box의 평균이 계산된다. 직관적으로 집계 프로세스는 강력한 past prediction이 있지만 현재 증거가 없는 경우 (예: 개체가 현재 가려져 있거나 감지에서 거짓 음성 인 경우) 특히 도움이 된다. 이를 통해 여러 프레임에 걸쳐 occlusions 를 추적할 수 있다. 반면 우리는 현재의 강력한 증거가 있지만 과거에 대한 예측이 없는 경우 new object에대한 증거가 있다.
+**Decoding Tracklets**<sup id = "1">[1](#1)</sup>: 각 time-stamp에서 모델은 n개의 time-stamp에 대한 detection bounding box를 출력한다. 반대로, 각 타임 스탬프에는 현재 detection과 n-1 개의 past prediction이 있다. 따라서 trajectory based optimization 문제를 해결하지 않고도 정확한 tracklets을 생성하기 위해 과거에 대한 정보를 집계할 수 있다. 감지 및 모션 예측이 완벽하다면 완벽한 tracklets을 디코딩 할 수 있다. 실제로 평균을 aggregation function으로 사용한다. 현재와 과거의 future prediction에서 감지된 항목이 겹치는 경우 동일한 개체로 간주되고 bounding box의 평균이 계산된다. 직관적으로 집계 프로세스는 강력한 past prediction이 있지만 현재 증거가 없는 경우 (예: 개체가 현재 가려져 있거나 감지에서 거짓 음성 인 경우) 특히 도움이 된다. 이를 통해 여러 프레임에 걸쳐 occlusions 를 추적할 수 있다. 반면 우리는 현재의 강력한 증거가 있지만 과거에 대한 예측이 없는 경우 new object에대한 증거가 있다.
 
  
 
@@ -188,6 +188,10 @@ Positive 및 negative sampling으로 인해 training 중 hard negative mining을
 
 
 
+
+
+
+**각주**
 
  <b id="footnote1">1</b> 이미지 인식 시스템에 의해 구성된 “moving object”가 뒤 따르는 track 조각.
 
