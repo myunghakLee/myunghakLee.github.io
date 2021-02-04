@@ -1,14 +1,15 @@
 ---
 # file: !my-blog.md
 layout: list
-title: Algorithm
-slug: algorithm
+title: Paper
+slug: paper
 menu: true
-permalink: /algorithm/
-order: 4
+permalink: /artificial-intelligence/
+order: 2
 sitemap: false
 description: >
-    인공지능 관련 내용들입니다.
+    인공지능 관련 논문들을 포스팅하는 페이지입니다.
+sitemap: false
 
 # accent_color: rgb(38,139,210)
 # accent_image: /assets/img/catagorys/programmer.jpg

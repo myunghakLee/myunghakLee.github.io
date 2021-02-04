@@ -51,6 +51,8 @@ author:
 menu:
   - title:             Artificial Intelligence
     url:               /artificial-intelligence/
+  - title:             Paper
+    url:               /paper/
   - title:             Pytorch
     url:               /pytorch/
   - title:             Algorithm
