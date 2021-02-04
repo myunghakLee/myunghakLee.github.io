@@ -1,6 +1,6 @@
 ---
 layout: post 
-title: "[논문(번역)/GAN] SinGAN : Fast and Furious: Real Time End-to-End 3D Detection, Tracking and Motion Forecasting with a Single Convolutional Net"
+title: "Fast and Furious: Real Time End-to-End 3D Detection, Tracking and Motion Forecasting with a Single Convolutional Net"
 # description: > 
 
 ---
