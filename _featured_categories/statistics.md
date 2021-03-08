@@ -2,7 +2,7 @@
 # file: !my-blog.md
 layout: list
 title: Statistics
-slug: Statistics
+slug: statistics
 menu: true
 permalink: /statistics/
 order: 5
