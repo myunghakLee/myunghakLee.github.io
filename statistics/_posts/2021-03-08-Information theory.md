@@ -3,10 +3,11 @@ layout: post
 title: "[Statistics] Information Theory"
 # description: > 
 
-
 ---
 
-# **정보이론**
+
+
+# Information Theroy
 
 
 
