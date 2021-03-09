@@ -1,6 +1,7 @@
 ---
 layout: post 
-title: "[Statistics] Information Theory"
+title: "[Information Theory] Foundation"
+
 # description: > 
 
 ---

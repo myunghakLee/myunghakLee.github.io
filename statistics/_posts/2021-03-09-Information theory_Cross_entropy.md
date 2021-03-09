@@ -1,6 +1,6 @@
 ---
 layout: post 
-title: "[Statistics] Information Theory(Cross Entropy)"
+title: "[Information Theory] Cross Entropy"
 # description: > 
 
 ---
