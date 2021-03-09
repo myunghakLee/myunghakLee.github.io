@@ -7,7 +7,7 @@ title: "[Statistics] Information Theory"
 
 
 
-# Information Theroy
+# Information Theory
 
 
 
