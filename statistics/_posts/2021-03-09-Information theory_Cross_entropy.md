@@ -13,9 +13,9 @@ title: "[Information Theory] Cross Entropy"
 
 ## Cross entropy
 
- 우선 Cross entropy를 들어가기 엔트로피를 구하는 식을 알아보자. 엔트로피를 구하는 식은 다음과 같다. 이에 관한 자세한 설명은 다음 링크를 참조하자. 
+ 우선 Cross entropy를 들어가기 엔트로피를 구하는 식을 알아보자. 엔트로피를 구하는 식은 다음과 같다. 이에 관한 자세한 설명은 다음 [링크](https://myunghaklee.github.io/blog/statistics/2021-03-08-Information-theory)를 참조하자. 
 
-[Entropy]: https://myunghaklee.github.io/blog/statistics/2021-03-08-Information-theory
+
 
 ![image-20210309144934053](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210309144934053.png?raw=tru)
 
