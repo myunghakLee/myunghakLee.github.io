@@ -19,7 +19,7 @@ title: "[Information Theory] Cross Entropy"
 
 ![image-20210309144934053](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210309144934053.png?raw=tru)
 
-확률 분포 P와 Q가 있다고 가정하자. P = [0.25, 0.25, 0.25, 0.25]가 되고 Q = [0.125, 0.125, 0.25, 0.5]라고 가정하자. 이 때 확률분포 Q를 P대신 사용할 경우 엔트로피의 변화량을 구하고 싶을 경우 다음과 같은 식을 사용한다.
+확률 분포 P와 Q가 있다고 가정하자. Q = [0.25, 0.25, 0.25, 0.25]가 되고 P = [0.125, 0.125, 0.25, 0.5]라고 가정하자. 이 때 확률분포 Q를 P대신 사용할 경우 엔트로피의 변화량을 구하고 싶을 경우 다음과 같은 식을 사용한다.
 
 ![image-20210309144629145](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210309144629145.png?raw=tru)
 
