@@ -2,7 +2,6 @@
 layout: post 
 title: "[Information Theory] Cross Entropy"
 # description: > 
-
 ---
 
 
