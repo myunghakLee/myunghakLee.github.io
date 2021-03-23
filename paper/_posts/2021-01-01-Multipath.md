@@ -35,7 +35,7 @@ https://arxiv.org/abs/1910.05449
 
 우리는 자율주행에 집중하여 연구를 진행하였다. 자율주행에서 중요한 과업은 동일한 도메인에 있는 다른 agent의 행동을 예측하는 것이다(양보를 할지 안 할지). 이러한 미래 예측은 다음 그림에 묘사된 바와 같이 도로 의미론(차선 연결, 정지선), 신호등 정보 및 다른 에이전트의 과거 관찰과 같은 정적 및 동적 세계의 context에 대한 이해를 필요로 한다.
 
-![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612438840713.png?raw=tru?raw=tru)
+![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612438840713.png?raw=tru?raw=tru?raw=tru)
 
 
 
@@ -60,7 +60,7 @@ https://arxiv.org/abs/1910.05449
 
 제어 불확도(control uncertainty)는 각 미래시간 단계에서 정규 분포화 되어 있고 평균이 anchor state에서 context-specific offset에 부합되도록 매개변수화 되고 관련 공분산이 unimodal aleatoric uncertainty(단봉 내재적 불확도)를 포착한다고 가정한다. 다음 그림은 도로 geometry를 고려한 제어 평균 오프셋 세분화와 시간이 지남에 따라 직관적으로 증가하는 **제어 불확실성**과 함께 장면 context에 따라 3가지 가능성 있는 **의도**가 있는 전형적인 시나리오를 보여준다.
 
-![image-20210204204239679](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204239679.png?raw=tru?raw=tru)
+![image-20210204204239679](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204239679.png?raw=tru?raw=tru?raw=tru)
 
 궤적 앵커는 비지도 학습을 통해 state-sequence 공간의 training data에서 발견되는 mode이다. 이러한 앵커는 agent에 대한 대략적인 미래에 대한 템플릿을 제공하며 “차선 변경” 또는 “느린 속도”와 같은 의미 개념에 해당할 수 있다 (명확하긴 하지만 모델링에 의미 개념을 사용하지는 않음).
 
@@ -96,26 +96,26 @@ https://arxiv.org/abs/1910.05449
 
 관측 값 x가 scene안의 모든 agent의 past trajectory와 contextual information(e.g : lane semantics, traffic light states)의 형태로 주어지면, Multipath는 future trajectory “s: p(s)”에 대한 매개변수 분포인 (1)을 제공하고 2번 식은 이 분포를 잘 요약하는 명시적 trajectory의 compact weighted set이다.
 
-![image-20210204204443283](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204443283.png?raw=tru?raw=tru)
+![image-20210204204443283](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204443283.png?raw=tru?raw=tru?raw=tru)
 
 위 식에서 st는 시간 t에서 에이전트의 상태이고 미래 궤적 s = [s1, …, sT]는 t=1에서 T까지의 일련의 상태이다. 또한 trajectory에 있는 상태를 웨이 포인트라고도 한다.
 
 본 논문에서는 불확실성의 개념을 독립적인 양으로 분해한다. 의도 불확실성(Intent uncertainty)은 agent의 잠재적인, 대략적인 의도 또는 원하는 목표에 대한 불확실성을 모델링한다. 예를 들어 운전 상황에서 agent가 도달하려는 차선에 대한 불확실성이다. 의도가 정해져도 agent가 의도를 충족시키기 위해 따르는 상태 시퀸스에 대한 불확실성을 설명하는 제어 불확실성이 여전히 존재한다. 의도 및 제어 불확실성은 모두 정적 및 동적 세계 컨텍스트 x의 과거 관찰에 의존한다.
 
-본 논문에서는 의도 집합을 K 앵커 집합 궤적 A = {ak}![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439107564.png?raw=tru?raw=tru)로 모델링 한다. 여기서 각 앵커 궤적은 일련의 상태이다(ak = [![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612439107564.png?raw=tru?raw=tru), …, ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439107564.png?raw=tru?raw=tru)] à 현재 주어진 것으로 가정). 우리는 소프트 맥스 분포를 사용하여 이 이산 의도 집합에 대한 불확실 성을 모델링한다.
+본 논문에서는 의도 집합을 K 앵커 집합 궤적 A = {ak}![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439107564.png?raw=tru?raw=tru?raw=tru)로 모델링 한다. 여기서 각 앵커 궤적은 일련의 상태이다(ak = [![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612439107564.png?raw=tru?raw=tru?raw=tru), …, ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439107564.png?raw=tru?raw=tru?raw=tru)] à 현재 주어진 것으로 가정). 우리는 소프트 맥스 분포를 사용하여 이 이산 의도 집합에 대한 불확실 성을 모델링한다.
 
-![image-20210204204608916](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204608916.png?raw=tru?raw=tru)
+![image-20210204204608916](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204608916.png?raw=tru?raw=tru?raw=tru)
 
-![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1612439107565.png?raw=tru?raw=tru)
+![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1612439107565.png?raw=tru?raw=tru?raw=tru)
 
-![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612440138043.png?raw=tru)
+![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612440138043.png?raw=tru?raw=tru)
  본 논문에서는 불확실성이 intent에 따라 unimodal이라 가정하고 앵커 궤적의 각 웨이 포인트 상태에 따라 제어 불확실성을 가우시안 분포로 모델링한다. 
 
-가우시안 파라미터인 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612440138044.png?raw=tru)및 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612440138044.png?raw=tru)는 각 앵커 궤적 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1612440138044.png?raw=tru)의 각 시간 단계에 대한 x의 함수로 모델에 의해 직접 예측된다. 가우스 분포 평균 ![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image008.png?raw=tru) + ![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image004.png?raw=tru)에서 ![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image004.png?raw=tru)는 앵커 상태 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1612440138044.png?raw=tru)로부터의 장면 별 오프셋을 나타낸다. 이전 앵커 분포 위에 장면별 잔차 또는 오류항을 모델링하는 것으로 생각 할 수 있다. 이를 통해 모델은 (특정 도로 형상, 신호등 상태, 다른 에이전트와의 상호작용 등)에서 오는 variation을 이용하여 정적 앵커 궤적을 현재의 context로 구체화할 수 있다.
+가우시안 파라미터인 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612440138044.png?raw=tru?raw=tru)및 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612440138044.png?raw=tru?raw=tru)는 각 앵커 궤적 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1612440138044.png?raw=tru?raw=tru)의 각 시간 단계에 대한 x의 함수로 모델에 의해 직접 예측된다. 가우스 분포 평균 ![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image008.png?raw=tru?raw=tru) + ![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image004.png?raw=tru?raw=tru)에서 ![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image004.png?raw=tru?raw=tru)는 앵커 상태 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1612440138044.png?raw=tru?raw=tru)로부터의 장면 별 오프셋을 나타낸다. 이전 앵커 분포 위에 장면별 잔차 또는 오류항을 모델링하는 것으로 생각 할 수 있다. 이를 통해 모델은 (특정 도로 형상, 신호등 상태, 다른 에이전트와의 상호작용 등)에서 오는 variation을 이용하여 정적 앵커 궤적을 현재의 context로 구체화할 수 있다.
 
 Time-step distribution은 앵커가 주어지면 조건부로 독립적이라고 가정한다. 즉 Φ(s~t~| ·, s~1:t-1~) 대신 Φ(s~t~| ·)를 쓴다. 이 모델링 가정을 통해 단일 추론 패스로 모든 time-step을 공동으로 예측할 수 있으므로 모델을 학습하기 쉽고 효율적으로 평가할 수 있다. 원하는 경우 RNN을 사용하여 조건부 next-time-step 종속성을 모델에 추가하는 것이 좋다.
 
-![image-20210204204645520](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204645520.png?raw=tru?raw=tru)
+![image-20210204204645520](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204204645520.png?raw=tru?raw=tru?raw=tru)
  전체 상태 공간에 대한 분포를 얻기 위해 agent의 의도에 대해 알아보자.
 
 
@@ -124,13 +124,13 @@ Time-step distribution은 앵커가 주어지면 조건부로 독립적이라고
 
 
 
-**Obtaining anchor trajectories.** 우리의 분포는 앵커 궤적 A에 의하여 매개변수화 된다. [6,5]의 논문에서 언급되었듯이 mixture를 직접 학습하는 것은 mode collapse문제를 겪는다. Object detection 및 human pose estimation과 같은 다른 domain에서 일반적인 관행과 마찬가지로 나머지 매개변수를 학습하기 위해 앵커를 수정하기 전에 먼저 앵커를 추정한다. 실제로 k-means 알고리즘을 간단한 근사치로 사용하여 궤적 사이의 following squared distance를 갖는 A를 구했다. d(u,v) = ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439243399.png?raw=tru?raw=tru) || Muut – Mvvt||![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612439243399.png?raw=tru?raw=tru), 여기서 Mu, Mv는 궤적을 canonical[[(2\]](#_msocom_2) rotation 및 translation-invariant [[(3\]](#_msocom_3) 에이전트 중심 좌표 프레임에 넣는 아핀 변환 행렬[[(4\]](#_msocom_4) 이다. In Sec4에서 일부 데이터 세트에서 k-mean은 몇가지 공통 모드로 심하게 치우친 사전 분포로 인해 고도로 중복된 클러스터로 이어진다. 이를 해결하기 위해 궤적 공간을 균일하게 샘플링하여 A를 얻는 더 간단한 접근 방식을 사용한다.
+**Obtaining anchor trajectories.** 우리의 분포는 앵커 궤적 A에 의하여 매개변수화 된다. [6,5]의 논문에서 언급되었듯이 mixture를 직접 학습하는 것은 mode collapse문제를 겪는다. Object detection 및 human pose estimation과 같은 다른 domain에서 일반적인 관행과 마찬가지로 나머지 매개변수를 학습하기 위해 앵커를 수정하기 전에 먼저 앵커를 추정한다. 실제로 k-means 알고리즘을 간단한 근사치로 사용하여 궤적 사이의 following squared distance를 갖는 A를 구했다. d(u,v) = ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439243399.png?raw=tru?raw=tru?raw=tru) || Muut – Mvvt||![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612439243399.png?raw=tru?raw=tru?raw=tru), 여기서 Mu, Mv는 궤적을 canonical[[(2\]](#_msocom_2) rotation 및 translation-invariant [[(3\]](#_msocom_3) 에이전트 중심 좌표 프레임에 넣는 아핀 변환 행렬[[(4\]](#_msocom_4) 이다. In Sec4에서 일부 데이터 세트에서 k-mean은 몇가지 공통 모드로 심하게 치우친 사전 분포로 인해 고도로 중복된 클러스터로 이어진다. 이를 해결하기 위해 궤적 공간을 균일하게 샘플링하여 A를 얻는 더 간단한 접근 방식을 사용한다.
 
-**Learning.** 기록된 주행 궤적의 log-likelihood를 최대화하기 위해 매개변수를 피팅하여 imitation learning을 통해 모델을 훈련한다. 데이터를 {(xm, ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439243399.png?raw=tru?raw=tru)m)}![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1612439243399.png?raw=tru?raw=tru)의 형식으로 한다. 방정식 2를 기반으로 다음과 같은 음의 log-likelihood도 loss를 사용하여 가중치 θ로 매개변수화 된 심층 신경망의 출력으로 분포 매개변수 π (ak | x), µ (x)![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1612439243399.png?raw=tru?raw=tru) 및 Σ (x)![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image010.png?raw=tru?raw=tru)를 예측하는 방법을 배운다.
+**Learning.** 기록된 주행 궤적의 log-likelihood를 최대화하기 위해 매개변수를 피팅하여 imitation learning을 통해 모델을 훈련한다. 데이터를 {(xm, ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439243399.png?raw=tru?raw=tru?raw=tru)m)}![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1612439243399.png?raw=tru?raw=tru?raw=tru)의 형식으로 한다. 방정식 2를 기반으로 다음과 같은 음의 log-likelihood도 loss를 사용하여 가중치 θ로 매개변수화 된 심층 신경망의 출력으로 분포 매개변수 π (ak | x), µ (x)![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1612439243399.png?raw=tru?raw=tru?raw=tru) 및 Σ (x)![img](file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/01/clip_image010.png?raw=tru?raw=tru?raw=tru)를 예측하는 방법을 배운다.
 
-![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1612439243399.png?raw=tru?raw=tru)
+![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1612439243399.png?raw=tru?raw=tru?raw=tru)
 
-이것은 표준 GMM likelihood 피팅의 time-sequence 확장입니다 [5]. notation ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image014-1612439243399.png?raw=tru?raw=tru)은 indicator 함수이고 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image016-1612439243399.png?raw=tru?raw=tru)m은 state-sequence 공간에서 2-norm distance로 측정된 ground truth 궤적 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439243399.png?raw=tru?raw=tru)m에 가장 근접하게 일치하는 앵커의 인덱스이다. 이러한 ground truth 앵커의 hard-assignment는 직접 GMM likelihood 피팅의 난해성을 회피하고 expectation-maximization 절차에 의존하는 것을 피하며 그들이 원하는 대로 앵커 설계를 제 할 수 있도록 한다. 앵커에 soft-assignment(예: ground truth 궤도에 대한 앵커의 거리에 비례)를 쉽게 사용할 수도 있다.
+이것은 표준 GMM likelihood 피팅의 time-sequence 확장입니다 [5]. notation ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image014-1612439243399.png?raw=tru?raw=tru?raw=tru)은 indicator 함수이고 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image016-1612439243399.png?raw=tru?raw=tru?raw=tru)m은 state-sequence 공간에서 2-norm distance로 측정된 ground truth 궤적 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439243399.png?raw=tru?raw=tru?raw=tru)m에 가장 근접하게 일치하는 앵커의 인덱스이다. 이러한 ground truth 앵커의 hard-assignment는 직접 GMM likelihood 피팅의 난해성을 회피하고 expectation-maximization 절차에 의존하는 것을 피하며 그들이 원하는 대로 앵커 설계를 제 할 수 있도록 한다. 앵커에 soft-assignment(예: ground truth 궤도에 대한 앵커의 거리에 비례)를 쉽게 사용할 수도 있다.
 
 
 
@@ -178,24 +178,24 @@ Conditional variational Auto-Encoder는 표준 implicit generative sampling mode
 
 #### **4.1 Metrics**
 
-다른 approaches들은 다양한 output representation을 사용한다. 대표적인 에로 single trajectory prediction[1]과 unweighted set of trajectory samples[3], distribution over trajectories(Our), probabilistic occupancy grids[11] 등이 있다. 각 representation은 각각은 고유한 metrics와 함께 제공되므로 모든 방법을 비교하기는 힘들다. 따라서 우리는 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439464708.png?raw=tru?raw=tru)t=1…T를 ground truth trajectory라 할 때 다음 metric을 따르도록 하였다.
+다른 approaches들은 다양한 output representation을 사용한다. 대표적인 에로 single trajectory prediction[1]과 unweighted set of trajectory samples[3], distribution over trajectories(Our), probabilistic occupancy grids[11] 등이 있다. 각 representation은 각각은 고유한 metrics와 함께 제공되므로 모든 방법을 비교하기는 힘들다. 따라서 우리는 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439464708.png?raw=tru?raw=tru?raw=tru)t=1…T를 ground truth trajectory라 할 때 다음 metric을 따르도록 하였다.
 
 **Log-likelihood(LL)**
 
-![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612439464708.png?raw=tru?raw=tru)
- 모든 파라미터를 학습 후에 Multipath가 수행하는 것처럼 모델이 likelihood 평가를 허용하면 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439464709.png?raw=tru?raw=tru)를 사용한다(식 2참조). 이 때 metric은 2xT의 비율로 축소된다. 여기서 T는 time-step이고 2는 2개의 차원을 나타낸다.
+![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1612439464708.png?raw=tru?raw=tru?raw=tru)
+ 모든 파라미터를 학습 후에 Multipath가 수행하는 것처럼 모델이 likelihood 평가를 허용하면 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1612439464709.png?raw=tru?raw=tru?raw=tru)를 사용한다(식 2참조). 이 때 metric은 2xT의 비율로 축소된다. 여기서 T는 time-step이고 2는 2개의 차원을 나타낸다.
 
 **Distance-based**
 
-이는 ADE(average displacement error)에서 주로 사용하는![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1612439464709.png?raw=tru?raw=tru)과 FDE(final displacement error)에서 주로 사용하는 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1612439464709.png?raw=tru?raw=tru)이다. 이 때 s*는 most-likely within weighted set이다. **MinADE~a~**(![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1612439464709.png?raw=tru?raw=tru))는 size가 M인 집합에서 closest trajectory의 displacement error를 측정하므로 logged ground truth가 되지 않는 합리적인 예측에 불이익을 주지 않는다. 이와 비슷하게 minMSD~M~도 있지만 이는 평균 대신 squared distance로 계산된다. 
+이는 ADE(average displacement error)에서 주로 사용하는![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1612439464709.png?raw=tru?raw=tru?raw=tru)과 FDE(final displacement error)에서 주로 사용하는 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1612439464709.png?raw=tru?raw=tru?raw=tru)이다. 이 때 s*는 most-likely within weighted set이다. **MinADE~a~**(![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1612439464709.png?raw=tru?raw=tru?raw=tru))는 size가 M인 집합에서 closest trajectory의 displacement error를 측정하므로 logged ground truth가 되지 않는 합리적인 예측에 불이익을 주지 않는다. 이와 비슷하게 minMSD~M~도 있지만 이는 평균 대신 squared distance로 계산된다. 
 
  
 
 ###  **4.2 Toy experiment: 3-way intersection**
 
-먼저 모델링 가정을 기반으로 생성된 간단한 개념-증명 데이터 집합을 탐색한다. 우리는 intent uncertainty distribution이(0.3, 0.5, 0.2)가 되도록 왼쪽, 중간, 오른쪽 경로를 선험적으로 설정하는 확률로 synthetic 3-way 교차로를 생성한다. Single-trajectory control uncertainty modeling의 유연성을 강조하기 위하여 각 경로는 매개변수화 된 sin wave(![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439517676.png?raw=tru?raw=tru))를 샘플링 하여 생성된다. 여기서 주파수는 ω~ U(0,2)이고 phase shift는 φ ∼ U(-π, , π)로 잡는다. figure 2처럼 다른 방법에 비하여 Multipath는 기본 분포를 올바르게 맞추고 intent uncertainty를 복구하며 거의 Bayes-optimal likelihood에 도달할 수 있었다. 
+먼저 모델링 가정을 기반으로 생성된 간단한 개념-증명 데이터 집합을 탐색한다. 우리는 intent uncertainty distribution이(0.3, 0.5, 0.2)가 되도록 왼쪽, 중간, 오른쪽 경로를 선험적으로 설정하는 확률로 synthetic 3-way 교차로를 생성한다. Single-trajectory control uncertainty modeling의 유연성을 강조하기 위하여 각 경로는 매개변수화 된 sin wave(![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1612439517676.png?raw=tru?raw=tru?raw=tru))를 샘플링 하여 생성된다. 여기서 주파수는 ω~ U(0,2)이고 phase shift는 φ ∼ U(-π, , π)로 잡는다. figure 2처럼 다른 방법에 비하여 Multipath는 기본 분포를 올바르게 맞추고 intent uncertainty를 복구하며 거의 Bayes-optimal likelihood에 도달할 수 있었다. 
 
-![image-20210204205213193](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205213193.png?raw=tru?raw=tru)
+![image-20210204205213193](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205213193.png?raw=tru?raw=tru?raw=tru)
 
 (a)  : 데이터 생성 절차에서 추출한 샘플로 ground truth경로는 파란색 선으로 표시
 
@@ -231,7 +231,7 @@ Conditional variational Auto-Encoder는 표준 implicit generative sampling mode
 
 아래 표는 대규모 자율 주행 데이터 세트에 대한 Multipath비교. metric 미래 trajectory set을 예상하지만 method가 하나만 생성하는 셀에 대괄호가 나타난다. 모든 실험은 평균 및 표준 편차 값을 생성하기 위해 무작위 초기화로 5회 반복하였다. LL은 log-likelihhod이다. ADE는 average distance error이다. minADEM은 M개의 trajectory prediction이 주어진 경우 상위 M개의 평균 distance error이다. 5개의 CVAE 실행 중 하나는 degenerate되었다. CVAE는 5개의 실행을 모두 포함하고 CVAE select는 degenerate된 실행을 제외한다. 더 자세한 분석은 섹션 A를 참조하자.
 
-![image-20210204205416301](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205416301.png?raw=tru?raw=tru)
+![image-20210204205416301](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205416301.png?raw=tru?raw=tru?raw=tru)
 
 
 
@@ -243,7 +243,7 @@ Top : 모든 agent의 기록된 trajectory가 청록색으로 표시된다. Focu
 
 Down : uncertainty 타원이 있는 최대 5개의 trajectory를 보여주는 multipath를 나타낸다. Trajectory probabilities(softmax 출력)는 오른쪽에 표시된 색상 맵으로 인코딩 된다. Multipath는 다양한 속도(1번째 열), 교차로에서의 다른 intent(2,3번째 열) 및 regression baseline이 단일 intent만 예측하는 차선 변경(4,5 번째 열)에 대한 uncertain future trajectories를 예측 할 수 있다.
 
-![image-20210204205449645](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205449645.png?raw=tru?raw=tru)
+![image-20210204205449645](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205449645.png?raw=tru?raw=tru?raw=tru)
 
 ### **4.4 Stanford Drone**
 
@@ -251,13 +251,13 @@ Stanford Drone dataset은 top-down view로 되어있는 데이터 집합이다. 
 
 Table 2에서 보듯이 본 논문의 모델은 SOTA를 찍었다. 그런데 여기서 CAR-Net은 우리의 single-trajectory model과 비견된다. 그들의 방법은 최고의 single trajectory distance metric 성능을 얻기 위해 sophisticated attention 및 sequential architecture에 초점을 맞추고 있다. 흥미롭게도 우리의 single trajectory model은 불확실성을 예측하도록 훈련되었을 때 더 잘 수행되며 이는 [8]에서 논의된 불확실성 모델링의 잠재적인 이점이다.
 
-![image-20210204205527872](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205527872.png?raw=tru?raw=tru)
+![image-20210204205527872](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205527872.png?raw=tru?raw=tru?raw=tru)
 
 ### **4.5 CARLA**
 
 CARLA simulator를 사용하여 생성된 사용 가능한 multi-agent trajectory forecasting 및 planning dataset에서 multipath를 평가해 보았다. 세부사항은 Sec E를 참조하자. Table 3은 각각의 다른 방법에 대해 [18]에서 보고한 결과를 재현하고 multipath의 성능을 이들과 비교한다. 평가 결과를 보고하기 위해 [18]에 정의된 대로 상위 k=12개의 prediction으로 minMSD metirc을 나열한 것이다.
 
-![image-20210204205552691](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205552691.png?raw=tru?raw=tru)
+![image-20210204205552691](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210204205552691.png?raw=tru?raw=tru?raw=tru)
 
 
 
