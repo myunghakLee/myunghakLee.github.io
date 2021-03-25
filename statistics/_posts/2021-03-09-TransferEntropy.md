@@ -31,3 +31,5 @@ Transfer Entropy를 공부하기 위해서는[Information theory](https://myungh
 
  
 
+참조 링크: https://mons1220.tistory.com/154
+
