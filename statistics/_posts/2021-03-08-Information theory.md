@@ -1,12 +1,11 @@
 ---
 layout: post 
-title: "[Information Theory] Foundation"
-
+title: "[Information Theory] KL Divergence"
 # description: > 
 
 ---
 
-
+본 포스팅은 information theory의 기초적인 부분을 다루고 있는 posting입니다.
 
 # Information Theory
 

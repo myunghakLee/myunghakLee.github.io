@@ -1,8 +1,11 @@
 ---
 layout: post 
-title: "[Information Theory] Cross Entropy"
+title: "[Information Theory] KL Divergence"
 # description: > 
+
 ---
+
+Cross Entropy에 대하여 설명하기 앞서 [Shannon entropy](https://myunghaklee.github.io/blog/statistics/2021-03-08-Information-theory/)를 보고 오는 것을 추천합니다.
 
 
 
@@ -27,4 +30,6 @@ title: "[Information Theory] Cross Entropy"
 ![image-20210309145129238](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210309145129238.png?raw=tru)
 
  보통 머신러닝의 경우 P가 ground truth가 되고 Q가 현재 학습한 확률값이다. 그리고 우리가 학습한 확률값 Q가 P에 가까워질수록 cross entropy의 값은 작아지게 된다. 따라서 loss 값을 줄이려는 머신러닝의 특성상 cross entropy를 loss function으로 사용하면 학습이 성공적으로 진행될 수 있는 것이다.
+
+
 
