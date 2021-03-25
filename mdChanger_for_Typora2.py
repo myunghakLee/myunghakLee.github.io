@@ -6,6 +6,8 @@ from tkinter import messagebox
 from os import listdir
 from os.path import isfile, join
 import os
+import shutil
+import time
 
 root= tk.Tk()
 
@@ -16,13 +18,32 @@ label1 = tk.Label(root, text='md-changer\nfor-typoraImage', bg = 'white')
 label1.config(font=('helvetica', 20))
 canvas1.create_window(150, 60, window=label1)
 
+
 link1 = "C:\\Users\\myunghak\\AppData\\Roaming\\Typora\\typora-user-images\\"
 link2 = "https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/"
 
 
 def getFile ():
+    temp_link = "file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/"
+
     read_path = ""
     write_path = ""
+    folder_name = str(time.time()).replace(".","_")
+    try:
+        folder = os.listdir(temp_link[8:])
+        print(len(folder))
+        assert len(folder) < 2, "The folder is wrong"
+
+
+        for f in folder:
+            print(f)
+            print("=" * 100)
+            print(f"copy folder : {temp_link[8:] + f} ----------> {link1 + folder_name}")
+            shutil.copytree(temp_link[8:] + f, link1 + folder_name)
+    except FileNotFoundError:
+        pass
+
+
     read_path = filedialog.askopenfilename()
     print("Read : "+ read_path)
 
@@ -35,9 +56,15 @@ def getFile ():
         while True:
             line = fp.readline()
             if not line: break
-            line1 = line.replace(link1,link2)
+
+                
+            line1 = line.replace(temp_link + folder[0] + "/",link2 + folder_name + "/")
             line2 = line1.replace(".png",".png?raw=tru")
-            out.write(line2)
+
+
+            line3 = line2.replace(link1,link2)
+            line4 = line3.replace(".png",".png?raw=tru")
+            out.write(line4)
     out.close()
     print("Saved md-changed file completely ")
     
