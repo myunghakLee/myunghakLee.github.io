@@ -1,6 +1,6 @@
 ---
 layout: post 
-title: "[Information Theory] KL Divergence"
+title: "[Information Theory] Cross Entropy"
 # description: > 
 
 ---
