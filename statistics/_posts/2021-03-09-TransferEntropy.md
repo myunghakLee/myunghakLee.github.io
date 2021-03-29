@@ -31,5 +31,15 @@ Transfer Entropy를 공부하기 위해서는[Information theory](https://myungh
 
  
 
-참조 링크: https://mons1220.tistory.com/154
+TE에 대하여 더 자세히 알고 싶다면 다음 링크를 참조하자.
+
+https://myunghaklee.github.io/blog/paper/2021-03-25-PyIF/
+
+
+
+참조 링크
+
+https://mons1220.tistory.com/154
+
+https://ikegwu.com/assets/papers/2020_Ikegwu_Traguer_McMullin_Brunner_05FA.pdf
 
