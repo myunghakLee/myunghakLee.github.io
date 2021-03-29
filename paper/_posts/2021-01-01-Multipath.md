@@ -1,6 +1,6 @@
 ---
 layout: post 
-title: "[논문(번역)/Motion Prediction]Label MultiPath Multiple Probabilistic Anchor Trajectory
+title: "[논문(번역)/Motion Prediction] MultiPath Multiple Probabilistic Anchor Trajectory
 Hypotheses for Behavior Prediction"
 # description: > 
 
