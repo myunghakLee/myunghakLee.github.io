@@ -5,7 +5,7 @@ title: "[Information Theory] Transfer Entropy"
 
 ---
 
-Transfer Entropy를 공부하기 위해서는[Information theory](https://myunghaklee.github.io/blog/statistics/2021-03-09-Information-theory_Cross_entropy/) [cross entropy](https://myunghaklee.github.io/blog/statistics/2021-03-09-Information-theory_Cross_entropy/) [KL - Divergence](https://myunghaklee.github.io/blog/statistics/2021-03-09-Information-theory_Cross_entropy/)개념이 필요함을 알려드립니다.
+Transfer Entropy를 공부하기 위해서는[Information theory](https://myunghaklee.github.io/blog/statistics/2021-03-08-Information-theory/) [cross entropy](https://myunghaklee.github.io/blog/statistics/2021-03-09-Information-theory_Cross_entropy/) [KL - Divergence](https://myunghaklee.github.io/blog/statistics/2021-03-09-KL-Divergence/)개념이 필요함을 알려드립니다.
 
 
 
@@ -19,7 +19,7 @@ Transfer Entropy를 공부하기 위해서는[Information theory](https://myungh
 
  이 말은 X의 이전 data만 주어졌을 때와 여기에 Y의 data가 추가로 주어졌을 때 불확실성(entropy)이 변한다는 것이고 이 차이가 클수록 x~t~ 는 Y의 이전 값들에 의해 영향을 크게 받는다는 것이다.
 
-![image-20210325124544083](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325124544083.png?raw=tru?raw=tru)
+<img src="https://user-images.githubusercontent.com/12128784/112811181-c2b4ab80-90b6-11eb-910a-f158d5ed4460.png" alt="image" style="zoom:80%;" />
 
 위 식을 다시 설명하면 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644042471.png?raw=tru?raw=tru)이 주어졌을 때 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616644042471.png?raw=tru?raw=tru)이 갖는 정보량과  ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644042471.png?raw=tru?raw=tru)와 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1616644042471.png?raw=tru?raw=tru)이 주어졌을 때 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644826933.png?raw=tru)이 갖는 정보량의 차이를 구하겠다는 식이다. 만약 이 값의 차이가 크다면 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644780859.png?raw=tru)이 ![img](https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644870316.png?raw=tru)에 미치는 영향이 크다고 봐도 될 것이다.
 
