@@ -19,12 +19,12 @@ label1.config(font=('helvetica', 20))
 canvas1.create_window(150, 60, window=label1)
 
 
-link1 = "C:\\Users\\myunghak\\AppData\\Roaming\\Typora\\typora-user-images\\"
+link1 = "C:\\Users\\mh9716\\AppData\\Roaming\\Typora\\typora-user-images\\"
 link2 = "https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/"
 
 
 def getFile ():
-    temp_link = "file:///C:/Users/myunghak/AppData/Local/Temp/msohtmlclip1/"
+    temp_link = "file:///C:/Users/mh9716/AppData/Local/Temp/msohtmlclip1/"
 
     read_path = ""
     write_path = ""
