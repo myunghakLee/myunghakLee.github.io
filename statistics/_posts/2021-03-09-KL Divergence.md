@@ -13,7 +13,7 @@ KL Divergence에 대하여 설명하기 앞서 [cross entropy](https://myunghakl
 
 
 
- KL divergence는 두 확률분포의 차이를 계산하는데 사용되는 함수입니다. 딥러닝 모델을 만들 때를 예로 들면 우리가 가지고 있는 데이터의 분포 P(x)와 모델이 추정한 데이터의 분포 Q(x)간의 차이를 KLD(KL-Divergence)를 활용해 구할 수 있습니다. KLD의 식은 다음과 같습니다.
+ KL divergence는 두 확률분포의 차이를 계산하는데 사용되는 함수입니다. 즉 다시말하면 어떠한 이상적인 분포에 대하여 그 분포를 근사하는 다른 분포를 대신 사용하여 샘플링을 진행한다면 발생할 수 있는 정보량의 차이를 말하는 것 입니다. 딥러닝 모델을 만들 때를 예로 들면 우리가 가지고 있는 데이터의 분포 P(x)와 모델이 추정한 데이터의 분포 Q(x)간의 차이를 KLD(KL-Divergence)를 활용해 구할 수 있습니다. KLD의 식은 다음과 같습니다.
 
 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325123152060.png?raw=tru" alt="image-20210325123152060" style="zoom:70%;" />
 
