@@ -1,8 +1,8 @@
 ---
 layout: post
-title: sample_torch
+title: sample_Etc
 # description: > 
     
 ---
- 
+
 샘플
