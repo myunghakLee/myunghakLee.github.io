@@ -1,6 +1,6 @@
 ---
 layout: list
-title: etc
+title: Etc
 slug: etc
 menu: true
 permalink: /etc/

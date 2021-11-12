@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en"><!--
+ __  __                __                                     __
+/\ \/\ \              /\ \             __                    /\ \
+\ \ \_\ \   __  __    \_\ \      __   /\_\      __       ___ \ \ \/'\
+ \ \  _  \ /\ \/\ \   /'_` \   /'__`\ \/\ \   /'__`\    /'___\\ \ , <
+  \ \ \ \ \\ \ \_\ \ /\ \L\ \ /\  __/  \ \ \ /\ \L\.\_ /\ \__/ \ \ \\`\
+   \ \_\ \_\\/`____ \\ \___,_\\ \____\ _\ \ \\ \__/.\_\\ \____\ \ \_\ \_\
+    \/_/\/_/ `/___/> \\/__,_ / \/____//\ \_\ \\/__/\/_/ \/____/  \/_/\/_/
+                /\___/                \ \____/
+                \/__/                  \/___/
+
+Powered by Hydejack v9.0.5 <https://hydejack.com/>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>[논문(번역)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states | MyungHak</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="[논문(번역)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states" />
+<meta name="author" content="<MyungHak> <Lee>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="본 포스팅은 연구노트의 목적을 가지고 작성되었습니다." />
+<meta property="og:description" content="본 포스팅은 연구노트의 목적을 가지고 작성되었습니다." />
+<link rel="canonical" href="http://localhost:4000/blog/paper/2020-01-01-Manifold-Mixup-Better-Representations-by-Interpolating-Hidden-states/" />
+<meta property="og:url" content="http://localhost:4000/blog/paper/2020-01-01-Manifold-Mixup-Better-Representations-by-Interpolating-Hidden-states/" />
+<meta property="og:site_name" content="MyungHak" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-01T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[논문(번역)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/blog/paper/2020-01-01-Manifold-Mixup-Better-Representations-by-Interpolating-Hidden-states/","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/paper/2020-01-01-Manifold-Mixup-Better-Representations-by-Interpolating-Hidden-states/"},"dateModified":"2020-01-01T00:00:00+09:00","datePublished":"2020-01-01T00:00:00+09:00","author":{"@type":"Person","name":"<MyungHak> <Lee>"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"<MyungHak> <Lee>"},"headline":"[논문(번역)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states","description":"본 포스팅은 연구노트의 목적을 가지고 작성되었습니다.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyungHak">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="MyungHak">
+
+
+  <meta name="theme-color" content="rgb(60,160,170)">
+
+
+<meta name="generator" content="Hydejack v9.0.5" />
+
+
+<link rel="alternate" href="http://localhost:4000/blog/paper/2020-01-01-Fast-and-Furious/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MyungHak" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+<link rel="dns-prefetch" href="/assets/js/search-worker-9.0.5.js" as="worker" id="_hrefSearch">
+
+
+
+
+
+<script>!function(e,t){"use strict";function n(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}e.loadJS=function(e,o){var r=t.createElement("script");r.src=e,o&&n(r,"load",o,{once:!0});var a=t.scripts[0];return a.parentNode.insertBefore(r,a),r},e._loaded=!1,e.loadJSDeferred=function(o,r){function a(){e._loaded=!0,r&&n(c,"load",r,{once:!0});var o=t.scripts[0];o.parentNode.insertBefore(c,o)}var c=t.createElement("script");return c.src=o,e._loaded?a():n(e,"load",a,{once:!0}),c},e.setRel=e.setRelStylesheet=function(e){function o(){this.rel="stylesheet"}n(t.getElementById(e),"load",o,{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = false;
+  w._noNavbar = false;
+  w._noToc = false;
+  w._noSearch = false;
+}(window);
+</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.0.5.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(45,145,150);--accent-color-faded: rgba(45,145,150,0.5);--accent-color-darkened: #247579;--theme-color: rgb(60,160,170);--dark-mode-body-bg: #283031;--dark-mode-border-color: #343e3f}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+
+
+
+</head>
+
+<body class="no-break-layout">
+  
+<script>
+  window._sunrise = 6;
+  window._sunset =  18;
+  !function(e,s){var a="light-mode",d="dark-mode",o=(new Date).getHours();if(!("matchMedia"in e&&e.matchMedia("(prefers-color-scheme)"))){var i=o<=e._sunrise||o>=e._sunset?d:a,t=i===d?a:d;s.body.classList.add(i),s.body.classList.remove(t)}}(window,document);
+
+</script>
+
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-post"
+  role="main"
+>
+  
+
+
+
+
+
+<article id="post-blog-paper-Manifold Mixup Better Representations by Interpolating Hidden states" class="page post mb6" role="article">
+  <header>
+    <h1 class="post-title flip-project-title">
+      
+        [논문(번역)/classification, domain adaptation] Manifold Mixup Better Representations by Interpolating Hidden states
+      
+    </h1>
+
+    <div class="post-date">
+      
+        
+        <time datetime="2020-01-01T00:00:00+09:00">01 Jan 2020</time>
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+in <a href="/paper/" class="flip-title">Paper</a>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+
+    
+
+
+
+  <div class="hr pb0"></div>
+
+
+  </header>
+
+  
+    <p>본 포스팅은 연구노트의 목적을 가지고 작성되었습니다.</p>
+
+<p>참조 사이트</p>
+
+<p>https://arxiv.org/abs/1806.05236</p>
+
+<p>https://github.com/vikasverma1077/manifold_mixup</p>
+
+<p><strong>Abstract</strong></p>
+
+<p>Deep neural network는 training data를 학습하는 데에는 뛰어난 성능을 보이지만 약간 다른 test case를 평가할 때에는 종종 부정확한 결과가 나온다. 예를 들어 adversarial example, outliers, distribution shift 등이 있다. 이를 해결하기 위하여 이 논문에서는 Manifold Mixup을 제안한다. 이는 semantic interpolation을 추가 training signal로 사용하여 여러 level의 representation에서 더 부드러운 decision boundaries를 얻는다. 따라서 manifold mixup으로 훈련된 신경망은 분산 방향이 적은 class-representation을 학습한다.</p>
+
+<p>그렇다면 우리는 왜 이러한 평탄화가 이상적인 조건에서 발생하는지에 대한 이론을 입증하고, 실제 상황에서 이를 검증하고, 이를 정보 이론 및 일반화에 관한 이전의 연구들과 연결할 것이다. 이는 많은 계산이 필요 없이 단 몇 줄의 코드로만 구현되었지만 manifold mixup은 supervised learning에 있어서 single-step adversarial attack에서의 견고성과 log-likelihood를 테스트할 때에 있어서의 baseline을 크게 향상시켰다.</p>
+
+<p><strong>1. Introduction</strong></p>
+
+<p>신경망은 종종 training set에서는 잘 작동하지만 test set에서는 잘 작동하지 않는 문제가 있다. 신경망은 데이터가 distributional shifts의 대상이 될 수 있는 환경에 배포되고 있기 때문에 이는 큰 문제가 된다. 이에 대한 대표적인 예로 adversarial example이 있다. 신경망은 사람의 눈으로는 알아 볼 수 없는 perturbation(섭동)이 들어가는 경우 evaluation시에 문제가 생긴다. 이는 특히 보안에 민감한 응용 프로그램에 machine learning을 배포 할 때 심각한 위험으로 다가온다.</p>
+
+<p>우리는 SOTA 신경망의 hidden representations와 decision boundaries에 관한 몇가지 문제점을 깨달았다.</p>
+
+<ul>
+  <li>
+    <p>첫째, decision boundary가 종종 sharply하고 data에 지나치게 가깝다.</p>
+  </li>
+  <li>
+    <p>둘째, hidden representation space의 대부분은 manifold의 on/off에따라 confidence 값이 지나치게 높아진다.</p>
+  </li>
+</ul>
+
+<p>따라서 우리는 training example의 hidden representation에 대하여 신경망을 훈련시켜 위와 같은 문제를 해결하는 정규화 기법인 Manifold Mixup을 제안한다.</p>
+
+<p>Word embedding을 통한 analogy[<a href="#_ftn1">1]</a> 연구를 포함한 이전 연구는 interpolation이 combining factor를 하는데 효과적인 방법임을 보여주었다. High level의 representation은 종종 low-dimensional이며 선형 분류자에게 유용하기 때문에 hidden representation의 linear interpolation은 feature space의 의미 있는 영역을 효과적으로 탐색해야 한다. Hidden representation의 조합을 새로운 training signal로 사용하기 위하여 우리는 one-hot label 쌍에서 동일한 linear interpolation을 수행하여 soft target과 mixed example을 만든다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/12128784/106141872-1a689080-61b4-11eb-94d8-55178b746a5b.png" alt="image" /></p>
+
+<p>위 그림은 small data를 가지고 간단한 two-dimensional classification task에서의 manifold mixup의 영향을 보여주고 있다. 위 예의 (a)에서 보는 바와 같이 vanilla training은 irregular decision boundary와 (d)와 같은 hidden representation의 복잡한 배열로 이어진다. 또한 (a)와(d)에서는 데이터의 모든 지점을 높은 confidence를 갖는다고 판단한다.</p>
+
+<p>이와 대조적으로 manifold mixup으로 동일한 deep neural network를 훈련하면 더 부드러운 decision boundary와 hidden representation의 더 간단한 (linear) arrangement로 이어진다. 요약하면 manifold mixup에 의하여 획득된 representation은 다음과 같은 2가지 특성(장점)을 갖는다.</p>
+
+<ul>
+  <li>
+    <p>Class representation은 variation이 줄어드는 방향으로 더욱 flatten해진다.</p>
+  </li>
+  <li>
+    <p>representation 사이의 모든 지점에는 낮은 confidence가 할당된다.</p>
+  </li>
+</ul>
+
+<p>보다 구체적으로 manifold mixup은 다음과 같은 이유로 deep neural network에서 일반화를 향상시킨다.</p>
+
+<ol>
+  <li>Multi level representation에서 training data를 더 멀리 떨어진 smooth한 decision boundary로 이어진다.(smoothness와 margin은 잘 알려진 generalization요소이다.)</li>
+  <li>더 깊은 hidden layer의 interpolation을 활용하여 더 높은 level의 정보를 캡처하여 추가 training signal을 제공한다.</li>
+  <li>class representation을 flatten하게 하여 상당한 차이로 variance를 줄일 것이다.</li>
+</ol>
+
+<p>다양한 실험을 통해 manifold mixup의 4가지 이점을 보여준다.</p>
+
+<ol>
+  <li>
+    <p>더 나은 generalization(Cutout, Mixup, AdaMix, Dropout에 비하여, 아래 그림 참조)</p>
+  </li>
+  <li>
+    <p>Test sample에 대한 log-likelihood 개선</p>
+  </li>
+  <li>
+    <p>Predicted data에 대한 성능 향상</p>
+  </li>
+  <li>
+    <p>Adversarial attack에 대한 견고성 향상. 이는 manifold mixup이 decision boundary를 데이터로부터 멀리 밀어 냈다는 증거이다.(하지만 이는 decision boundary를 모든 방향으로 데이터로부터 멀어지게 하는 관점에서 정의되는 full adversarial robustness과 혼동해서는 안된다.)</p>
+  </li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/12128784/106142214-8f3bca80-61b4-11eb-9627-6eb0477f2a9e.png" alt="image" /></p>
+
+<p><strong>2. Manifold Mixup</strong></p>
+
+<p>우선 f(x) = f~k~(g~k~(x))라는 식이 있다고 하자. 여기서 g­k는 입력 데이터를 layer k에서 hidden representation으로 mapping나는 신경망의 일부를 나타내고 fk는 이러한 hidden representation을 output f(x)에 부분 mapping한다. Manifold mixup을 사용하는 training f는 5단계로 수행된다.</p>
+
+<p>첫째, 신경망의 eligible layer set S에서 random layer k를 선택한다.</p>
+
+<p>둘째, k 번째 layer에 도달할때까지 평소와 같이 2개의 임의 데이터 minibatch(x;y) 및 (x0;y0)를 제공한다.</p>
+
+<p>셋째, 이러한 중간 minibatch에서 입력 mixup을 수행한다. 이는 mixed minibatch를 생성한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/12128784/106143480-2b1a0600-61b6-11eb-8af4-5874e8e634c5.png" alt="image" /></p>
+
+<p>넷째, 우리는 mixed minibatch인 <img src="https://user-images.githubusercontent.com/12128784/106144638-d4adc700-61b7-11eb-9e15-26ef2740eb27.png" alt="image" />를 사용한 output까지 network의 layer k에서 forward pass를 시킬 것이다.</p>
+
+<p>다섯째, 위에서 나온 output은 신경망의 모든 매개변수를 업데이트하는 loss값과 기울기를 계산하는데 사용된다.</p>
+
+<p>수식적으로 보면 manifold mixup은 다음을 최소화하는 방향으로 이루어진다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/12128784/106144743-f73fe000-61b7-11eb-9635-defadc0a952f.png" alt="image" /></p>
+
+<hr />
+
+<p>[<a href="#_ftnref1">1]</a> 비유, 유추</p>
+
+  
+</article>
+
+
+<hr class="dingbat related" />
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/post_images/MyungHak_profile.jpg"
+    srcset="/assets/post_images/MyungHak_profile.jpg 1x,/assets/post_images/MyungHak_profile.jpg 2x"
+    
+  
+  alt="<MyungHak> <Lee>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>본 블로그는 연구노트의 목적을 가지고 작성되었습니다.</strong>
+[]</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/myunghakLee" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+    
+
+
+  
+
+  
+    
+
+
+  <aside class="other-projects related mb0" role="complementary">  <h2>Related Posts</h2>  <div class="columns">          <div class="column column-1-2">                  <article class="project-card">  <a href="/blog/etc/2021-11-12-sample_etc/" class="no-hover no-print-link flip-project" tabindex="-1">    <div class="project-card-img aspect-ratio sixteen-nine flip-project-img">          </div>  </a>  <h3 class="project-card-title flip-project-title">    <a href="/blog/etc/2021-11-12-sample_etc/" class="flip-title">sample_torch</a>  </h3>      <a class="fill-card no-hover" href="/blog/etc/2021-11-12-sample_etc/" tabindex="-1"><span class="sr-only">Continue reading sample_torch</span></a></article>              </div>          <div class="column column-1-2">                  <article class="project-card">  <a href="/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" class="no-hover no-print-link flip-project" tabindex="-1">    <div class="project-card-img aspect-ratio sixteen-nine flip-project-img">          </div>  </a>  <h3 class="project-card-title flip-project-title">    <a href="/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" class="flip-title">Abstract</a>  </h3>      <a class="fill-card no-hover" href="/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" tabindex="-1"><span class="sr-only">Continue reading Abstract</span></a></article>              </div>      </div></aside>
+
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Random Posts</h2>  <ul class="related-posts">          <li class="h4">  <a href="/blog/paper/2020-12-01-Multipath/" class="flip-title"><span>[논문(번역)/Motion Prediction] MultiPath Multiple Probabilistic Anchor Trajectory Hypotheses for Behavior Prediction</span></a>  <time class="faded fine" datetime="2020-12-01T00:00:00+09:00">01 Dec 2020</time></li>          <li class="h4">  <a href="/blog/statistics/2021-03-09-TransferEntropy/" class="flip-title"><span>[Information Theory] Transfer Entropy</span></a>  <time class="faded fine" datetime="2021-03-09T00:00:00+09:00">09 Mar 2021</time></li>          <li class="h4">  <a href="/blog/etc/2021-11-12-sample_etc/" class="flip-title"><span>sample_torch</span></a>  <time class="faded fine" datetime="2021-11-12T00:00:00+09:00">12 Nov 2021</time></li>      </ul></aside>
+
+  
+
+  
+    
+
+  
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© All rights reserved by MyungHak Lee.
+</small></p>
+  
+  
+  
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(60,160,170);background-image:url(/assets/img/sidebar-bg.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/logo.png" class="avatar" alt="MyungHak" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">MyungHak</h2></a>
+    
+    
+      <p class="">
+        Lee
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/artificial-intelligence/"
+          class="sidebar-nav-item "
+          
+        >
+          Artificial Intelligence
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/paper/"
+          class="sidebar-nav-item "
+          
+        >
+          Paper
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/pytorch/"
+          class="sidebar-nav-item "
+          
+        >
+          Pytorch
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/algorithm/"
+          class="sidebar-nav-item "
+          
+        >
+          Algorithm
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/statistics/"
+          class="sidebar-nav-item "
+          
+        >
+          Statistics
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/etc/"
+          class="sidebar-nav-item "
+          
+        >
+          Etc
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/myunghakLee" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var e=document.createElement("script");if(!("noModule"in e)&&"onbeforeload"in e){var t=!1;document.addEventListener("beforeload",function(n){if(n.target===e)t=!0;else if(!n.target.hasAttribute("nomodule")||!t)return;n.preventDefault()},!0),e.type="module",e.src=".",document.head.appendChild(e),e.remove()}}();
+</script>
+  <script src="/assets/js/hydejack-9.0.5.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.0.5.js" nomodule defer></script>
+  
+
+  
+  <script>!function(w, d) {
+    w.ga=w.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+    /**/
+      ga('create', 'G-W5K9KGXEB5', 'auto');
+    /**/
+
+    var pushStateEl = d.getElementById('_pushState');
+    var timeoutId;
+    pushStateEl.addEventListener('hy-push-state-load', function() {
+      w.clearTimeout(timeoutId);
+      timeoutId = w.setTimeout(function() {
+        ga('set', 'page', w.location.pathname);
+        ga('send', 'pageview');
+      }, 500);
+    });
+
+    d.addEventListener('hy--cookies-ok', function () {
+      w.ga(function(tracker) {
+        w.ga("set", "anonymizeIp", undefined);
+        localStorage && localStorage.setItem("ga--client-id", tracker.get("clientId"));
+      });
+    });
+
+    w.loadJSDeferred('https://www.google-analytics.com/analytics.js');
+  }(window, document);</script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5K9KGXEB5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-W5K9KGXEB5');
+  </script>
+
+
+
+  <script type="module">
+    if ('serviceWorker' in navigator) {
+      /**/
+      navigator.serviceWorker.getRegistration()
+        .then(r => r.unregister())
+        .catch(() => {});
+      /**/
+    }
+  </script>
+<!--<![endif]-->
+  
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_forward-template">
+  <button id="_forward" class="forward nav-btn no-hover">
+    <span class="sr-only">Forward</span>
+    <span class="icon-arrow-right2"></span>
+  </button>
+</template>
+
+  <template id="_back-template">
+  <button id="_back" class="back nav-btn no-hover">
+    <span class="sr-only">Back</span>
+    <span class="icon-arrow-left2"></span>
+  </button>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+  
+  
+    <template id="_dark-mode-template">
+  <button id="_dark-mode" class="nav-btn no-hover" >
+    <span class="sr-only">Dark Mode</span>
+    <span class="icon-brightness-contrast"></span>
+  </button>
+</template>
+
+  
+  
+    <template id="_search-template">
+  <button id="_search" class="nav-btn no-hover">
+    <label class="sr-only" for="_search-input">Search</label>
+    <span class="icon-search"></span>
+  </button>
+  <div id="_search-box">
+    <div class="nav-btn">
+      <span class="icon-search"></span>
+    </div>
+    <input 
+      id="_search-input"
+      type="search"
+      class="form-control form-control-lg nav-btn"
+      placeholder="SEARCH NOT ENABLED DURING DEVELOPMENT"
+    />
+    <button type="reset" class="nav-btn no-hover">
+      <span class="sr-only">Close</span>
+      <span class="icon-cross"></span>
+    </button>
+  </div>
+  <div id="_hits"></div>
+</template>
+
+  
+</div>
+
+</body>
+</html>

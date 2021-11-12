@@ -1,2 +1,612 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-01-27T23:04:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MyungHak</title><subtitle>Hydejack is a boutique Jekyll theme for hackers, nerds, and academics, with a focus on personal sites that are meant to impress.
-</subtitle><author><name>&lt;MyungHak&gt; &lt;Lee &gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><entry><title type="html">sample</title><link href="http://localhost:4000/blog/artificial-intelligence/2020-01-12-sample/" rel="alternate" type="text/html" title="sample" /><published>2020-01-12T00:00:00+09:00</published><updated>2020-01-12T00:00:00+09:00</updated><id>http://localhost:4000/blog/artificial-intelligence/sample</id><content type="html" xml:base="http://localhost:4000/blog/artificial-intelligence/2020-01-12-sample/">&lt;p&gt;공부를 위해 다음을 참고하였다.&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee &gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="artificial-intelligence" /><summary type="html">공부를 위해 다음을 참고하였다.</summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-11-12T02:45:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MyungHak</title><subtitle>Hydejack is a boutique Jekyll theme for hackers, nerds, and academics, with a focus on personal sites that are meant to impress.
+</subtitle><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><entry><title type="html">sample_torch</title><link href="http://localhost:4000/blog/etc/2021-11-12-sample_etc/" rel="alternate" type="text/html" title="sample_torch" /><published>2021-11-12T00:00:00+09:00</published><updated>2021-11-12T00:00:00+09:00</updated><id>http://localhost:4000/blog/etc/sample_etc</id><content type="html" xml:base="http://localhost:4000/blog/etc/2021-11-12-sample_etc/">&lt;p&gt;샘플&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="etc" /><summary type="html">샘플</summary></entry><entry><title type="html">Abstract</title><link href="http://localhost:4000/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" rel="alternate" type="text/html" title="Abstract" /><published>2021-04-06T00:00:00+09:00</published><updated>2021-04-06T00:00:00+09:00</updated><id>http://localhost:4000/blog/paper/Learning%20Lane%20Graph%20Representations%20for%20Motion%20Forecasting</id><content type="html" xml:base="http://localhost:4000/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/">&lt;p&gt;본 논문에서는 actor-actor, actor-lane, lane-actor, lane-lane의 복잡한 interaction을 포착하는 방법을 제시한다. LaneGCN과 actor-map interaction으로 구동 되며 이는 정확하고 사실적인 multi-modal trajectory prediction이 가능하게 해준다.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h3&gt;
+
+&lt;p&gt;Actor의 움직임은 대부분 차선에 종속적이다. 따라서 차선 정보를 신경망의 입력으로 넣어 주는 것이 유리하다. 최근 신경망에서는 지도 정보를 rasterize하여 집어넣는 시도가 있었다. 그러나 이러한 방법은 다음과 같은 단점이 있다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;정보의 손실을 피할 수 없다&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;지도는 복잡한 topology의 그래프로 구성되어 있는데 여기에 2D convolution을 적용하는 것은 비 효율적이다(보통 차선의 경우 긴 범위를 갖는데 이를 모두 포착하려면 너무 큰 receptive field가 필요하다).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;차선의 경우 거리는 가깝더라도 동일한 방향의 차선과 반대편의 차선은 전혀 다른 의미를 가지고 있다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;따라서 본 논문은 다음과 같은 방법을 제시한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Rasterization 대신 vectorized map으로부터 lane graph를 구성하여 정보 손실을 피한다. 그리고 여기에 lane graph의 복잡한 topology와 long range dependencies를 효과적으로 포착하는 LaneGCN(Lane Graph Convolution Network)을 적용한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Actor와 lane을 모두 node로 표기한다. 그 후 Lane과 actor에서 각각 feature를 뽑기 위하여 1D CNN과 LaneGCN을 이용한다. 그 후 spatial attention과 다른 LaneGCN을 활용하여 4가지 유형의 상호작용을 모델링한다(actor-to-lane, lane-to-lane, lane-to-actor and actor-to-actor).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이와 같은 방법으로 Argoverse dataset에서 SOTA를 찍었다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406121128163.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406121128163&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2related-work&quot;&gt;2.Related Work&lt;/h3&gt;
+
+&lt;p&gt;본 논문의 Map representation은 VectorNet과 유사하나 VectorNet은 lane을 node로 본 반면 본 논문은 lane segment를 node로 보았다. 즉 resolution이 조금 더 높다. 또한 본 논문은 GCN에서 영감을 얻어 lane graph용으로 설계된 특화된 버전인 LaneGCN을 제안한다. 또한 모델에 lane-graph의 복잡한 topology와 long-range dependencies를 포착하는데 효과적인 multi scale dilated convolution을 사용하였다.&lt;/p&gt;
+
+&lt;h3 id=&quot;3lane-graph-representations-for-motion-forecasting&quot;&gt;3.Lane Graph Representations for Motion Forecasting&lt;/h3&gt;
+
+&lt;p&gt;이번 장에서는 traffic actor와 HD map의 fusion에 대하여 설명하겠다. 본 논문에서는 다음 4가지 module을 사용하였다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;ActorNet&lt;/strong&gt;: Actor의 past trajectory를 input으로 받아와 1D convolution으로 feature를 추출한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;MapNet&lt;/strong&gt;: HD map으로부터 lane graph를 구성하고 LaneGCN을 이용하여 lane node feature를 뽑는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;FusionNet&lt;/strong&gt;: 4개의 interaction block으로 구성되어 있다(lane to lane block에는 another LaneGCN을 이용하는 반면 다른 block에는 spatial attention layer를 사용한다).&lt;/p&gt;
+
+    &lt;p&gt;​	A.   Actor to lane block: actor node에서 lane node로 실시간 교통 정보를 fusion&lt;/p&gt;
+
+    &lt;p&gt;​	B.   Lane to lane block: lane graph를 통해 정보를 전파, lane feature를 update&lt;/p&gt;
+
+    &lt;p&gt;​	C.   Lane to actor block: lane node에서 actor node로 update된 정보 전파&lt;/p&gt;
+
+    &lt;p&gt;​	D.   Actor to actor block은 actor간의 상호작용을 수행&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Prediction&lt;/strong&gt; &lt;strong&gt;Header&lt;/strong&gt;: fusion 후 actor feature를 사용하여 multi modal trajectory를 생성&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406121426808.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406121426808&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;31-actornet-extracting-traffic-participant-representations&quot;&gt;3.1 ActorNet: Extracting Traffic Participant Representations&lt;/h4&gt;
+
+&lt;p&gt;각 trajectory는 각 sequence의 변위로 나타낸다. ∆p~t~는 time step t-1에서 t까지의 변위이다. 그리고 T는 trajectory의 크기이다. 만약 trajectory가 T보다 작으면 0으로 padding해준다. 그리고 각 step이 padding된 것인지 아닌지를 나타내는 1*T크기의 binary mask를 추가해준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406121558183.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406121558183&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;CNN과 RNN 모두 temporal data에 사용된다. 그러나 본 논문은 1D CNN을 사용하였다. Actor Net의 output은 temporal feature map이고 t=0은 actor feature로 사용된다. 본 논문의 network는 1D convolution의 3 group/scale을 가진다. 각 group은 첫 번째 block의 stride를 2로 하는 2개의 residual block으로 구성된다. 그 후 FPN(Feature Pyramid Network)를 사용하여 multi-scale feature를 fusion하고 또 다른 residual block을 적용하여 output을 얻어낸다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406160249565.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406160249565&quot; style=&quot;zoom:50%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;32-mapnet-extracting-structure-map-representation&quot;&gt;&lt;strong&gt;3.2 MapNet: Extracting Structure Map Representation&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;앞서 설명했던 대로 Map을 rasterize해서 집어넣으면 문제가 발생한다. 따라서 본 논문에서는 graph를 이용하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Map Data&lt;/strong&gt;: map data를 set of lanes and their connectivity로 나타냈다. 바로 붙어있는(반대편 차선등은 제외) 2 lane은 4가지 type이 있다(predecessor, successor, left neighbor, right neighbor).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lane Graph Construction&lt;/strong&gt;:본 논문에서는 lane node를 centerline의 두 연속된 점(그림 3의 회색 원)에 의해 형성된 직선 segment로 정의한다. Lane node의 위치는 두 끝점의 평균 좌표이다. 위에서 설명했듯 Lane centerline간의 연결에 따라 lane node는 총 4가지로 나뉜다. 본 논문에서는 lane node를 V ∈ R^N×2^로 표시한다. 여기서 N은 lane node의 수이다. 또한 A~i~ ∈ R^N×N^는 4 개의 인접 행렬 {A~i~}~i∈{pre,suc,left,right}~와의 연결성을 나타낸다. 즉 노드 k가 노드 j의 i형 이웃이면 A~i,j,k~ = 1이다. 즉 “node k는 i-type을 갖고 j의 이웃이다”라는 의미이다. 이러한 전제 하에서 만일 A가 B의 Successor라면 A에서 B로의 접근은 가능하나 B에서 A로의 접근은 불가능하다. 그러나 만약 둘의 관계가 neighbor라면 양쪽모두에서 접근이 가능하다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406160525989.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406160525989&quot; style=&quot;zoom:40%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;LaneConv Operator&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;p&gt;보통 graph convolution의 경우 Y = LXW이다. 여기서 X ∈ R^N×F^는 node feature이고 W ∈ R^F×O^는 weight matrix, Y ∈ R^N×O^는 output이며 L ∈ R^N×N^은 Laplacian matrix이며 다음 식으로 얻어진다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;어떤 node feature가 lane graph의 정보를 보존시킬지 명확치 않음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Single graph Laplacian은 connection type을 포착할 수 없다. 즉 차선의 방향 정보를 잃는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이러한 형태의 graph convolution은 long range dependencies(dilated convolution같은)를 처리하는 것이 어렵다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;따라서 본 논문은 위의 단점을 해결한 LaneConv라는 새로운 연산자를 소개한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406161306592.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406161306592&quot; style=&quot;zoom:35%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 I는 Self-connection을 그리고 A는 different node와의 connection을 뜻한다. 그리고 D는 output을 normalize하는 역할이다. 그러나이러한 vanilla graph convolution은 motion prediciton에서는 비 효율적이다. 왜냐하면 lane graph의 information이 보존된다는 보장도 없으며 connection type 역시 포착하지 못한다. 그리고 long range dependency 역시 포착하지 못한다. 따라서 본 논문은 LaneConv를 제시한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Node feature&lt;/em&gt;: 본 논문에서는 lane node의 information을 enccoding하기 위하여 lane의 모양(크기 및 방향)과 위치모두를 고려하였다.  v~i~는 lane의 중심 좌표이고 v~i~^end^및 v~i~^start^는 마지막 및 처음 좌표이다. 그리고 이렇게 encoding된 x~i~를 row로 하는 matrix가 X이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406161435791.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406161435791&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;LaneConv&lt;/em&gt;: node feature는 오직 local informatio만 포착한다. 따라서 이를 aggregate해주기 위하여 다음과 같은 LaneConv식을 이용하였다.아래 식에서 A~i~와 W~i~는 adjacency와 weight matrix이다. 그리고 이때 A~suc~와 A~pre~는 단위 행렬을 오른쪽 위(non-zero superdiagonal)와 왼쪽 아래(non-zero subdiagonal)로 한칸 이동하여 얻은 행렬이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406161543606.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406161543606&quot; style=&quot;zoom:100%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Dilated LaneConv&lt;/em&gt;: actor의 속력이 빠른 경우 모델은 long range dependency를 포착할 필요가 있다. 보통의 grid graph의 경우 dilated convolution operator가 효율적으로 long range dependency를 포착할 수 있다. 여기에서 영감을 받아 본 논문에서는 dilated LaneConv operator를 제안한다.아래 식에서 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1617695386558.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 A~pre~의 k제곱이다. 이는 information을 k-step으로 propagate 가능하게 해준다. 이 때 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/1617697074_6849957/clip_image004.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 굉장히 sparse하기 때문에 sparse matrix multiplication으로 효율적인 계산이 가능하다. 또한 extended LaneConv operator는 predecessor및 successor에서만 사용한다(long range dependency는 차선 방향을 따르기 때문).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1617695386557.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;LaneGCN&lt;/strong&gt;: 본 논문에서는 multi-scale LaneConv operator를 사용하여 LaneGCN을 구축한다. 2번식과 3번식을 사용하여 C dilation size를 가진 multi-scale LaneConv operator를 얻는다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165047618.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406165047618&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165110245.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406165110245&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;33-fusionnet&quot;&gt;3.3 FusionNet&lt;/h4&gt;
+
+&lt;p&gt;본 section에서는 ActorNet과 MapNet으로부터 얻어진 actor와 lane node의 정보를 fuse할 것이다. 이전 연구들이 Actor간의 interaction은 포착을 하였지만 Actor와 map사이의 종속성은 제대로 파악하지 못하였다. 하지만 본 논문은 이를 가능하도록 하였다.&lt;/p&gt;
+
+&lt;p&gt;본 논문에서는 4개의 Fusion module이 있다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;A2L(actors to lanes): real-time traffic information to lane nodes(blockage or lane의 사용중 여부)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;L2L(lanes to lanes): lane graph를 이용하여 traffic information을 propagate하여 lane node feature를 update한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;L2A(lanes to actors): update된 map feature를 fuse하여 actor로 보냄&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;A2A(actors to actors): motion forecasting을 위한 prediction header를 생성하는데 사용되는 Actor가 interaction을 처리하고 output actor feature를 생성.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;L2L은 MapNet에서 사용된 것과 동일한 architecture를 가진 다른 LaneGCN을 사용하여 구현된다. 그리고 A2L, L2A, A2A에 대하여 special attention layer를 사용한다. Attention layer는 3모듈에 동일한 방식으로 적용된다. 예를 들어 A2L은 actor node i가 주어지면 다음과 같이 context lane-node j에서 feature를 aggregate한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165301740.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406165301740&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 식에서 x~i~는 i번째 node feature이고 φ는 layer normalization과 ReLU이다. 그리고 ∆~i,j~는 MLP(v~j~-v~i~)이고 여기서 v는 node location이다. 또한 context node는 actor node i의 L2 distance가 특정 threshold보다 작은 것들이다(본 논문에서는 A2L, L2A, A2A에 각각 7,6,100 미터를 사용). 그리고 A2L, L2A, A2A는 모두 attention layer와 linear layer 및 residual connection으로 구성된 2 residual block으로 구성된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165512827.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406165512827&quot; style=&quot;zoom:60%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;34-prediction-header&quot;&gt;3.4 Prediction Header&lt;/h4&gt;
+
+&lt;p&gt;After fusion actor feature를 입력으로 사용하여 multi modal prediction header가 최종 motion prediction을 출력한다. 각 actor에 대하여 K개의 future trajectory와 confidence score를 예측한다. header에는 각 mode의 trajectory를 예측하는 regression branch와 각 mode의 confidence를 예측하는 classification branch가 있다. m번째 actor의 경우 regression branch에 residual block과 linear layer를 적용하여 BEV coordinate의 K sequence를 regress한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165717224.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406165717224&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 식에서 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1617695846222.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 m번째 actor의 k-th mode BEV 좌표이다. Classification branch에서는 K distance embedding을 위하여 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1617695846223.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;에 MLP를 적용한다. 그 후 각각의 distance embedding을 actor feature와 concatenate하고 residual block과 linear layer를 적용하여 K confidence score를 출력한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165746107.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406165746107&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;summary&quot;&gt;Summary&lt;/h4&gt;
+
+&lt;p&gt;지금까지의 것들을 다 합치면 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165855896.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406165855896&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;experimental-evaluation&quot;&gt;&lt;strong&gt;Experimental Evaluation&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;본 논문은 &lt;a href=&quot;https://www.argoverse.org/&quot;&gt;Argoverse Dataset&lt;/a&gt;에 대한 평가지표를 구하였고 SOTA를 찍었다(그러나 2021년 4월 기준 밀려남).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170022574.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406170022574&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Importance of each module&lt;/strong&gt;: 아래 표에서는 ActorNet에 여러 모듈들을 추가해가며 실험을 한 결과이다. 그 결과 본 논문에서는 다음과 같은 결과를 도출해 냈다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;모든 모듈이 성능향상에 기여하였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;actor에서 map으로의 정보 전달이 효율적인 motion forecasting preformance에 큰 영향을 주는 traffic information을 가져오는데 도움이 됐다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ActorNet에 A2A만 추가하는 것에 비하여 L2A, A2L, L2L을 모두 추가하는 것이 더 좋은 결과가 나오는 것을 보아 L2A, A2L, L2L모두 각 factor간의 interaction을 용이하게 하는데 이용될 수 있는 것을 알 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170232676.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406170232676&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lane Graph Operators&lt;/strong&gt;: 아래 표는 vanilla graph convolution에 각각의 component를 추가함에 따라 얻는 효과에 대한 실험결과이다. 아래 표에서 보면 모든 component가 성능을 굉장히 향상 시키는것을 볼 수 있다. 특히 residual block은 단 7%의 파라미터 추가만으로 굉장히 큰 성능 향상을 가져왔다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170343163.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406170343163&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Qualitative Results&lt;/strong&gt;: 아래 그림에서는 여러 상황에서 본 논문의 모델과 다른 모델의 차이를 보여준다.&lt;/p&gt;
+
+&lt;p&gt;첫번째 행에서는 우회전하는 시나리오이다. 다른 방법들은 우회전을 제대로 포착하지 못하였으나 본 논문의 모델은 가능했다.&lt;/p&gt;
+
+&lt;p&gt;두번째 행은 agent가 비보호 좌회전을 위해 대기중인 경우이다. 이는 history가 부족하여 지도 정보를 포착하는 것이 필수적이다. 따라서 다른 모델들은 제대로 된 예측을 하지 못하였고 본 논문의 모델은 성공적인 예측을 보였다.&lt;/p&gt;
+
+&lt;p&gt;세번째 행은 자동차가 감속하여 교차로에 정지하는 경우이다. 이 경우 본 논문의 모델이 다른 모델에 비하여 더 많은 감속 mode를 생성하였다.&lt;/p&gt;
+
+&lt;p&gt;네번째 행은 급격한 가속을 한 경우인데 이 경우 어떠한 모델도 제대로 포착을 하지 못하였다. 이는 예측을 하기위한 충분한 정보가 없기 때문일 가능성이 크다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170451581.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406170451581&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;5-conclusion&quot;&gt;&lt;strong&gt;5. Conclusion&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;본 논문에서는 lane graph representation을 학습하고 완전한 actor-map interaction을 수행하기 위한 prediction model을 제안한다. 특히 map을 집어넣을 때 rasterize하지 않고 vector로 바꾸어 lane graph를 구성하고 LaneGCN을 이용하여 topology feature를 추출한다. 또한 spatial attention과 LaneGCN을 이용하여 actor와 lane의 정보를 fuse하여 대규모 Argoverse dataset으로 실험을 진행하였고 SOTA를 찍었다.&lt;/p&gt;
+
+&lt;h3 id=&quot;appendix&quot;&gt;&lt;strong&gt;Appendix&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;다음은 모델의 세부 architecture이다. 본 모델은 4개의 모듈로 구성되어 있다.&lt;/p&gt;
+
+&lt;p&gt;ActorNet은 1D CNN으로 시간적 feature를 추출하고 multi scale feature를 FPN과 병합한다. MapNet은 LGC(Lane Graph Network)으로 lane topology를 추출한다. LGN은 4개의 multi-scale LaneConv residual block이다. Actor-map fusion cycle은 A2L, L2L, L2A, A2A로 이루어진 fusion network stack이다. A2L, L2A, A2A는 2개의 attention residual block의 stack이며 L2L은 또다른 LGN이다. 마지막으로 update된 actor feature는 multi-mode trajectory 및 confidence score를 생성하기 위해 prediction header에서 사용된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170650334.png?raw=tru?raw=tru&quot; alt=&quot;image-20210406170650334&quot; /&gt;&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="paper" /><summary type="html">본 논문에서는 actor-actor, actor-lane, lane-actor, lane-lane의 복잡한 interaction을 포착하는 방법을 제시한다. LaneGCN과 actor-map interaction으로 구동 되며 이는 정확하고 사실적인 multi-modal trajectory prediction이 가능하게 해준다.</summary></entry><entry><title type="html">PyIF: A Fast and Light Weight Implementation to Estimate Bivariate Transfer Entropy for Big Data</title><link href="http://localhost:4000/blog/paper/2021-03-25-PyIF/" rel="alternate" type="text/html" title="PyIF: A Fast and Light Weight Implementation to Estimate Bivariate Transfer Entropy for Big Data" /><published>2021-03-25T00:00:00+09:00</published><updated>2021-03-25T00:00:00+09:00</updated><id>http://localhost:4000/blog/paper/PyIF</id><content type="html" xml:base="http://localhost:4000/blog/paper/2021-03-25-PyIF/">&lt;h3 id=&quot;abstract&quot;&gt;Abstract&lt;/h3&gt;
+
+&lt;p&gt;Transfer entropy는 시간에 따라 변화하는 process간의 정보의 흐름을 정량화 하는 정보 측정이다. Transfer entropy는 금융시장, 표준 시스템, 신경 과학 및 소셜미디어에서 다양하게 쓰인다. 본 논문은 Kraskov의 방법으로 Transfer Entropy를 추정하는 PyIF라는 빠른 open source python 구현을 제공한다. PyIF는 해당 KD-Tree에 대한 쿼리를 병렬화 하여 여러 프로세스 인 KD-Tree를 활용하고 CUDA 호환 GPU와 함께 사용하여 전송 엔트로피를 구하는 시간을 크게 줄일 수 있었다. 분석 결과, PyIF의 GPU 구현이 기존 구현보다 최대 1072 배 더 빠르다(CPU 구현이 181 배 더 빨라짐).&lt;/p&gt;
+
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;상호 정보는 information theory에서 랜덤 변수 간에 공유되는 정보의 양을 정량화 하는 또 다른 척도이다. 상호 정보와 유사하지만 전송 엔트로피 (TE)는 정보의 역학과 이러한 역학이 시간에 따라 어떻게 진화하는지 고려한다. 간단히 말해서, TE는 다른 임의 프로세스의 과거 정보를 알 때 하나의 임의 프로세스에서 불확실성의 감소를 정량화 한다. TE는 또한 정보 전송의 비대칭 척도입니다. 프로세스 A에서 프로세스 B로 계산된 TE와 B에서 A로 계산된 TE는 다른 결과를 산출 할 수 있다.&lt;/p&gt;
+
+&lt;h5 id=&quot;a-applications-of-transfer-entropy&quot;&gt;&lt;strong&gt;A. Applications of Transfer Entropy&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;Network Inference은 TE의 또 다른 응용 분야다. Network Inference의 목적은 데이터에서 개별 프로세스 간의 관계를 식별하여 네트워크를 추론하는 것이다. computational neuroscience(컴퓨팅 신경 과학), 금융 시장 분석, 유전자 규제 네트워크, 소셜 미디어 및 다중 에이전트 시스템은 TE가 네트워크를 모델링하는 데 사용된 영역이다. Network Inference에 TE를 사용한 초기 접근 방식은 네트워크의 모든 변수 쌍 사이에서 pairwise TE를 측정하거나 TE 값을 임계 값으로 설정하여 네트워크에서 노드 간의 연결을 선택한다. 최근 접근법은 링크가 존재하는지 여부를 결정하기 위해 pairwise TE의 통계적 유의성 테스트를 사용했다. 다음 논문은 더 많은 TE 응용 사례를 제공하고 있다(Introduction to Transfer Entropy: Information Flow in Complex).&lt;/p&gt;
+
+&lt;h5 id=&quot;b-outline&quot;&gt;&lt;strong&gt;B. Outline&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;본 논문은 bivariate TE를 추정하기 위해 제안된 PyIF에 대하여 소개한다. 그리고 이를 기존 구현과 비교 분석을 한 후 마지막으로 discussion과 향후 작업으로 논문을 마무리한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;definition-of-transfer-entropy&quot;&gt;&lt;strong&gt;Definition Of Transfer Entropy&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;2000 년에 Schreiber [2]는 TE를 발견하고 “transfer entropy”라는 이름을 만들었지 만 Milian Palus [3]도 독립적으로 개념을 발견했다. 함수 I가 두 확률 분포 사이의 상호 정보를 나타낸다. 지연된 상호 정보 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673531055.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt; 는 Y에서 X로의 정보 전송에 대한 time-asymmetric 척도로 사용될 수 있다. 여기서 X와 Y는 모두 임의 프로세스이고 k는 지연 기간이며 t는 현재 기간이다. 그러나 지연된 상호 정보는 프로세스 X와 Y 간의 공유 이력(shared history)을 설명하지 않기 때문에 충분하지 않다.&lt;/p&gt;
+
+&lt;p&gt;TE는 조건부 상호 정보를 통해 두 프로세스 간의 공유 이력을 고려한다. 특히, TE는 X~t~와 과거 사이에 중복되거나 공유된 정보를 제거하기 위해 X~t~의 과거를 조건으로 한다. 이것은 또한 X의 시간 t에대한 X안의 모든 Y의 정보를 제거한다. 따라서 Transfer entropy T(Y에서 X로 정보 전송이 발생하는 경우)는 다음과 같이 정의할 수 있다(X~t-k~가 주어진 상태에서 Y에서 X로의 정보전송의 정보량).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325205948455.png?raw=tru?raw=tru&quot; alt=&quot;image-20210325205948455&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Kraskov는 Transfer entropy가 두 조건부 상호 정보 계산의 차이로 표현될 수 있음을 보여준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325210002100.png?raw=tru?raw=tru&quot; alt=&quot;image-20210325210002100&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 정의의 직관은 TE가 X~t~에 대한 X~t-k~의 정보를 고려한 후 X~t~에 대한 Y~t-k~의 정보량을 측정한다는 것이다. 다르게 말하면, TE는 X~t-k~를 알 때 X~t~에 대한 불확실성의 감소를 고려한 후 Y~t-k~를 알 때 X~t~에 대한 불확실성의 감소를 정량화 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;estimating-transfer-entropy&quot;&gt;&lt;strong&gt;Estimating Transfer Entropy&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;상호 정보를 추정하는 많은 기술이 있습니다. 지금부터 이러한 상호 정보를 추정하기 위한 수식에 대해 알아보고자 한다.&lt;/p&gt;
+
+&lt;h5 id=&quot;a-kernel-density-estimator&quot;&gt;&lt;strong&gt;A. Kernel Density Estimator&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;Kernel Density Estimators는 TE를 추정하는 데 사용할 수 있다. 변수 X 및 Y가있는 크기 n의 bivariate 데이터 세트의 경우 상호 정보는 다음과 같이 추정할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673670639.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673680859.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt; 및 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616673680859.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 추정된 marginal probability density function이고 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1616673680859.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 joint estimated probability density estimation입니다. x~1~, x~2~, …, x~n~을 포함하는 bivariate 데이터 세트의 경우 각 x가 d 차원 공간에 있는 경우 커널 K를 사용하는 bivariate 커널 밀도 추정기는 다음과 같이 정의된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325210158967.png?raw=tru?raw=tru&quot; alt=&quot;image-20210325210158967&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 식에서 h는 smoothing parameter이고 K는 아래 식으로 정의된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673724696.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;b-kernel-density-estimator&quot;&gt;&lt;strong&gt;B. Kernel Density Estimator&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;Transfer Entropy는 k-nearest neighbors을 사용하여 추정할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673775203.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Kraskov이 정의를 확장하여 엔트로피를 다음과 같이 구한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673785273.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 n은 데이터 포인트의 수, k는 nearest neighbors, &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673794898.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 x의 차원, &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt; unit ball의 부피이다. 두 개의 랜덤 변수 X와 Y에 대해 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 (xi, yi) 사이의 거리이고 k 번째 neighbor는 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;로 표시된다. &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;와 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image014-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 각각 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image016-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;와 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/1616673918_1904554/clip_image016.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;로 정의된다. nx(i)는 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image018-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;와 같은 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image020-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;의 수이다. &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image022-1616673794899.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 다음의 digamma function이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325210341089.png?raw=tru?raw=tru&quot; alt=&quot;image-20210325210341089&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Γ(x)는 일반적인 gamma function이다. 마지막으로 C = 0.5772156649에서 ψ(1) = −C이고 이는 Euler-Mascheroni 상수이다. 랜덤 변수 Y의 엔트로피를 추정하기 위해 Y를 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673827889.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;로 대체할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;X와 Y 사이의 Joint entropy는 다음과 같이 구할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 dy는 y의 차원이고 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt; unit ball의 column이다. &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;, &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image010-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;을 이용하면 다음 식과 같이 상호 정보를 이용할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image012-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 식에서 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image014-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;는 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image016-1616673858997.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;를 만족하는 points yj의 수이다. 이 방법은 Kraskov estimator라고 한다.&lt;/p&gt;
+
+&lt;h5 id=&quot;c-additional-estimators&quot;&gt;&lt;strong&gt;C. Additional Estimators&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;Khan 또한 상호 정보를 추정하는 데 사용할 수 있는 joint probability density를 추정하기 위해 상호 정보를 계산하고 XY-plane의 adaptive partitioning을 계산하기 위한 differential entropy의 근사 가치가 있는 Edge worth approximation의 유용성을 탐구했다.&lt;/p&gt;
+
+&lt;p&gt;궁극적으로 Khan KDE estimator와 Kraskov estimator가 랜덤 프로세스의 종속 구조를 포착하는 능력과 관련하여 다른 방법을 능가한다는 것을 발견했다. 현재 우리 소프트웨어는 Kraskov estimator를 사용하여 bivariate TE estimating을 지원하며 향후 다른 estimator를 추가할 계획이다.&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="paper" /><summary type="html">Abstract</summary></entry><entry><title type="html">[논문(정리)/Motion Precdiction] Collaborative Motion Prediction via Neural Motion Message passing</title><link href="http://localhost:4000/blog/paper/2021-03-23-NMMP/" rel="alternate" type="text/html" title="[논문(정리)/Motion Precdiction] Collaborative Motion Prediction via Neural Motion Message passing" /><published>2021-03-23T00:00:00+09:00</published><updated>2021-03-23T00:00:00+09:00</updated><id>http://localhost:4000/blog/paper/NMMP</id><content type="html" xml:base="http://localhost:4000/blog/paper/2021-03-23-NMMP/">&lt;p&gt;본 논문은 2020 CVPR에 개제된 논문입니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;collaborative-motion-prediction-via-neural-motion-message-passing&quot;&gt;Collaborative Motion Prediction via Neural Motion Message passing&lt;/h1&gt;
+
+&lt;h2 id=&quot;abstract&quot;&gt;Abstract&lt;/h2&gt;
+
+&lt;p&gt;Motion Prediction은 자율주행에 있어 필수적인 과업이다.&lt;/p&gt;
+
+&lt;p&gt;본 논문에서는 Motion prediction을 위하여 차량 및 보행자 간의 상호작용을 명시적으로 모델링하는 NMMP(Neural Motion Message Passing)을 제시하였고 SOTA를 찍었다.&lt;/p&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;지금까지의 자율주행 연구는 아래 3가지로 나뉜다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Spatial-centric &lt;em&gt;mechanism&lt;/em&gt; : 공간 정보를 활용&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Social mechanism: attention&lt;/em&gt; : social pooling 사용&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Graph-based mechanism&lt;/em&gt; : 관찰된 경로를 따라 차량(보행자)간의 상호작용을 명시적으로 모델링하는 그래프 구성&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;그러나 &lt;em&gt;Spatial-centric&lt;/em&gt; &lt;em&gt;mechanism&lt;/em&gt;과 &lt;em&gt;Social mechanism: attention&lt;/em&gt;은 temporal horizon을 무시한다&lt;/p&gt;
+
+&lt;p&gt;따라서 본 논문은 &lt;em&gt;Graph-based mechanism&lt;/em&gt;을 확장한 NMMP를 제시한다.&lt;/p&gt;
+
+&lt;p&gt;본 논문은 크게 2가지 시나리오를 가정한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pedestrian setting: 보행자는 open area에서 자유로운 움직임을 보임&lt;/li&gt;
+  &lt;li&gt;Pedestrian and vehicle setting: 도시의 도로 주행 환경에서 어느정도 제약이 있는 움직임을 보임&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;본 논문은 위 2가지 시나리오에서 모두 SOTA를 찍었다.&lt;/p&gt;
+
+&lt;h2 id=&quot;related-works---motion-prediction&quot;&gt;Related Works - Motion Prediction&lt;/h2&gt;
+
+&lt;p&gt;Motion Prediction에 관한 전통적인 방법은 사람이 직접 만든 규칙을 바탕으로 한다. 그러나 이는 일반화 성능이 떨어진다.&lt;/p&gt;
+
+&lt;p&gt;Sequence-to-Sequence 모델을 이용하여 이전 trajectory  sequence를 인코딩하는 모델들도 있었다. 그러나 이는 interaction을 무시하는 경향이 있었다.&lt;/p&gt;
+
+&lt;p&gt;최근 나오는 Motion Prediction Model들에는 다음과 같은 것들이 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Spatial-centric&lt;/em&gt; &lt;em&gt;mechanism&lt;/em&gt; : 공간 관계를 사용하여 actor간 interaction을 암시적으로 모델링&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Social mechanism: attention&lt;/em&gt; : neighborhood의 정보를 aggregatio하여 각 actor에게 전송한다. Social LSTM은 인접 actor에 대해 최대 풀링을 사용한다. Social GAN은 모든 actor에 대해 max pooling을 적용한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Graph-based mechanism&lt;/em&gt; : actor간의 쌍별 상호 작용을 명시 적으로 모델링하는 그래프를 구성, Social-BiGAT 는 그래프주의 네트워크 (GAT)를 기반으로 장면에서 상호 작용을 표현하기 위해 전역 임베딩을 학습, Social Attention과 STGAT는 각각 시공간 그래프와 LSTM을 사용하여 시간에 따른 동적 상호 작용 변화를 포착&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;우리는 두 가지 측면에서 그래프 기반 메커니즘을 확장합니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;지시 된 상호 작용 캡처&lt;/li&gt;
+  &lt;li&gt;상호 작용에 대한 해석성을 제공&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;related-works---gnn&quot;&gt;Related Works - GNN&lt;/h2&gt;
+
+&lt;p&gt;두가지 주류 architecture에는 graph convolution network 및 nueral message passing based network가 포함된다. grpah convolution network는 edge를 일시적인 부분으로 간주하는 반면, nueral message passing based network는 edge를 model의 필수 부분으로 취급한다. 이 작업에서는 nueral message passing based network를 사용하여 교통 행위자(보행자, 차량)간의 복잡한 상호작용을 학습한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;neural-message-passing&quot;&gt;Neural Message Passing&lt;/h2&gt;
+
+&lt;p&gt;한 Scene낸에서 N개의 눈에 보이는 traffic actor의 시간 t에서 i번째 actor의 공간 좌표는 다음과 같다고 가정한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323160604797.png?raw=tru&quot; alt=&quot;image-20210323160604797&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그러면 관측된 궤적 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616483127621.png?raw=tru&quot; alt=&quot;img&quot; /&gt;및 i번째 actor의 future trajectory(GT) &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616483127622.png?raw=tru&quot; alt=&quot;img&quot; /&gt;는 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323160617299.png?raw=tru&quot; alt=&quot;image-20210323160617299&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;즉 p^-^는 과거 경로를 나타내고 p^+^는 미래 경로를 나타낸다.&lt;/p&gt;
+
+&lt;p&gt;이때 본 논문에서 하고싶은 일은 Prediction Model g(·)을 구하는 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323160759976.png?raw=tru&quot; alt=&quot;image-20210323160759976&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;본 논문에서는 fully-connected graph로 초기화 한 후 다음 식을 통하여 actor와 interaction embedding을 trajectory embedding으로 초기화한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161007872.png?raw=tru&quot; alt=&quot;image-20210323161007872&quot; style=&quot;zoom:67%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그 이후 node에서 edge로 그리고 다시 edge에서 node로 정보를 주고 받으며 서로의 interaction정도를 얻는다(아래 수식은 K-time반복된다).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161059906.png?raw=tru&quot; alt=&quot;image-20210323161059906&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;지금까지의 일들을 그림을 통해 표현하면 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;우선 actor들의 과거 경로를 가지고 자신의 좌표 변위 인코등 값인 h와 다른 actor간의 차이를 embeding한 d값을 얻는다(아래 나오는 f_……_들은 다 MLP다).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161205420.png?raw=tru&quot; alt=&quot;image-20210323161205420&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그 후 시간 정보를 embedding하기 위하여 LSTM을 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161331417.png?raw=tru&quot; alt=&quot;image-20210323161331417&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161338818.png?raw=tru&quot; alt=&quot;image-20210323161338818&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그 다음 초기 v^0^와 e^0^값을 구한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161443677.png?raw=tru&quot; alt=&quot;image-20210323161443677&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그 후 v 에서 e로 그리고 다시 e에서 v로 정보를 주고 받으며 서로의 상호작용의 정도를 익힌다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161536027.png?raw=tru&quot; alt=&quot;image-20210323161536027&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;지금까지 설명한 것이 NMMP의 주요 모듈이다. 그렇다면 이제부터는 이 모듈을 NMMP가 어떻게 사용하는지 알아보겠다.&lt;/p&gt;
+
+&lt;h2 id=&quot;motion-prediciton-system--ped&quot;&gt;Motion Prediciton System -ped&lt;/h2&gt;
+
+&lt;p&gt;Motion Prediciton은 기본적으로 SocialGAN을 기반으로한 논문이다. 따라서 본 논문 역시 GAN을 기반으로 모델을 구성하였다. 즉 Generator가 actor의 future trajectoy를 예측하고 discriminator는 complete trajectory를 real인지 fake인지 구분한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161842538.png?raw=tru&quot; alt=&quot;image-20210323161842538&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선 Generator 부분부터 알아보자.&lt;/p&gt;
+
+&lt;p&gt;Timestamp t에서 i번째 actor의 예측 좌표&lt;img src=&quot;C:\Users\myunghak\AppData\Roaming\Typora\typora-user-images\clip_image002-1616485232773.png&quot; alt=&quot;img&quot; /&gt;는 다음을 통해 얻어진다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161959545.png?raw=tru&quot; alt=&quot;image-20210323161959545&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Generator는 2개의 brech로 되어있다. 하나는 NMMP의 output중 h값을 이용하는 것으로 이는 아직 상호작용이 포함되어있지 않은 feature이다. 여기에 Gaussian Noise를 추가시켜준 후 decoder를 통과시켜 z~ind~를 만들어 준다. 그 후 상호작용의 정도가 포함된 v값을 decoder에 집이넣어 Z~inter~를 만들어 준다. 그리고 이렇게 만들어진 z~ind~와 z~inter~를 합하여 내가 얼마나 움직였는지를 알아내고 여기에 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616484275735.png?raw=tru&quot; alt=&quot;img&quot; /&gt;을 더해주어 나의 미래위치인 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616484304409.png?raw=tru&quot; alt=&quot;img&quot; /&gt;를 구한다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 future trajectory를 구하면 이를 discriminator에 집어넣어 참/거짓을 판별하게 한다. discriminator는 단지 MLP, LSTM, NMMP,MLP로 이루어진 간단한 모듈이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162630112.png?raw=tru&quot; alt=&quot;image-20210323162630112&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Loss는 다음과 같이 L2 loss와 binary cross entropy loss를 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162704949.png?raw=tru&quot; alt=&quot;image-20210323162704949&quot; style=&quot;zoom:60%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;motion-prediciton-system--ped--vehicle&quot;&gt;Motion Prediciton System -ped &amp;amp; vehicle&lt;/h2&gt;
+
+&lt;p&gt;지금까지는 보행자의 경로만 예측해보았다면 이번에는 보행자와 차량 둘의 경로를 모두 예측할 것이다.&lt;/p&gt;
+
+&lt;p&gt;본 모델은 도시 환경에서 관측된 dataset을 이용했으며 이는 곧 사람이 움직이는 영역과 차량이 움직이는 영역이 고정되어있다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;본 모델은 다음과 같이 individual brach와 interactive brach로 나뉜다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162919087.png?raw=tru&quot; alt=&quot;image-20210323162919087&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Loss function은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162942263.png?raw=tru&quot; alt=&quot;image-20210323162942263&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;experiments--ped&quot;&gt;Experiments -ped&lt;/h2&gt;
+
+&lt;p&gt;다른 모델과 성능을 비교해보면 다음과 같다(보행자만 있는 데이터셋에서).&lt;/p&gt;
+
+&lt;p&gt;평가지표는 ADE(Average Displacement Error) / FDE(Final Displacement Error)를 사용하였다. ADE는 내가 예측한 경로와 GT와의 거리차이고 FDE는 내가 예측한 마지막 지점과 GT의 마지막 지점간의 차이이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163103690.png?raw=tru&quot; alt=&quot;image-20210323163103690&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;SDD(Stanford Drone Dataset에서의 결과는 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163127162.png?raw=tru&quot; alt=&quot;image-20210323163127162&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;experiments--pedvehicle&quot;&gt;Experiments -ped&amp;amp;vehicle&lt;/h2&gt;
+
+&lt;p&gt;이번에는 차량과 사람이 모두 있는 NuScenes dataset에서의 결과를 확인해보겠다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163216545.png?raw=tru&quot; alt=&quot;image-20210323163216545&quot; style=&quot;zoom:67%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ablation-study&quot;&gt;Ablation Study&lt;/h2&gt;
+
+&lt;p&gt;본 section에서는 NMMP 모듈이 어떠한 영향을 끼치고 각 하이퍼 파라미터가 어떠한 영향을 끼치는지를 알아보겠다.&lt;/p&gt;
+
+&lt;p&gt;NMMP 모듈은 Generator와 discriminator모두에 들어가 있는데 이 module을 제거하였을 경우 성능을 알아보았다(아래 dataset은 모두 사람만 있는 dataset이다).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163328471.png?raw=tru&quot; alt=&quot;image-20210323163328471&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음은 node2edge와 edge2node로의 정보 교환의 횟수인 K값을 바꾸어 가며 실험을 하였다. 이 때 5로 하는 경우가 가장 좋았는데 이는 interaction의 횟수가 많을수록 모듈이 조밀한 상호 작용을 모델링하는데 더 많은 용량을 얻지만 iteration이 너무 많으면 actor embedding이 over smoothing되어 local information과 global information이 혼합되기 때문이라고 예측한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163501412.png?raw=tru&quot; alt=&quot;image-20210323163501412&quot; style=&quot;zoom:67%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음은 본 논문의 base가 되는 SocialGAN과 비교해 보았다. 그 결과 보행자 수가 증가할 수록 Social GAN과의 격차가 커짐을 알 수 있었고 이는 정규화 비율의 증가 덕분이라고 예측한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163606811.png?raw=tru&quot; alt=&quot;image-20210323163606811&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;본 논문에서는 교통 행위자 간의 상호 작용을 명시 적으로 모델링하는 새로운 모듈 인 NMMP를 제안하였고 Single motion prediction만 하였던 이전 연구들과 달리 pedestrian 및 joint pedestrian동작 예측을 위한 NMMP를 고안하였고 SOTA를 찍었다.&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="paper" /><summary type="html">본 논문은 2020 CVPR에 개제된 논문입니다.</summary></entry><entry><title type="html">[Information Theory] Transfer Entropy</title><link href="http://localhost:4000/blog/statistics/2021-03-09-TransferEntropy/" rel="alternate" type="text/html" title="[Information Theory] Transfer Entropy" /><published>2021-03-09T00:00:00+09:00</published><updated>2021-03-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/statistics/TransferEntropy</id><content type="html" xml:base="http://localhost:4000/blog/statistics/2021-03-09-TransferEntropy/">&lt;p&gt;Transfer Entropy를 공부하기 위해서는&lt;a href=&quot;https://myunghaklee.github.io/blog/statistics/2021-03-08-Information-theory/&quot;&gt;Information theory&lt;/a&gt; &lt;a href=&quot;https://myunghaklee.github.io/blog/statistics/2021-03-09-Information-theory_Cross_entropy/&quot;&gt;cross entropy&lt;/a&gt; &lt;a href=&quot;https://myunghaklee.github.io/blog/statistics/2021-03-09-KL-Divergence/&quot;&gt;KL - Divergence&lt;/a&gt;개념이 필요함을 알려드립니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;transfer-entropy&quot;&gt;Transfer Entropy&lt;/h1&gt;
+
+&lt;p&gt;Transfer Entropy는 두 객체의 인과관계의 정도를 알아보기 위하여 도입된 개념이다. 즉 Transfer entropy에서는 시간의 개념이 포함되어 있다.&lt;/p&gt;
+
+&lt;p&gt;만약 X의 행동이 Y로부터 유발된 것이라고 추측한다면 X의 현재 행동은 Y의 행동과 상관관계가 존재하야 한다. 즉 x~t~는 y~t-1~, y~t-2~ … 와 상관관계가 존재해야 한다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;이 말은 X의 이전 data만 주어졌을 때와 여기에 Y의 data가 추가로 주어졌을 때 불확실성(entropy)이 변한다는 것이고 이 차이가 클수록 x~t~ 는 Y의 이전 값들에 의해 영향을 크게 받는다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/12128784/112811181-c2b4ab80-90b6-11eb-910a-f158d5ed4460.png&quot; alt=&quot;image&quot; style=&quot;zoom:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 식을 다시 설명하면 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644042471.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;이 주어졌을 때 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616644042471.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;이 갖는 정보량과  &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644042471.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;와 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1616644042471.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;이 주어졌을 때 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644826933.png?raw=tru&quot; alt=&quot;img&quot; /&gt;이 갖는 정보량의 차이를 구하겠다는 식이다. 만약 이 값의 차이가 크다면 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644780859.png?raw=tru&quot; alt=&quot;img&quot; /&gt;이 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644870316.png?raw=tru&quot; alt=&quot;img&quot; /&gt;에 미치는 영향이 크다고 봐도 될 것이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
+
+&lt;p&gt;극단적으로 말해서 만일 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image008-1616642648200.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;이지만 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644278564.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;이라면 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616644278564.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;은 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image006-1616644278564.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;이 주어져야 비로소 확정되고 이는 곧 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616644515952.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;은 &lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616644515952.png?raw=tru?raw=tru&quot; alt=&quot;img&quot; /&gt;에 지대한 영향을 끼친다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;TE에 대하여 더 자세히 알고 싶다면 다음 링크를 참조하자.&lt;/p&gt;
+
+&lt;p&gt;https://myunghaklee.github.io/blog/paper/2021-03-25-PyIF/&lt;/p&gt;
+
+&lt;p&gt;참조 링크&lt;/p&gt;
+
+&lt;p&gt;https://mons1220.tistory.com/154&lt;/p&gt;
+
+&lt;p&gt;https://ikegwu.com/assets/papers/2020_Ikegwu_Traguer_McMullin_Brunner_05FA.pdf&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="statistics" /><summary type="html">Transfer Entropy를 공부하기 위해서는Information theory cross entropy KL - Divergence개념이 필요함을 알려드립니다.</summary></entry><entry><title type="html">[Information Theory] KL Divergence</title><link href="http://localhost:4000/blog/statistics/2021-03-09-KL-Divergence/" rel="alternate" type="text/html" title="[Information Theory] KL Divergence" /><published>2021-03-09T00:00:00+09:00</published><updated>2021-03-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/statistics/KL%20Divergence</id><content type="html" xml:base="http://localhost:4000/blog/statistics/2021-03-09-KL-Divergence/">&lt;p&gt;KL Divergence에 대하여 설명하기 앞서 &lt;a href=&quot;https://myunghaklee.github.io/blog/statistics/2021-03-09-Information-theory_Cross_entropy/&quot;&gt;cross entropy&lt;/a&gt;를 보고 오는 것을 추천합니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;kl-divergence&quot;&gt;KL Divergence&lt;/h1&gt;
+
+&lt;p&gt;KL divergence는 두 확률분포의 차이를 계산하는데 사용되는 함수입니다. 즉 다시말하면 어떠한 이상적인 분포에 대하여 그 분포를 근사하는 다른 분포를 대신 사용하여 샘플링을 진행한다면 발생할 수 있는 정보량의 차이를 말하는 것 입니다. 딥러닝 모델을 만들 때를 예로 들면 우리가 가지고 있는 데이터의 분포 P(x)와 모델이 추정한 데이터의 분포 Q(x)간의 차이를 KLD(KL-Divergence)를 활용해 구할 수 있습니다. KLD의 식은 다음과 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325123152060.png?raw=tru&quot; alt=&quot;image-20210325123152060&quot; style=&quot;zoom:70%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만일 두 확률분포가 동일할 경우 KLD의 값은 0이 됩니다. 단 KLD는 비대칭으로 P와 Q의 위치가 바뀌면 KLD의 값도 바뀝니다. 즉 KLD를 거리함수라고 보면 안 됩니다.&lt;/p&gt;
+
+&lt;p&gt;지금부터 위 수식에 대하여 자세히 알아보겠습니다. 위에서 KLD는 두 확률분포의 차이를 계산한다고 했는데 조금 더 정확히 말하면 KLD는 어떠한 확률 분포 P가 있을 때, 샘플링 과정에서 그 분포를 근사적으로 표현하는 확률분포 Q를 P대신 사용할 경우 엔트로피의 변화를 의미합니다. 따라서 우리는 식을 다음과 같이 고쳐 쓸 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210325123242339.png?raw=tru&quot; alt=&quot;image-20210325123242339&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;따라서 우리는 위 식을 통하여 두 확률 분포의 차이를 계산할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;참고링크&lt;/p&gt;
+
+&lt;p&gt;https://ratsgo.github.io/statistics/2017/09/22/information/&lt;/p&gt;
+
+&lt;p&gt;https://ko.wikipedia.org/wiki/%EC%BF%A8%EB%B0%B1-%EB%9D%BC%EC%9D%B4%EB%B8%94%EB%9F%AC_%EB%B0%9C%EC%82%B0&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="statistics" /><summary type="html">KL Divergence에 대하여 설명하기 앞서 cross entropy를 보고 오는 것을 추천합니다.</summary></entry><entry><title type="html">[Information Theory] Cross Entropy</title><link href="http://localhost:4000/blog/statistics/2021-03-09-Information-theory_Cross_entropy/" rel="alternate" type="text/html" title="[Information Theory] Cross Entropy" /><published>2021-03-09T00:00:00+09:00</published><updated>2021-03-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/statistics/Information%20theory_Cross_entropy</id><content type="html" xml:base="http://localhost:4000/blog/statistics/2021-03-09-Information-theory_Cross_entropy/">&lt;p&gt;Cross Entropy에 대하여 설명하기 앞서 &lt;a href=&quot;https://myunghaklee.github.io/blog/statistics/2021-03-08-Information-theory/&quot;&gt;Shannon entropy&lt;/a&gt;를 보고 오는 것을 추천합니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;information-theory&quot;&gt;Information Theory&lt;/h1&gt;
+
+&lt;h2 id=&quot;cross-entropy&quot;&gt;Cross entropy&lt;/h2&gt;
+
+&lt;p&gt;우선 Cross entropy를 들어가기 엔트로피를 구하는 식을 알아보자. 엔트로피를 구하는 식은 다음과 같다. 이에 관한 자세한 설명은 다음 &lt;a href=&quot;https://myunghaklee.github.io/blog/statistics/2021-03-08-Information-theory&quot;&gt;링크&lt;/a&gt;를 참조하자.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210309144934053.png?raw=tru&quot; alt=&quot;image-20210309144934053&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;확률 분포 P와 Q가 있다고 가정하자. Q = [0.25, 0.25, 0.25, 0.25]가 되고 P = [0.125, 0.125, 0.25, 0.5]라고 가정하자. 이 때 확률분포 Q를 P대신 사용할 경우 엔트로피의 변화량을 구하고 싶을 경우 다음과 같은 식을 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210309144629145.png?raw=tru&quot; alt=&quot;image-20210309144629145&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 우리가 유념해둘 것은 Q를 P대신 사용했으므로 정보량은 Q에 해당하는 것을 사용한다. 그러나 그 정보량이 나올 확률은 변하지 않으므로 정보량의 기대값 즉 entropy는 위 식과 같이 구하는 것이다. 이제 위 식을 일반화하여 적어보면 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210309145129238.png?raw=tru&quot; alt=&quot;image-20210309145129238&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;보통 머신러닝의 경우 P가 ground truth가 되고 Q가 현재 학습한 확률값이다. 그리고 우리가 학습한 확률값 Q가 P에 가까워질수록 cross entropy의 값은 작아지게 된다. 따라서 loss 값을 줄이려는 머신러닝의 특성상 cross entropy를 loss function으로 사용하면 학습이 성공적으로 진행될 수 있는 것이다.&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="statistics" /><summary type="html">Cross Entropy에 대하여 설명하기 앞서 Shannon entropy를 보고 오는 것을 추천합니다.</summary></entry><entry><title type="html">[Information Theory] Foundation</title><link href="http://localhost:4000/blog/statistics/2021-03-08-Information-theory/" rel="alternate" type="text/html" title="[Information Theory] Foundation" /><published>2021-03-08T00:00:00+09:00</published><updated>2021-03-08T00:00:00+09:00</updated><id>http://localhost:4000/blog/statistics/Information%20theory</id><content type="html" xml:base="http://localhost:4000/blog/statistics/2021-03-08-Information-theory/">&lt;p&gt;본 포스팅은 information theory의 기초적인 부분을 다루고 있는 posting입니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;information-theory&quot;&gt;Information Theory&lt;/h1&gt;
+
+&lt;h2 id=&quot;shannon-entropy&quot;&gt;Shannon entropy&lt;/h2&gt;
+
+&lt;p&gt;정보량은 불확실성이 커질수록 커진다. 여기서 불확실성이 크다는 말은 곧 사건이 발생할 확률이 적다는 것이다. 예를 들어 “내일은 해가 동쪽에서 뜰 것이다”라는 문장의 정보량은 0에 근사한다. 반면 “내일 비가 올 것이다”라는 문장의 정보량은 비교적 높다. 즉 정리하면 정보량은 다음 3가지 조건을 만족한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;자주 발생하는 사건은 낮은 정보량을 가진다(100퍼센트 발생하는 사건의 경우 전혀 정보가 없다고 볼 수 있다.)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;자주 발생하지 않는 사건의 경우 높은 정보량을 갖는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;독립 사건은 추가적인 정보량을 갖는다. 즉 동전을 던져 앞면이 두번 나오는 사건에 대한 정보량은 앞면이 한번 나온 정보량의 2배이다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;따라서 정보량은 다음 수식과 같이 구한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210308202704364.png?raw=tru?raw=tru&quot; alt=&quot;image-20210308202704364&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;예를 들어보자. 동전을 던지는 사건과 주사위를 던지는 사건을 비교해보자. 동전의 경우 정보량은 -log20.5 = 1이고 주사위의 경우 -log2(1/6) ≒ 2.5849가 나온다. 즉 주사위의 경우가 동전보다 불확실성이 크므로 정보량도 크게 나온다.&lt;/p&gt;
+
+&lt;p&gt;여기서 Shannon entropy는 모든 사건의 정보량의 기대값이다. 즉 전체 사건의 확률 분포의 불확실성을 나타낼 때 사용한다. 어떤 확률분포 P에 대한 Shannon entropy는 다음 수식으로 나타낸다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210308202806113.png?raw=tru?raw=tru&quot; alt=&quot;image-20210308202806113&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;앞면과 뒷면이 나올 확률이 동일한 동전의 경우를 예를 들면 다음과 같은 식을 통해 구할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210308202828090.png?raw=tru?raw=tru&quot; alt=&quot;image-20210308202828090&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Appendix&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;그렇다면 이번에는 N개의 동전을 던졌을 때를 생각해 보자. 그러한 경우 수식은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210308202922866.png?raw=tru?raw=tru&quot; alt=&quot;image-20210308202922866&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;즉 우리는 위 식을 통해 앞면과 뒷면의 나올 확률이 동일한 동전을 N번 던지는 경우의 불확실성은 N이라는 것을 알 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이번에는 동전을 던졌을 때 앞면과 뒷면이 나오는 정도가 동일하지 않다고 해보자. 그 때 앞면이 나올 확률별로 Shannon entropy를 구해보면 다음 그래프와 같다(편의상 동전을 던지는 횟수는 1번이라 가정하자)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210308203037245.png?raw=tru?raw=tru&quot; alt=&quot;image-20210308203037245&quot; style=&quot;zoom:50%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;경우의 수가 많다 ==&amp;gt; 예측이 어렵다 ==&amp;gt; 불확실 성이 크다 ==&amp;gt; 어떠한 값이 주어지면 그것에 대한 정보량은 크다&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Ex)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;동전을 던지는 경우(앞, 뒷면이 나올 확률이 같다고 가정)&lt;/p&gt;
+
+&lt;p&gt;경우의 수는 2다. ==&amp;gt; 예측이 비교적 쉽다 ==&amp;gt; 불확실 성이 적다 ==&amp;gt; 동전이 앞면이 나왔다는 정보는 정보량이 비교적 적다&lt;/p&gt;
+
+&lt;p&gt;주사위를 던지는 경우(모든 눈이 나올 확률이 같다고 가정)&lt;/p&gt;
+
+&lt;p&gt;경우의 수는 6이다. ==&amp;gt; 예측이 비교적 어렵다 ==&amp;gt; 불확실성이 크다 ==&amp;gt; 주사위의 눈이 1이 나왔다는 정보는 정보량이 비교적 크다.&lt;/p&gt;
+
+&lt;p&gt;참조 링크 : https://ratsgo.github.io/statistics/2017/09/22/information/&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="statistics" /><summary type="html">본 포스팅은 information theory의 기초적인 부분을 다루고 있는 posting입니다.</summary></entry><entry><title type="html">sample_torch</title><link href="http://localhost:4000/blog/pytorch/2021-01-28-sample_pytorch/" rel="alternate" type="text/html" title="sample_torch" /><published>2021-01-28T00:00:00+09:00</published><updated>2021-01-28T00:00:00+09:00</updated><id>http://localhost:4000/blog/pytorch/sample_pytorch</id><content type="html" xml:base="http://localhost:4000/blog/pytorch/2021-01-28-sample_pytorch/">&lt;p&gt;샘플&lt;/p&gt;</content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="pytorch" /><summary type="html">샘플</summary></entry><entry><title type="html">[논문(번역|정리)/주제] 논문제목</title><link href="http://localhost:4000/blog/paper/2021-01-01-Sample-%EC%96%91%EC%8B%9D/" rel="alternate" type="text/html" title="[논문(번역|정리)/주제] 논문제목" /><published>2021-01-01T00:00:00+09:00</published><updated>2021-01-01T00:00:00+09:00</updated><id>http://localhost:4000/blog/paper/Sample%20%EC%96%91%EC%8B%9D</id><content type="html" xml:base="http://localhost:4000/blog/paper/2021-01-01-Sample-%EC%96%91%EC%8B%9D/"></content><author><name>&lt;MyungHak&gt; &lt;Lee&gt;</name><email>&lt;mh9716@kookmin.ac.kr&gt;</email></author><category term="paper" /><summary type="html"></summary></entry></feed>

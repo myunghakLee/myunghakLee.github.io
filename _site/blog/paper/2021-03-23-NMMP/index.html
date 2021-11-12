@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en"><!--
+ __  __                __                                     __
+/\ \/\ \              /\ \             __                    /\ \
+\ \ \_\ \   __  __    \_\ \      __   /\_\      __       ___ \ \ \/'\
+ \ \  _  \ /\ \/\ \   /'_` \   /'__`\ \/\ \   /'__`\    /'___\\ \ , <
+  \ \ \ \ \\ \ \_\ \ /\ \L\ \ /\  __/  \ \ \ /\ \L\.\_ /\ \__/ \ \ \\`\
+   \ \_\ \_\\/`____ \\ \___,_\\ \____\ _\ \ \\ \__/.\_\\ \____\ \ \_\ \_\
+    \/_/\/_/ `/___/> \\/__,_ / \/____//\ \_\ \\/__/\/_/ \/____/  \/_/\/_/
+                /\___/                \ \____/
+                \/__/                  \/___/
+
+Powered by Hydejack v9.0.5 <https://hydejack.com/>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>[논문(정리)/Motion Precdiction] Collaborative Motion Prediction via Neural Motion Message passing | MyungHak</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="[논문(정리)/Motion Precdiction] Collaborative Motion Prediction via Neural Motion Message passing" />
+<meta name="author" content="<MyungHak> <Lee>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="본 논문은 2020 CVPR에 개제된 논문입니다." />
+<meta property="og:description" content="본 논문은 2020 CVPR에 개제된 논문입니다." />
+<link rel="canonical" href="http://localhost:4000/blog/paper/2021-03-23-NMMP/" />
+<meta property="og:url" content="http://localhost:4000/blog/paper/2021-03-23-NMMP/" />
+<meta property="og:site_name" content="MyungHak" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-23T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[논문(정리)/Motion Precdiction] Collaborative Motion Prediction via Neural Motion Message passing" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/blog/paper/2021-03-23-NMMP/","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/paper/2021-03-23-NMMP/"},"dateModified":"2021-03-23T00:00:00+09:00","datePublished":"2021-03-23T00:00:00+09:00","author":{"@type":"Person","name":"<MyungHak> <Lee>"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"<MyungHak> <Lee>"},"headline":"[논문(정리)/Motion Precdiction] Collaborative Motion Prediction via Neural Motion Message passing","description":"본 논문은 2020 CVPR에 개제된 논문입니다.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyungHak">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="MyungHak">
+
+
+  <meta name="theme-color" content="rgb(60,160,170)">
+
+
+<meta name="generator" content="Hydejack v9.0.5" />
+
+
+<link rel="alternate" href="http://localhost:4000/blog/paper/2020-01-01-Fast-and-Furious/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MyungHak" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+<link rel="dns-prefetch" href="/assets/js/search-worker-9.0.5.js" as="worker" id="_hrefSearch">
+
+
+
+
+
+<script>!function(e,t){"use strict";function n(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}e.loadJS=function(e,o){var r=t.createElement("script");r.src=e,o&&n(r,"load",o,{once:!0});var a=t.scripts[0];return a.parentNode.insertBefore(r,a),r},e._loaded=!1,e.loadJSDeferred=function(o,r){function a(){e._loaded=!0,r&&n(c,"load",r,{once:!0});var o=t.scripts[0];o.parentNode.insertBefore(c,o)}var c=t.createElement("script");return c.src=o,e._loaded?a():n(e,"load",a,{once:!0}),c},e.setRel=e.setRelStylesheet=function(e){function o(){this.rel="stylesheet"}n(t.getElementById(e),"load",o,{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = false;
+  w._noNavbar = false;
+  w._noToc = false;
+  w._noSearch = false;
+}(window);
+</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.0.5.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(45,145,150);--accent-color-faded: rgba(45,145,150,0.5);--accent-color-darkened: #247579;--theme-color: rgb(60,160,170);--dark-mode-body-bg: #283031;--dark-mode-border-color: #343e3f}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+
+
+
+</head>
+
+<body class="no-break-layout">
+  
+<script>
+  window._sunrise = 6;
+  window._sunset =  18;
+  !function(e,s){var a="light-mode",d="dark-mode",o=(new Date).getHours();if(!("matchMedia"in e&&e.matchMedia("(prefers-color-scheme)"))){var i=o<=e._sunrise||o>=e._sunset?d:a,t=i===d?a:d;s.body.classList.add(i),s.body.classList.remove(t)}}(window,document);
+
+</script>
+
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-post"
+  role="main"
+>
+  
+
+
+
+
+
+<article id="post-blog-paper-NMMP" class="page post mb6" role="article">
+  <header>
+    <h1 class="post-title flip-project-title">
+      
+        [논문(정리)/Motion Precdiction] Collaborative Motion Prediction via Neural Motion Message passing
+      
+    </h1>
+
+    <div class="post-date">
+      
+        
+        <time datetime="2021-03-23T00:00:00+09:00">23 Mar 2021</time>
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+in <a href="/paper/" class="flip-title">Paper</a>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+
+    
+
+
+
+  <div class="hr pb0"></div>
+
+
+  </header>
+
+  
+    <p>본 논문은 2020 CVPR에 개제된 논문입니다.</p>
+
+<h1 id="collaborative-motion-prediction-via-neural-motion-message-passing">Collaborative Motion Prediction via Neural Motion Message passing</h1>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Motion Prediction은 자율주행에 있어 필수적인 과업이다.</p>
+
+<p>본 논문에서는 Motion prediction을 위하여 차량 및 보행자 간의 상호작용을 명시적으로 모델링하는 NMMP(Neural Motion Message Passing)을 제시하였고 SOTA를 찍었다.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>지금까지의 자율주행 연구는 아래 3가지로 나뉜다.</p>
+
+<ul>
+  <li>
+    <p>Spatial-centric <em>mechanism</em> : 공간 정보를 활용</p>
+  </li>
+  <li>
+    <p><em>Social mechanism: attention</em> : social pooling 사용</p>
+  </li>
+  <li>
+    <p><em>Graph-based mechanism</em> : 관찰된 경로를 따라 차량(보행자)간의 상호작용을 명시적으로 모델링하는 그래프 구성</p>
+  </li>
+</ul>
+
+<p>그러나 <em>Spatial-centric</em> <em>mechanism</em>과 <em>Social mechanism: attention</em>은 temporal horizon을 무시한다</p>
+
+<p>따라서 본 논문은 <em>Graph-based mechanism</em>을 확장한 NMMP를 제시한다.</p>
+
+<p>본 논문은 크게 2가지 시나리오를 가정한다.</p>
+
+<ul>
+  <li>Pedestrian setting: 보행자는 open area에서 자유로운 움직임을 보임</li>
+  <li>Pedestrian and vehicle setting: 도시의 도로 주행 환경에서 어느정도 제약이 있는 움직임을 보임</li>
+</ul>
+
+<p>본 논문은 위 2가지 시나리오에서 모두 SOTA를 찍었다.</p>
+
+<h2 id="related-works---motion-prediction">Related Works - Motion Prediction</h2>
+
+<p>Motion Prediction에 관한 전통적인 방법은 사람이 직접 만든 규칙을 바탕으로 한다. 그러나 이는 일반화 성능이 떨어진다.</p>
+
+<p>Sequence-to-Sequence 모델을 이용하여 이전 trajectory  sequence를 인코딩하는 모델들도 있었다. 그러나 이는 interaction을 무시하는 경향이 있었다.</p>
+
+<p>최근 나오는 Motion Prediction Model들에는 다음과 같은 것들이 있다.</p>
+
+<ul>
+  <li>
+    <p><em>Spatial-centric</em> <em>mechanism</em> : 공간 관계를 사용하여 actor간 interaction을 암시적으로 모델링</p>
+  </li>
+  <li>
+    <p><em>Social mechanism: attention</em> : neighborhood의 정보를 aggregatio하여 각 actor에게 전송한다. Social LSTM은 인접 actor에 대해 최대 풀링을 사용한다. Social GAN은 모든 actor에 대해 max pooling을 적용한다.</p>
+  </li>
+  <li>
+    <p><em>Graph-based mechanism</em> : actor간의 쌍별 상호 작용을 명시 적으로 모델링하는 그래프를 구성, Social-BiGAT 는 그래프주의 네트워크 (GAT)를 기반으로 장면에서 상호 작용을 표현하기 위해 전역 임베딩을 학습, Social Attention과 STGAT는 각각 시공간 그래프와 LSTM을 사용하여 시간에 따른 동적 상호 작용 변화를 포착</p>
+  </li>
+</ul>
+
+<p>우리는 두 가지 측면에서 그래프 기반 메커니즘을 확장합니다.</p>
+
+<ol>
+  <li>지시 된 상호 작용 캡처</li>
+  <li>상호 작용에 대한 해석성을 제공</li>
+</ol>
+
+<h2 id="related-works---gnn">Related Works - GNN</h2>
+
+<p>두가지 주류 architecture에는 graph convolution network 및 nueral message passing based network가 포함된다. grpah convolution network는 edge를 일시적인 부분으로 간주하는 반면, nueral message passing based network는 edge를 model의 필수 부분으로 취급한다. 이 작업에서는 nueral message passing based network를 사용하여 교통 행위자(보행자, 차량)간의 복잡한 상호작용을 학습한다.</p>
+
+<h2 id="neural-message-passing">Neural Message Passing</h2>
+
+<p>한 Scene낸에서 N개의 눈에 보이는 traffic actor의 시간 t에서 i번째 actor의 공간 좌표는 다음과 같다고 가정한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323160604797.png?raw=tru" alt="image-20210323160604797" /></p>
+
+<p>그러면 관측된 궤적 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616483127621.png?raw=tru" alt="img" />및 i번째 actor의 future trajectory(GT) <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1616483127622.png?raw=tru" alt="img" />는 다음과 같다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323160617299.png?raw=tru" alt="image-20210323160617299" /></p>
+
+<p>즉 p^-^는 과거 경로를 나타내고 p^+^는 미래 경로를 나타낸다.</p>
+
+<p>이때 본 논문에서 하고싶은 일은 Prediction Model g(·)을 구하는 것이다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323160759976.png?raw=tru" alt="image-20210323160759976" /></p>
+
+<p>본 논문에서는 fully-connected graph로 초기화 한 후 다음 식을 통하여 actor와 interaction embedding을 trajectory embedding으로 초기화한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161007872.png?raw=tru" alt="image-20210323161007872" style="zoom:67%;" /></p>
+
+<p>그 이후 node에서 edge로 그리고 다시 edge에서 node로 정보를 주고 받으며 서로의 interaction정도를 얻는다(아래 수식은 K-time반복된다).</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161059906.png?raw=tru" alt="image-20210323161059906" style="zoom:80%;" /></p>
+
+<p>지금까지의 일들을 그림을 통해 표현하면 다음과 같다.</p>
+
+<p>우선 actor들의 과거 경로를 가지고 자신의 좌표 변위 인코등 값인 h와 다른 actor간의 차이를 embeding한 d값을 얻는다(아래 나오는 f_……_들은 다 MLP다).</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161205420.png?raw=tru" alt="image-20210323161205420" /></p>
+
+<p>그 후 시간 정보를 embedding하기 위하여 LSTM을 사용한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161331417.png?raw=tru" alt="image-20210323161331417" style="zoom:80%;" /></p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161338818.png?raw=tru" alt="image-20210323161338818" style="zoom:80%;" /></p>
+
+<p>그 다음 초기 v^0^와 e^0^값을 구한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161443677.png?raw=tru" alt="image-20210323161443677" style="zoom:80%;" /></p>
+
+<p>그 후 v 에서 e로 그리고 다시 e에서 v로 정보를 주고 받으며 서로의 상호작용의 정도를 익힌다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161536027.png?raw=tru" alt="image-20210323161536027" style="zoom:80%;" /></p>
+
+<p>지금까지 설명한 것이 NMMP의 주요 모듈이다. 그렇다면 이제부터는 이 모듈을 NMMP가 어떻게 사용하는지 알아보겠다.</p>
+
+<h2 id="motion-prediciton-system--ped">Motion Prediciton System -ped</h2>
+
+<p>Motion Prediciton은 기본적으로 SocialGAN을 기반으로한 논문이다. 따라서 본 논문 역시 GAN을 기반으로 모델을 구성하였다. 즉 Generator가 actor의 future trajectoy를 예측하고 discriminator는 complete trajectory를 real인지 fake인지 구분한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161842538.png?raw=tru" alt="image-20210323161842538" /></p>
+
+<p>우선 Generator 부분부터 알아보자.</p>
+
+<p>Timestamp t에서 i번째 actor의 예측 좌표<img src="C:\Users\myunghak\AppData\Roaming\Typora\typora-user-images\clip_image002-1616485232773.png" alt="img" />는 다음을 통해 얻어진다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323161959545.png?raw=tru" alt="image-20210323161959545" /></p>
+
+<p>Generator는 2개의 brech로 되어있다. 하나는 NMMP의 output중 h값을 이용하는 것으로 이는 아직 상호작용이 포함되어있지 않은 feature이다. 여기에 Gaussian Noise를 추가시켜준 후 decoder를 통과시켜 z~ind~를 만들어 준다. 그 후 상호작용의 정도가 포함된 v값을 decoder에 집이넣어 Z~inter~를 만들어 준다. 그리고 이렇게 만들어진 z~ind~와 z~inter~를 합하여 내가 얼마나 움직였는지를 알아내고 여기에 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616484275735.png?raw=tru" alt="img" />을 더해주어 나의 미래위치인 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1616484304409.png?raw=tru" alt="img" />를 구한다.</p>
+
+<p>이렇게 future trajectory를 구하면 이를 discriminator에 집어넣어 참/거짓을 판별하게 한다. discriminator는 단지 MLP, LSTM, NMMP,MLP로 이루어진 간단한 모듈이다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162630112.png?raw=tru" alt="image-20210323162630112" /></p>
+
+<p>Loss는 다음과 같이 L2 loss와 binary cross entropy loss를 사용한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162704949.png?raw=tru" alt="image-20210323162704949" style="zoom:60%;" /></p>
+
+<h2 id="motion-prediciton-system--ped--vehicle">Motion Prediciton System -ped &amp; vehicle</h2>
+
+<p>지금까지는 보행자의 경로만 예측해보았다면 이번에는 보행자와 차량 둘의 경로를 모두 예측할 것이다.</p>
+
+<p>본 모델은 도시 환경에서 관측된 dataset을 이용했으며 이는 곧 사람이 움직이는 영역과 차량이 움직이는 영역이 고정되어있다는 것이다.</p>
+
+<p>본 모델은 다음과 같이 individual brach와 interactive brach로 나뉜다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162919087.png?raw=tru" alt="image-20210323162919087" /></p>
+
+<p>Loss function은 다음과 같다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323162942263.png?raw=tru" alt="image-20210323162942263" style="zoom:80%;" /></p>
+
+<h2 id="experiments--ped">Experiments -ped</h2>
+
+<p>다른 모델과 성능을 비교해보면 다음과 같다(보행자만 있는 데이터셋에서).</p>
+
+<p>평가지표는 ADE(Average Displacement Error) / FDE(Final Displacement Error)를 사용하였다. ADE는 내가 예측한 경로와 GT와의 거리차이고 FDE는 내가 예측한 마지막 지점과 GT의 마지막 지점간의 차이이다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163103690.png?raw=tru" alt="image-20210323163103690" /></p>
+
+<p>SDD(Stanford Drone Dataset에서의 결과는 다음과 같다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163127162.png?raw=tru" alt="image-20210323163127162" style="zoom:80%;" /></p>
+
+<h2 id="experiments--pedvehicle">Experiments -ped&amp;vehicle</h2>
+
+<p>이번에는 차량과 사람이 모두 있는 NuScenes dataset에서의 결과를 확인해보겠다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163216545.png?raw=tru" alt="image-20210323163216545" style="zoom:67%;" /></p>
+
+<h2 id="ablation-study">Ablation Study</h2>
+
+<p>본 section에서는 NMMP 모듈이 어떠한 영향을 끼치고 각 하이퍼 파라미터가 어떠한 영향을 끼치는지를 알아보겠다.</p>
+
+<p>NMMP 모듈은 Generator와 discriminator모두에 들어가 있는데 이 module을 제거하였을 경우 성능을 알아보았다(아래 dataset은 모두 사람만 있는 dataset이다).</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163328471.png?raw=tru" alt="image-20210323163328471" /></p>
+
+<p>다음은 node2edge와 edge2node로의 정보 교환의 횟수인 K값을 바꾸어 가며 실험을 하였다. 이 때 5로 하는 경우가 가장 좋았는데 이는 interaction의 횟수가 많을수록 모듈이 조밀한 상호 작용을 모델링하는데 더 많은 용량을 얻지만 iteration이 너무 많으면 actor embedding이 over smoothing되어 local information과 global information이 혼합되기 때문이라고 예측한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163501412.png?raw=tru" alt="image-20210323163501412" style="zoom:67%;" /></p>
+
+<p>다음은 본 논문의 base가 되는 SocialGAN과 비교해 보았다. 그 결과 보행자 수가 증가할 수록 Social GAN과의 격차가 커짐을 알 수 있었고 이는 정규화 비율의 증가 덕분이라고 예측한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210323163606811.png?raw=tru" alt="image-20210323163606811" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>본 논문에서는 교통 행위자 간의 상호 작용을 명시 적으로 모델링하는 새로운 모듈 인 NMMP를 제안하였고 Single motion prediction만 하였던 이전 연구들과 달리 pedestrian 및 joint pedestrian동작 예측을 위한 NMMP를 고안하였고 SOTA를 찍었다.</p>
+
+  
+</article>
+
+
+<hr class="dingbat related" />
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/post_images/MyungHak_profile.jpg"
+    srcset="/assets/post_images/MyungHak_profile.jpg 1x,/assets/post_images/MyungHak_profile.jpg 2x"
+    
+  
+  alt="<MyungHak> <Lee>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>본 블로그는 연구노트의 목적을 가지고 작성되었습니다.</strong>
+[]</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/myunghakLee" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+    
+
+
+  
+
+  
+    
+
+
+  <aside class="other-projects related mb0" role="complementary">  <h2>Related Posts</h2>  <div class="columns">          <div class="column column-1-2">                  <article class="project-card">  <a href="/blog/etc/2021-11-12-sample_etc/" class="no-hover no-print-link flip-project" tabindex="-1">    <div class="project-card-img aspect-ratio sixteen-nine flip-project-img">          </div>  </a>  <h3 class="project-card-title flip-project-title">    <a href="/blog/etc/2021-11-12-sample_etc/" class="flip-title">sample_torch</a>  </h3>      <a class="fill-card no-hover" href="/blog/etc/2021-11-12-sample_etc/" tabindex="-1"><span class="sr-only">Continue reading sample_torch</span></a></article>              </div>          <div class="column column-1-2">                  <article class="project-card">  <a href="/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" class="no-hover no-print-link flip-project" tabindex="-1">    <div class="project-card-img aspect-ratio sixteen-nine flip-project-img">          </div>  </a>  <h3 class="project-card-title flip-project-title">    <a href="/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" class="flip-title">Abstract</a>  </h3>      <a class="fill-card no-hover" href="/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" tabindex="-1"><span class="sr-only">Continue reading Abstract</span></a></article>              </div>      </div></aside>
+
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Random Posts</h2>  <ul class="related-posts">          <li class="h4">  <a href="/blog/pytorch/2021-01-28-sample_pytorch/" class="flip-title"><span>sample_torch</span></a>  <time class="faded fine" datetime="2021-01-28T00:00:00+09:00">28 Jan 2021</time></li>          <li class="h4">  <a href="/blog/etc/2021-11-12-sample_etc/" class="flip-title"><span>sample_torch</span></a>  <time class="faded fine" datetime="2021-11-12T00:00:00+09:00">12 Nov 2021</time></li>          <li class="h4">  <a href="/blog/paper/2020-01-01-Image-to-Image-Translation-for-Domain-Adaptation/" class="flip-title"><span>[논문(번역)/Domain Adaptation] Image to Image Translation for Domain Adaptation</span></a>  <time class="faded fine" datetime="2020-01-01T00:00:00+09:00">01 Jan 2020</time></li>      </ul></aside>
+
+  
+
+  
+    
+
+  
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© All rights reserved by MyungHak Lee.
+</small></p>
+  
+  
+  
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(60,160,170);background-image:url(/assets/img/sidebar-bg.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/logo.png" class="avatar" alt="MyungHak" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">MyungHak</h2></a>
+    
+    
+      <p class="">
+        Lee
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/artificial-intelligence/"
+          class="sidebar-nav-item "
+          
+        >
+          Artificial Intelligence
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/paper/"
+          class="sidebar-nav-item "
+          
+        >
+          Paper
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/pytorch/"
+          class="sidebar-nav-item "
+          
+        >
+          Pytorch
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/algorithm/"
+          class="sidebar-nav-item "
+          
+        >
+          Algorithm
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/statistics/"
+          class="sidebar-nav-item "
+          
+        >
+          Statistics
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/etc/"
+          class="sidebar-nav-item "
+          
+        >
+          Etc
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/myunghakLee" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var e=document.createElement("script");if(!("noModule"in e)&&"onbeforeload"in e){var t=!1;document.addEventListener("beforeload",function(n){if(n.target===e)t=!0;else if(!n.target.hasAttribute("nomodule")||!t)return;n.preventDefault()},!0),e.type="module",e.src=".",document.head.appendChild(e),e.remove()}}();
+</script>
+  <script src="/assets/js/hydejack-9.0.5.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.0.5.js" nomodule defer></script>
+  
+
+  
+  <script>!function(w, d) {
+    w.ga=w.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+    /**/
+      ga('create', 'G-W5K9KGXEB5', 'auto');
+    /**/
+
+    var pushStateEl = d.getElementById('_pushState');
+    var timeoutId;
+    pushStateEl.addEventListener('hy-push-state-load', function() {
+      w.clearTimeout(timeoutId);
+      timeoutId = w.setTimeout(function() {
+        ga('set', 'page', w.location.pathname);
+        ga('send', 'pageview');
+      }, 500);
+    });
+
+    d.addEventListener('hy--cookies-ok', function () {
+      w.ga(function(tracker) {
+        w.ga("set", "anonymizeIp", undefined);
+        localStorage && localStorage.setItem("ga--client-id", tracker.get("clientId"));
+      });
+    });
+
+    w.loadJSDeferred('https://www.google-analytics.com/analytics.js');
+  }(window, document);</script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5K9KGXEB5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-W5K9KGXEB5');
+  </script>
+
+
+
+  <script type="module">
+    if ('serviceWorker' in navigator) {
+      /**/
+      navigator.serviceWorker.getRegistration()
+        .then(r => r.unregister())
+        .catch(() => {});
+      /**/
+    }
+  </script>
+<!--<![endif]-->
+  
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_forward-template">
+  <button id="_forward" class="forward nav-btn no-hover">
+    <span class="sr-only">Forward</span>
+    <span class="icon-arrow-right2"></span>
+  </button>
+</template>
+
+  <template id="_back-template">
+  <button id="_back" class="back nav-btn no-hover">
+    <span class="sr-only">Back</span>
+    <span class="icon-arrow-left2"></span>
+  </button>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+  
+  
+    <template id="_dark-mode-template">
+  <button id="_dark-mode" class="nav-btn no-hover" >
+    <span class="sr-only">Dark Mode</span>
+    <span class="icon-brightness-contrast"></span>
+  </button>
+</template>
+
+  
+  
+    <template id="_search-template">
+  <button id="_search" class="nav-btn no-hover">
+    <label class="sr-only" for="_search-input">Search</label>
+    <span class="icon-search"></span>
+  </button>
+  <div id="_search-box">
+    <div class="nav-btn">
+      <span class="icon-search"></span>
+    </div>
+    <input 
+      id="_search-input"
+      type="search"
+      class="form-control form-control-lg nav-btn"
+      placeholder="SEARCH NOT ENABLED DURING DEVELOPMENT"
+    />
+    <button type="reset" class="nav-btn no-hover">
+      <span class="sr-only">Close</span>
+      <span class="icon-cross"></span>
+    </button>
+  </div>
+  <div id="_hits"></div>
+</template>
+
+  
+</div>
+
+</body>
+</html>

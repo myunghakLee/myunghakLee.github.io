@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en"><!--
+ __  __                __                                     __
+/\ \/\ \              /\ \             __                    /\ \
+\ \ \_\ \   __  __    \_\ \      __   /\_\      __       ___ \ \ \/'\
+ \ \  _  \ /\ \/\ \   /'_` \   /'__`\ \/\ \   /'__`\    /'___\\ \ , <
+  \ \ \ \ \\ \ \_\ \ /\ \L\ \ /\  __/  \ \ \ /\ \L\.\_ /\ \__/ \ \ \\`\
+   \ \_\ \_\\/`____ \\ \___,_\\ \____\ _\ \ \\ \__/.\_\\ \____\ \ \_\ \_\
+    \/_/\/_/ `/___/> \\/__,_ / \/____//\ \_\ \\/__/\/_/ \/____/  \/_/\/_/
+                /\___/                \ \____/
+                \/__/                  \/___/
+
+Powered by Hydejack v9.0.5 <https://hydejack.com/>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Abstract | MyungHak</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Abstract" />
+<meta name="author" content="<MyungHak> <Lee>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="본 논문에서는 actor-actor, actor-lane, lane-actor, lane-lane의 복잡한 interaction을 포착하는 방법을 제시한다. LaneGCN과 actor-map interaction으로 구동 되며 이는 정확하고 사실적인 multi-modal trajectory prediction이 가능하게 해준다." />
+<meta property="og:description" content="본 논문에서는 actor-actor, actor-lane, lane-actor, lane-lane의 복잡한 interaction을 포착하는 방법을 제시한다. LaneGCN과 actor-map interaction으로 구동 되며 이는 정확하고 사실적인 multi-modal trajectory prediction이 가능하게 해준다." />
+<link rel="canonical" href="http://localhost:4000/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" />
+<meta property="og:url" content="http://localhost:4000/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/" />
+<meta property="og:site_name" content="MyungHak" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-06T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Abstract" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/paper/2021-04-06-Learning-Lane-Graph-Representations-for-Motion-Forecasting/"},"dateModified":"2021-04-06T00:00:00+09:00","datePublished":"2021-04-06T00:00:00+09:00","author":{"@type":"Person","name":"<MyungHak> <Lee>"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"<MyungHak> <Lee>"},"headline":"Abstract","description":"본 논문에서는 actor-actor, actor-lane, lane-actor, lane-lane의 복잡한 interaction을 포착하는 방법을 제시한다. LaneGCN과 actor-map interaction으로 구동 되며 이는 정확하고 사실적인 multi-modal trajectory prediction이 가능하게 해준다.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyungHak">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="MyungHak">
+
+
+  <meta name="theme-color" content="rgb(60,160,170)">
+
+
+<meta name="generator" content="Hydejack v9.0.5" />
+
+
+<link rel="alternate" href="http://localhost:4000/blog/paper/2020-01-01-Fast-and-Furious/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MyungHak" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+<link rel="dns-prefetch" href="/assets/js/search-worker-9.0.5.js" as="worker" id="_hrefSearch">
+
+
+
+
+
+<script>!function(e,t){"use strict";function n(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}e.loadJS=function(e,o){var r=t.createElement("script");r.src=e,o&&n(r,"load",o,{once:!0});var a=t.scripts[0];return a.parentNode.insertBefore(r,a),r},e._loaded=!1,e.loadJSDeferred=function(o,r){function a(){e._loaded=!0,r&&n(c,"load",r,{once:!0});var o=t.scripts[0];o.parentNode.insertBefore(c,o)}var c=t.createElement("script");return c.src=o,e._loaded?a():n(e,"load",a,{once:!0}),c},e.setRel=e.setRelStylesheet=function(e){function o(){this.rel="stylesheet"}n(t.getElementById(e),"load",o,{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = false;
+  w._noNavbar = false;
+  w._noToc = false;
+  w._noSearch = false;
+}(window);
+</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.0.5.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(45,145,150);--accent-color-faded: rgba(45,145,150,0.5);--accent-color-darkened: #247579;--theme-color: rgb(60,160,170);--dark-mode-body-bg: #283031;--dark-mode-border-color: #343e3f}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+
+
+
+</head>
+
+<body class="no-break-layout">
+  
+<script>
+  window._sunrise = 6;
+  window._sunset =  18;
+  !function(e,s){var a="light-mode",d="dark-mode",o=(new Date).getHours();if(!("matchMedia"in e&&e.matchMedia("(prefers-color-scheme)"))){var i=o<=e._sunrise||o>=e._sunset?d:a,t=i===d?a:d;s.body.classList.add(i),s.body.classList.remove(t)}}(window,document);
+
+</script>
+
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-post"
+  role="main"
+>
+  
+
+
+
+
+
+<article id="post-blog-paper-Learning Lane Graph Representations for Motion Forecasting" class="page post mb6" role="article">
+  <header>
+    <h1 class="post-title flip-project-title">
+      
+        Abstract
+      
+    </h1>
+
+    <div class="post-date">
+      
+        
+        <time datetime="2021-04-06T00:00:00+09:00">06 Apr 2021</time>
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+in <a href="/paper/" class="flip-title">Paper</a>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+
+    
+
+
+
+  <div class="hr pb0"></div>
+
+
+  </header>
+
+  
+    <p>본 논문에서는 actor-actor, actor-lane, lane-actor, lane-lane의 복잡한 interaction을 포착하는 방법을 제시한다. LaneGCN과 actor-map interaction으로 구동 되며 이는 정확하고 사실적인 multi-modal trajectory prediction이 가능하게 해준다.</p>
+
+<h3 id="1-introduction">1. Introduction</h3>
+
+<p>Actor의 움직임은 대부분 차선에 종속적이다. 따라서 차선 정보를 신경망의 입력으로 넣어 주는 것이 유리하다. 최근 신경망에서는 지도 정보를 rasterize하여 집어넣는 시도가 있었다. 그러나 이러한 방법은 다음과 같은 단점이 있다.</p>
+
+<ol>
+  <li>
+    <p>정보의 손실을 피할 수 없다</p>
+  </li>
+  <li>
+    <p>지도는 복잡한 topology의 그래프로 구성되어 있는데 여기에 2D convolution을 적용하는 것은 비 효율적이다(보통 차선의 경우 긴 범위를 갖는데 이를 모두 포착하려면 너무 큰 receptive field가 필요하다).</p>
+  </li>
+  <li>
+    <p>차선의 경우 거리는 가깝더라도 동일한 방향의 차선과 반대편의 차선은 전혀 다른 의미를 가지고 있다.</p>
+  </li>
+</ol>
+
+<p>따라서 본 논문은 다음과 같은 방법을 제시한다.</p>
+
+<ol>
+  <li>
+    <p>Rasterization 대신 vectorized map으로부터 lane graph를 구성하여 정보 손실을 피한다. 그리고 여기에 lane graph의 복잡한 topology와 long range dependencies를 효과적으로 포착하는 LaneGCN(Lane Graph Convolution Network)을 적용한다.</p>
+  </li>
+  <li>
+    <p>Actor와 lane을 모두 node로 표기한다. 그 후 Lane과 actor에서 각각 feature를 뽑기 위하여 1D CNN과 LaneGCN을 이용한다. 그 후 spatial attention과 다른 LaneGCN을 활용하여 4가지 유형의 상호작용을 모델링한다(actor-to-lane, lane-to-lane, lane-to-actor and actor-to-actor).</p>
+  </li>
+  <li>
+    <p>이와 같은 방법으로 Argoverse dataset에서 SOTA를 찍었다.</p>
+  </li>
+</ol>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406121128163.png?raw=tru?raw=tru" alt="image-20210406121128163" /></p>
+
+<h3 id="2related-work">2.Related Work</h3>
+
+<p>본 논문의 Map representation은 VectorNet과 유사하나 VectorNet은 lane을 node로 본 반면 본 논문은 lane segment를 node로 보았다. 즉 resolution이 조금 더 높다. 또한 본 논문은 GCN에서 영감을 얻어 lane graph용으로 설계된 특화된 버전인 LaneGCN을 제안한다. 또한 모델에 lane-graph의 복잡한 topology와 long-range dependencies를 포착하는데 효과적인 multi scale dilated convolution을 사용하였다.</p>
+
+<h3 id="3lane-graph-representations-for-motion-forecasting">3.Lane Graph Representations for Motion Forecasting</h3>
+
+<p>이번 장에서는 traffic actor와 HD map의 fusion에 대하여 설명하겠다. 본 논문에서는 다음 4가지 module을 사용하였다.</p>
+
+<ol>
+  <li>
+    <p><strong>ActorNet</strong>: Actor의 past trajectory를 input으로 받아와 1D convolution으로 feature를 추출한다.</p>
+  </li>
+  <li>
+    <p><strong>MapNet</strong>: HD map으로부터 lane graph를 구성하고 LaneGCN을 이용하여 lane node feature를 뽑는다.</p>
+  </li>
+  <li>
+    <p><strong>FusionNet</strong>: 4개의 interaction block으로 구성되어 있다(lane to lane block에는 another LaneGCN을 이용하는 반면 다른 block에는 spatial attention layer를 사용한다).</p>
+
+    <p>​	A.   Actor to lane block: actor node에서 lane node로 실시간 교통 정보를 fusion</p>
+
+    <p>​	B.   Lane to lane block: lane graph를 통해 정보를 전파, lane feature를 update</p>
+
+    <p>​	C.   Lane to actor block: lane node에서 actor node로 update된 정보 전파</p>
+
+    <p>​	D.   Actor to actor block은 actor간의 상호작용을 수행</p>
+  </li>
+  <li>
+    <p><strong>Prediction</strong> <strong>Header</strong>: fusion 후 actor feature를 사용하여 multi modal trajectory를 생성</p>
+  </li>
+</ol>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406121426808.png?raw=tru?raw=tru" alt="image-20210406121426808" /></p>
+
+<h4 id="31-actornet-extracting-traffic-participant-representations">3.1 ActorNet: Extracting Traffic Participant Representations</h4>
+
+<p>각 trajectory는 각 sequence의 변위로 나타낸다. ∆p~t~는 time step t-1에서 t까지의 변위이다. 그리고 T는 trajectory의 크기이다. 만약 trajectory가 T보다 작으면 0으로 padding해준다. 그리고 각 step이 padding된 것인지 아닌지를 나타내는 1*T크기의 binary mask를 추가해준다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406121558183.png?raw=tru?raw=tru" alt="image-20210406121558183" /></p>
+
+<p>CNN과 RNN 모두 temporal data에 사용된다. 그러나 본 논문은 1D CNN을 사용하였다. Actor Net의 output은 temporal feature map이고 t=0은 actor feature로 사용된다. 본 논문의 network는 1D convolution의 3 group/scale을 가진다. 각 group은 첫 번째 block의 stride를 2로 하는 2개의 residual block으로 구성된다. 그 후 FPN(Feature Pyramid Network)를 사용하여 multi-scale feature를 fusion하고 또 다른 residual block을 적용하여 output을 얻어낸다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406160249565.png?raw=tru?raw=tru" alt="image-20210406160249565" style="zoom:50%;" /></p>
+
+<h4 id="32-mapnet-extracting-structure-map-representation"><strong>3.2 MapNet: Extracting Structure Map Representation</strong></h4>
+
+<p>앞서 설명했던 대로 Map을 rasterize해서 집어넣으면 문제가 발생한다. 따라서 본 논문에서는 graph를 이용하였다.</p>
+
+<p><strong>Map Data</strong>: map data를 set of lanes and their connectivity로 나타냈다. 바로 붙어있는(반대편 차선등은 제외) 2 lane은 4가지 type이 있다(predecessor, successor, left neighbor, right neighbor).</p>
+
+<p><strong>Lane Graph Construction</strong>:본 논문에서는 lane node를 centerline의 두 연속된 점(그림 3의 회색 원)에 의해 형성된 직선 segment로 정의한다. Lane node의 위치는 두 끝점의 평균 좌표이다. 위에서 설명했듯 Lane centerline간의 연결에 따라 lane node는 총 4가지로 나뉜다. 본 논문에서는 lane node를 V ∈ R^N×2^로 표시한다. 여기서 N은 lane node의 수이다. 또한 A~i~ ∈ R^N×N^는 4 개의 인접 행렬 {A~i~}~i∈{pre,suc,left,right}~와의 연결성을 나타낸다. 즉 노드 k가 노드 j의 i형 이웃이면 A~i,j,k~ = 1이다. 즉 “node k는 i-type을 갖고 j의 이웃이다”라는 의미이다. 이러한 전제 하에서 만일 A가 B의 Successor라면 A에서 B로의 접근은 가능하나 B에서 A로의 접근은 불가능하다. 그러나 만약 둘의 관계가 neighbor라면 양쪽모두에서 접근이 가능하다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406160525989.png?raw=tru?raw=tru" alt="image-20210406160525989" style="zoom:40%;" /></p>
+
+<p><strong>LaneConv Operator</strong>:</p>
+
+<p>보통 graph convolution의 경우 Y = LXW이다. 여기서 X ∈ R^N×F^는 node feature이고 W ∈ R^F×O^는 weight matrix, Y ∈ R^N×O^는 output이며 L ∈ R^N×N^은 Laplacian matrix이며 다음 식으로 얻어진다.</p>
+
+<ol>
+  <li>
+    <p>어떤 node feature가 lane graph의 정보를 보존시킬지 명확치 않음</p>
+  </li>
+  <li>
+    <p>Single graph Laplacian은 connection type을 포착할 수 없다. 즉 차선의 방향 정보를 잃는다.</p>
+  </li>
+  <li>
+    <p>이러한 형태의 graph convolution은 long range dependencies(dilated convolution같은)를 처리하는 것이 어렵다.</p>
+  </li>
+</ol>
+
+<p>따라서 본 논문은 위의 단점을 해결한 LaneConv라는 새로운 연산자를 소개한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406161306592.png?raw=tru?raw=tru" alt="image-20210406161306592" style="zoom:35%;" /></p>
+
+<p>여기서 I는 Self-connection을 그리고 A는 different node와의 connection을 뜻한다. 그리고 D는 output을 normalize하는 역할이다. 그러나이러한 vanilla graph convolution은 motion prediciton에서는 비 효율적이다. 왜냐하면 lane graph의 information이 보존된다는 보장도 없으며 connection type 역시 포착하지 못한다. 그리고 long range dependency 역시 포착하지 못한다. 따라서 본 논문은 LaneConv를 제시한다.</p>
+
+<p><em>Node feature</em>: 본 논문에서는 lane node의 information을 enccoding하기 위하여 lane의 모양(크기 및 방향)과 위치모두를 고려하였다.  v~i~는 lane의 중심 좌표이고 v~i~^end^및 v~i~^start^는 마지막 및 처음 좌표이다. 그리고 이렇게 encoding된 x~i~를 row로 하는 matrix가 X이다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406161435791.png?raw=tru?raw=tru" alt="image-20210406161435791" /></p>
+
+<p><em>LaneConv</em>: node feature는 오직 local informatio만 포착한다. 따라서 이를 aggregate해주기 위하여 다음과 같은 LaneConv식을 이용하였다.아래 식에서 A~i~와 W~i~는 adjacency와 weight matrix이다. 그리고 이때 A~suc~와 A~pre~는 단위 행렬을 오른쪽 위(non-zero superdiagonal)와 왼쪽 아래(non-zero subdiagonal)로 한칸 이동하여 얻은 행렬이다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406161543606.png?raw=tru?raw=tru" alt="image-20210406161543606" style="zoom:100%;" /></p>
+
+<p><em>Dilated LaneConv</em>: actor의 속력이 빠른 경우 모델은 long range dependency를 포착할 필요가 있다. 보통의 grid graph의 경우 dilated convolution operator가 효율적으로 long range dependency를 포착할 수 있다. 여기에서 영감을 받아 본 논문에서는 dilated LaneConv operator를 제안한다.아래 식에서 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1617695386558.png?raw=tru?raw=tru" alt="img" />는 A~pre~의 k제곱이다. 이는 information을 k-step으로 propagate 가능하게 해준다. 이 때 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/1617697074_6849957/clip_image004.png?raw=tru?raw=tru" alt="img" />는 굉장히 sparse하기 때문에 sparse matrix multiplication으로 효율적인 계산이 가능하다. 또한 extended LaneConv operator는 predecessor및 successor에서만 사용한다(long range dependency는 차선 방향을 따르기 때문).</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1617695386557.png?raw=tru?raw=tru" alt="img" /></p>
+
+<p><strong>LaneGCN</strong>: 본 논문에서는 multi-scale LaneConv operator를 사용하여 LaneGCN을 구축한다. 2번식과 3번식을 사용하여 C dilation size를 가진 multi-scale LaneConv operator를 얻는다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165047618.png?raw=tru?raw=tru" alt="image-20210406165047618" /></p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165110245.png?raw=tru?raw=tru" alt="image-20210406165110245" /></p>
+
+<h4 id="33-fusionnet">3.3 FusionNet</h4>
+
+<p>본 section에서는 ActorNet과 MapNet으로부터 얻어진 actor와 lane node의 정보를 fuse할 것이다. 이전 연구들이 Actor간의 interaction은 포착을 하였지만 Actor와 map사이의 종속성은 제대로 파악하지 못하였다. 하지만 본 논문은 이를 가능하도록 하였다.</p>
+
+<p>본 논문에서는 4개의 Fusion module이 있다.</p>
+
+<ol>
+  <li>
+    <p>A2L(actors to lanes): real-time traffic information to lane nodes(blockage or lane의 사용중 여부)</p>
+  </li>
+  <li>
+    <p>L2L(lanes to lanes): lane graph를 이용하여 traffic information을 propagate하여 lane node feature를 update한다.</p>
+  </li>
+  <li>
+    <p>L2A(lanes to actors): update된 map feature를 fuse하여 actor로 보냄</p>
+  </li>
+  <li>
+    <p>A2A(actors to actors): motion forecasting을 위한 prediction header를 생성하는데 사용되는 Actor가 interaction을 처리하고 output actor feature를 생성.</p>
+  </li>
+</ol>
+
+<p>L2L은 MapNet에서 사용된 것과 동일한 architecture를 가진 다른 LaneGCN을 사용하여 구현된다. 그리고 A2L, L2A, A2A에 대하여 special attention layer를 사용한다. Attention layer는 3모듈에 동일한 방식으로 적용된다. 예를 들어 A2L은 actor node i가 주어지면 다음과 같이 context lane-node j에서 feature를 aggregate한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165301740.png?raw=tru?raw=tru" alt="image-20210406165301740" /></p>
+
+<p>위 식에서 x~i~는 i번째 node feature이고 φ는 layer normalization과 ReLU이다. 그리고 ∆~i,j~는 MLP(v~j~-v~i~)이고 여기서 v는 node location이다. 또한 context node는 actor node i의 L2 distance가 특정 threshold보다 작은 것들이다(본 논문에서는 A2L, L2A, A2A에 각각 7,6,100 미터를 사용). 그리고 A2L, L2A, A2A는 모두 attention layer와 linear layer 및 residual connection으로 구성된 2 residual block으로 구성된다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165512827.png?raw=tru?raw=tru" alt="image-20210406165512827" style="zoom:60%;" /></p>
+
+<h4 id="34-prediction-header">3.4 Prediction Header</h4>
+
+<p>After fusion actor feature를 입력으로 사용하여 multi modal prediction header가 최종 motion prediction을 출력한다. 각 actor에 대하여 K개의 future trajectory와 confidence score를 예측한다. header에는 각 mode의 trajectory를 예측하는 regression branch와 각 mode의 confidence를 예측하는 classification branch가 있다. m번째 actor의 경우 regression branch에 residual block과 linear layer를 적용하여 BEV coordinate의 K sequence를 regress한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165717224.png?raw=tru?raw=tru" alt="image-20210406165717224" /></p>
+
+<p>위 식에서 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image002-1617695846222.png?raw=tru?raw=tru" alt="img" />는 m번째 actor의 k-th mode BEV 좌표이다. Classification branch에서는 K distance embedding을 위하여 <img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/clip_image004-1617695846223.png?raw=tru?raw=tru" alt="img" />에 MLP를 적용한다. 그 후 각각의 distance embedding을 actor feature와 concatenate하고 residual block과 linear layer를 적용하여 K confidence score를 출력한다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165746107.png?raw=tru?raw=tru" alt="image-20210406165746107" /></p>
+
+<h4 id="summary">Summary</h4>
+
+<p>지금까지의 것들을 다 합치면 다음과 같다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406165855896.png?raw=tru?raw=tru" alt="image-20210406165855896" /></p>
+
+<h3 id="experimental-evaluation"><strong>Experimental Evaluation</strong></h3>
+
+<p>본 논문은 <a href="https://www.argoverse.org/">Argoverse Dataset</a>에 대한 평가지표를 구하였고 SOTA를 찍었다(그러나 2021년 4월 기준 밀려남).</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170022574.png?raw=tru?raw=tru" alt="image-20210406170022574" /></p>
+
+<p><strong>Importance of each module</strong>: 아래 표에서는 ActorNet에 여러 모듈들을 추가해가며 실험을 한 결과이다. 그 결과 본 논문에서는 다음과 같은 결과를 도출해 냈다.</p>
+
+<ol>
+  <li>
+    <p>모든 모듈이 성능향상에 기여하였다.</p>
+  </li>
+  <li>
+    <p>actor에서 map으로의 정보 전달이 효율적인 motion forecasting preformance에 큰 영향을 주는 traffic information을 가져오는데 도움이 됐다.</p>
+  </li>
+  <li>
+    <p>ActorNet에 A2A만 추가하는 것에 비하여 L2A, A2L, L2L을 모두 추가하는 것이 더 좋은 결과가 나오는 것을 보아 L2A, A2L, L2L모두 각 factor간의 interaction을 용이하게 하는데 이용될 수 있는 것을 알 수 있다.</p>
+  </li>
+</ol>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170232676.png?raw=tru?raw=tru" alt="image-20210406170232676" /></p>
+
+<p><strong>Lane Graph Operators</strong>: 아래 표는 vanilla graph convolution에 각각의 component를 추가함에 따라 얻는 효과에 대한 실험결과이다. 아래 표에서 보면 모든 component가 성능을 굉장히 향상 시키는것을 볼 수 있다. 특히 residual block은 단 7%의 파라미터 추가만으로 굉장히 큰 성능 향상을 가져왔다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170343163.png?raw=tru?raw=tru" alt="image-20210406170343163" /></p>
+
+<p><strong>Qualitative Results</strong>: 아래 그림에서는 여러 상황에서 본 논문의 모델과 다른 모델의 차이를 보여준다.</p>
+
+<p>첫번째 행에서는 우회전하는 시나리오이다. 다른 방법들은 우회전을 제대로 포착하지 못하였으나 본 논문의 모델은 가능했다.</p>
+
+<p>두번째 행은 agent가 비보호 좌회전을 위해 대기중인 경우이다. 이는 history가 부족하여 지도 정보를 포착하는 것이 필수적이다. 따라서 다른 모델들은 제대로 된 예측을 하지 못하였고 본 논문의 모델은 성공적인 예측을 보였다.</p>
+
+<p>세번째 행은 자동차가 감속하여 교차로에 정지하는 경우이다. 이 경우 본 논문의 모델이 다른 모델에 비하여 더 많은 감속 mode를 생성하였다.</p>
+
+<p>네번째 행은 급격한 가속을 한 경우인데 이 경우 어떠한 모델도 제대로 포착을 하지 못하였다. 이는 예측을 하기위한 충분한 정보가 없기 때문일 가능성이 크다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170451581.png?raw=tru?raw=tru" alt="image-20210406170451581" /></p>
+
+<h3 id="5-conclusion"><strong>5. Conclusion</strong></h3>
+
+<p>본 논문에서는 lane graph representation을 학습하고 완전한 actor-map interaction을 수행하기 위한 prediction model을 제안한다. 특히 map을 집어넣을 때 rasterize하지 않고 vector로 바꾸어 lane graph를 구성하고 LaneGCN을 이용하여 topology feature를 추출한다. 또한 spatial attention과 LaneGCN을 이용하여 actor와 lane의 정보를 fuse하여 대규모 Argoverse dataset으로 실험을 진행하였고 SOTA를 찍었다.</p>
+
+<h3 id="appendix"><strong>Appendix</strong></h3>
+
+<p>다음은 모델의 세부 architecture이다. 본 모델은 4개의 모듈로 구성되어 있다.</p>
+
+<p>ActorNet은 1D CNN으로 시간적 feature를 추출하고 multi scale feature를 FPN과 병합한다. MapNet은 LGC(Lane Graph Network)으로 lane topology를 추출한다. LGN은 4개의 multi-scale LaneConv residual block이다. Actor-map fusion cycle은 A2L, L2L, L2A, A2A로 이루어진 fusion network stack이다. A2L, L2A, A2A는 2개의 attention residual block의 stack이며 L2L은 또다른 LGN이다. 마지막으로 update된 actor feature는 multi-mode trajectory 및 confidence score를 생성하기 위해 prediction header에서 사용된다.</p>
+
+<p><img src="https://github.com/myunghakLee/GIT_BLOG_IMAGE/blob/master/image-20210406170650334.png?raw=tru?raw=tru" alt="image-20210406170650334" /></p>
+
+  
+</article>
+
+
+<hr class="dingbat related" />
+
+
+
+
+  
+     
+
+
+  <aside class="about related mt4 mb4" role="complementary">
+    
+    
+
+<div class="author mt4">
+  
+
+  
+    
+
+
+<img
+  
+    src="/assets/post_images/MyungHak_profile.jpg"
+    srcset="/assets/post_images/MyungHak_profile.jpg 1x,/assets/post_images/MyungHak_profile.jpg 2x"
+    
+  
+  alt="<MyungHak> <Lee>"
+  class="avatar"
+  
+  width="120"
+  height="120"
+  loading="lazy"
+/>
+
+  
+
+  
+  
+  <h2  class="page-title hr-bottom">
+    About
+  </h2>
+
+  <p><strong>본 블로그는 연구노트의 목적을 가지고 작성되었습니다.</strong>
+[]</p>
+
+
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/myunghakLee" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+
+  </aside>
+
+
+  
+
+  
+    
+
+
+  
+
+  
+    
+
+
+  <aside class="other-projects related mb0" role="complementary">  <h2>Related Posts</h2>  <div class="columns">          <div class="column column-1-2">                  <article class="project-card">  <a href="/blog/etc/2021-11-12-sample_etc/" class="no-hover no-print-link flip-project" tabindex="-1">    <div class="project-card-img aspect-ratio sixteen-nine flip-project-img">          </div>  </a>  <h3 class="project-card-title flip-project-title">    <a href="/blog/etc/2021-11-12-sample_etc/" class="flip-title">sample_torch</a>  </h3>      <a class="fill-card no-hover" href="/blog/etc/2021-11-12-sample_etc/" tabindex="-1"><span class="sr-only">Continue reading sample_torch</span></a></article>              </div>          <div class="column column-1-2">                  <article class="project-card">  <a href="/blog/paper/2021-03-25-PyIF/" class="no-hover no-print-link flip-project" tabindex="-1">    <div class="project-card-img aspect-ratio sixteen-nine flip-project-img">          </div>  </a>  <h3 class="project-card-title flip-project-title">    <a href="/blog/paper/2021-03-25-PyIF/" class="flip-title">PyIF: A Fast and Light Weight Implementation to Estimate Bivariate Transfer Entropy for Big Data</a>  </h3>      <a class="fill-card no-hover" href="/blog/paper/2021-03-25-PyIF/" tabindex="-1"><span class="sr-only">Continue reading PyIF: A Fast and Light Weight Implementation to Estimate Bivariate Transfer Entropy for Big Data</span></a></article>              </div>      </div></aside>
+
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Random Posts</h2>  <ul class="related-posts">          <li class="h4">  <a href="/blog/statistics/2021-03-09-KL-Divergence/" class="flip-title"><span>[Information Theory] KL Divergence</span></a>  <time class="faded fine" datetime="2021-03-09T00:00:00+09:00">09 Mar 2021</time></li>          <li class="h4">  <a href="/blog/paper/2020-01-01-GIoU/" class="flip-title"><span>[논문(정리)/loss]Generalized Intersection over Union: A Metric and A Loss for Bounding Box Regression</span></a>  <time class="faded fine" datetime="2020-01-01T00:00:00+09:00">01 Jan 2020</time></li>          <li class="h4">  <a href="/blog/paper/2020-01-01-Image-to-Image-Translation-for-Domain-Adaptation/" class="flip-title"><span>[논문(번역)/Domain Adaptation] Image to Image Translation for Domain Adaptation</span></a>  <time class="faded fine" datetime="2020-01-01T00:00:00+09:00">01 Jan 2020</time></li>      </ul></aside>
+
+  
+
+  
+    
+
+  
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© All rights reserved by MyungHak Lee.
+</small></p>
+  
+  
+  
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(60,160,170);background-image:url(/assets/img/sidebar-bg.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/logo.png" class="avatar" alt="MyungHak" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">MyungHak</h2></a>
+    
+    
+      <p class="">
+        Lee
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/artificial-intelligence/"
+          class="sidebar-nav-item "
+          
+        >
+          Artificial Intelligence
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/paper/"
+          class="sidebar-nav-item "
+          
+        >
+          Paper
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/pytorch/"
+          class="sidebar-nav-item "
+          
+        >
+          Pytorch
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/algorithm/"
+          class="sidebar-nav-item "
+          
+        >
+          Algorithm
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/statistics/"
+          class="sidebar-nav-item "
+          
+        >
+          Statistics
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/etc/"
+          class="sidebar-nav-item "
+          
+        >
+          Etc
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/myunghakLee" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var e=document.createElement("script");if(!("noModule"in e)&&"onbeforeload"in e){var t=!1;document.addEventListener("beforeload",function(n){if(n.target===e)t=!0;else if(!n.target.hasAttribute("nomodule")||!t)return;n.preventDefault()},!0),e.type="module",e.src=".",document.head.appendChild(e),e.remove()}}();
+</script>
+  <script src="/assets/js/hydejack-9.0.5.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.0.5.js" nomodule defer></script>
+  
+
+  
+  <script>!function(w, d) {
+    w.ga=w.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+    /**/
+      ga('create', 'G-W5K9KGXEB5', 'auto');
+    /**/
+
+    var pushStateEl = d.getElementById('_pushState');
+    var timeoutId;
+    pushStateEl.addEventListener('hy-push-state-load', function() {
+      w.clearTimeout(timeoutId);
+      timeoutId = w.setTimeout(function() {
+        ga('set', 'page', w.location.pathname);
+        ga('send', 'pageview');
+      }, 500);
+    });
+
+    d.addEventListener('hy--cookies-ok', function () {
+      w.ga(function(tracker) {
+        w.ga("set", "anonymizeIp", undefined);
+        localStorage && localStorage.setItem("ga--client-id", tracker.get("clientId"));
+      });
+    });
+
+    w.loadJSDeferred('https://www.google-analytics.com/analytics.js');
+  }(window, document);</script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5K9KGXEB5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-W5K9KGXEB5');
+  </script>
+
+
+
+  <script type="module">
+    if ('serviceWorker' in navigator) {
+      /**/
+      navigator.serviceWorker.getRegistration()
+        .then(r => r.unregister())
+        .catch(() => {});
+      /**/
+    }
+  </script>
+<!--<![endif]-->
+  
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_forward-template">
+  <button id="_forward" class="forward nav-btn no-hover">
+    <span class="sr-only">Forward</span>
+    <span class="icon-arrow-right2"></span>
+  </button>
+</template>
+
+  <template id="_back-template">
+  <button id="_back" class="back nav-btn no-hover">
+    <span class="sr-only">Back</span>
+    <span class="icon-arrow-left2"></span>
+  </button>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+  
+  
+    <template id="_dark-mode-template">
+  <button id="_dark-mode" class="nav-btn no-hover" >
+    <span class="sr-only">Dark Mode</span>
+    <span class="icon-brightness-contrast"></span>
+  </button>
+</template>
+
+  
+  
+    <template id="_search-template">
+  <button id="_search" class="nav-btn no-hover">
+    <label class="sr-only" for="_search-input">Search</label>
+    <span class="icon-search"></span>
+  </button>
+  <div id="_search-box">
+    <div class="nav-btn">
+      <span class="icon-search"></span>
+    </div>
+    <input 
+      id="_search-input"
+      type="search"
+      class="form-control form-control-lg nav-btn"
+      placeholder="SEARCH NOT ENABLED DURING DEVELOPMENT"
+    />
+    <button type="reset" class="nav-btn no-hover">
+      <span class="sr-only">Close</span>
+      <span class="icon-cross"></span>
+    </button>
+  </div>
+  <div id="_hits"></div>
+</template>
+
+  
+</div>
+
+</body>
+</html>
