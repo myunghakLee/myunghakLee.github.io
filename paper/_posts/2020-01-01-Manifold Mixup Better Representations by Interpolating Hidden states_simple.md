@@ -6,16 +6,19 @@ description: >
 
 
 
-참조 링크
-
-https://arxiv.org/abs/1806.05236
-
-https://github.com/vikasverma1077/manifold_mixup
 
 
-Manifold Mixup전에 Mixup(https://arxiv.org/abs/1710.09412)부터 다루고 넘어가자.
+본 페이지는 Manifold Mixup 논문을 굉장히 간단히 요약한 것으로 자세한 상항을 보자면 [여기](https://myunghaklee.github.io/blog/paper/2020-01-01-Manifold-Mixup-Better-Representations-by-Interpolating-Hidden-states/)로 이동하자.
 
-에서 Mixup은 DataAugmentation의 방법중 하나이다. 원래라면 classification시 다음과 같이 예측하는것이 맞다.
+
+
+
+
+Manifold Mixup을 알려면 우선 [Mixup](https://arxiv.org/abs/1710.09412)부터 알아야 한다.
+
+Mixup은 DataAugmentation의 방법중 하나이다. 
+
+일반적인 classification은 다음과 같이 고양이는 고양이로, 강아지는 강아지로 예측한다.
 
 ![image](https://user-images.githubusercontent.com/12128784/106145317-bac0b400-61b8-11eb-9792-e631c289ff00.png)
 
@@ -48,3 +51,19 @@ Mixup은 input data를 mix했다면 Manifold Mixup은 Manifold 상에서 Mix를 
 ![image](https://user-images.githubusercontent.com/12128784/106146092-9e714700-61b9-11eb-91ae-52575f7b23d6.png)
 
 또한 이러한 정규화 뿐 아니라 Adversarial training의 효과도 갖는다.
+
+
+
+
+
+
+
+
+
+
+
+참조 링크
+
+https://arxiv.org/abs/1806.05236
+
+https://github.com/vikasverma1077/manifold_mixup
