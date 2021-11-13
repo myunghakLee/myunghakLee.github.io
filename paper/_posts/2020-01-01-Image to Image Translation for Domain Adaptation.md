@@ -122,7 +122,7 @@ Unsupervised domain adaptation을 위한 our proposed method는 위에서 언급
 
 이제 최종적으로 위의 5개의 loss를 합하여 general loss를 다음과 같이 정의한다.
 
-![image-20210128231449655](C:\Users\mh9716\AppData\Roaming\Typora\typora-user-images\image-20210128231449655.png)
+![image](https://user-images.githubusercontent.com/12128784/141647065-86d14480-c325-404b-9780-09871255ce8a.png)
 
  Domain adaptation을 위한 다양한 방법들(이전까지의)은 우리들의 framework의 포함됩니다. 표 1에는 이러한 다양한 방법들(이전까지의)을 recover하기 위해 포함해야 할 hyperparameters들이 요약되어 있다.
 
@@ -150,7 +150,7 @@ Unsupervised domain adaptation을 위한 our proposed method는 위에서 언급
 
 * Translation classification loss는 seconde encoder와 classifier(fy , h)로만 역전파 된다. 이는 translate된 image에서 class정보를 숨겨 gy의 부정행위를 막는다
 
-![image-20210128231720652](C:\Users\mh9716\AppData\Roaming\Typora\typora-user-images\image-20210128231720652.png)
+![image-20211113231404536](C:\Users\mh9716\AppData\Roaming\Typora\typora-user-images\image-20211113231404536.png)
 
 **Experiments – MNIST, USPS, SVHN**
 
