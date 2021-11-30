@@ -35,6 +35,8 @@ def getFile ():
 
             if "typora-user-images" in line:
                 file_name = line.split("\\")[-1][:-1]
+                while (file_name[-1] == ')'):
+                    file_name = file_name[:-1]                
                 print((link1 + file_name).replace("\\\\", "\\"))
                 shutil.copy2(link1 + file_name, "/gitpage/myunghakLee.github.io/blog_images/")
 
