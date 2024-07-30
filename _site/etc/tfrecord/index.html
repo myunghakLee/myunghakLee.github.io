@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>TFRecord 사용법 | MyungHak</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="TFRecord 사용법" />
+<meta name="author" content="<firstname> <lastname>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="TFRecord의 간단한 사용법에 대해 서술한 포스팅입니다." />
+<meta property="og:description" content="TFRecord의 간단한 사용법에 대해 서술한 포스팅입니다." />
+<link rel="canonical" href="http://localhost:4000/etc/tfrecord/" />
+<meta property="og:url" content="http://localhost:4000/etc/tfrecord/" />
+<meta property="og:site_name" content="MyungHak" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="TFRecord 사용법" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"<firstname> <lastname>"},"description":"TFRecord의 간단한 사용법에 대해 서술한 포스팅입니다.","headline":"TFRecord 사용법","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"<firstname> <lastname>"},"url":"http://localhost:4000/etc/tfrecord/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+    <meta name="keywords" content="Machine Learning">
+  
+
+
+
+  <meta name="theme-color" content="rgb(25,55,71)">
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyungHak">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="MyungHak">
+
+<meta name="generator" content="Hydejack v9.1.6" />
+
+
+<link rel="alternate" href="http://localhost:4000/etc/tfrecord/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MyungHak" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+<link rel="dns-prefetch" href="/assets/js/search-worker-9.1.6.js" as="worker" id="_hrefSearch">
+
+
+
+
+
+<script>!function(r,c){"use strict";function a(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}r.loadJS=function(e,t){var n=c.createElement("script"),e=(n.src=e,t&&a(n,"load",t,{once:!0}),c.scripts[0]);return e.parentNode.insertBefore(n,e),n},r._loaded=!1,r.loadJSDeferred=function(e,t){var n=c.createElement("script");function o(){r._loaded=!0,t&&a(n,"load",t,{once:!0});var e=c.scripts[0];e.parentNode.insertBefore(n,e)}return n.src=e,r._loaded?o():a(r,"load",o,{once:!0}),n},r.setRel=r.setRelStylesheet=function(e){a(c.getElementById(e),"load",function(){this.rel="stylesheet"},{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = false;
+  w._noNavbar = false;
+  w._noToc = false;
+  w._noSearch = false;
+  w._advertise = false;
+  w._search = {
+    DATA_URL: '/assets/sitedata.json?no-cache',
+    STORAGE_KEY: 'mini-search/',
+    INDEX_KEY: 'index--2024-07-30T18:01:21+09:00',
+  };
+  w._clapButton = true;
+}(window);</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.1.6.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);--accent-color-highlight: rgba(79,177,186,0.1);--accent-color-darkened: #409ba3;--theme-color: rgb(25,55,71);--dark-mode-body-bg: #2a2d2f;--dark-mode-border-color: #363a3d}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+
+
+
+</head>
+
+<body class="no-break-layout">
+  
+<script>
+  window._sunrise = 6;
+  window._sunset =  18;
+  !function(e,s){var d="light-mode",o="dark-mode",a=(new Date).getHours();"matchMedia"in e&&e.matchMedia("(prefers-color-scheme)")||(e=(a=a<=e._sunrise||a>=e._sunset?o:d)==o?d:o,s.body.classList.add(a),s.body.classList.remove(e))}(window,document);
+
+</script>
+
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-page"
+  role="main"
+>
+  <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+    <li><a href="/">home</a></li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/etc/">etc</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          <span>tfrecord</span>
+        
+      </li>
+    
+  
+</ul></nav>
+  <article class="page mb6" role="article">
+  <header>
+    <h1 class="page-title">TFRecord 사용법</h1>
+    
+
+
+
+  
+    <p class="note-sm" >
+      TFRecord의 간단한 사용법에 대해 서술한 포스팅입니다.
+
+    </p>
+  
+
+
+  </header>
+
+  <h2 id="tfrecord란">TFRecord란</h2>
+
+<p>TFRecord는 텐서 플로우에서 학습을 위한 데이터를 저장하는 포멧중 하나이다. TFRecord는 여러개의 파일들을 하나의 바이너리 포맷 파일로 저장한다. 이에 따라 학습시 데이터 데이터를 빠르게 읽어올 수 있게 된다.</p>
+
+<h2 id="tfrecord-파일-작성법">TFRecord 파일 작성법</h2>
+
+<p>한번 TFRecord파일을 작성해 보겠습니다.</p>
+
+<p>저는 Voc dataset으로 작성을 시도하였습니다.</p>
+
+<p>우선 필요한 라이브러리를 import 해옵니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+</code></pre></div></div>
+
+<p>그 후 VOC dataset의 레이블을 우선 dictionary형태로 저장해둡니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s">"person"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"car"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"bicycle"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"bus"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">"motorbike"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">"train"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">"aeroplane"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">"chair"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s">"bottle"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s">"diningtable"</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s">"pottedplant"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s">"tvmonitor"</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s">"sofa"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s">"bird"</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s">"cat"</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span> <span class="s">"cow"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s">"dog"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s">"horse"</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span> <span class="s">"sheep"</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s">"boat"</span><span class="p">:</span> <span class="mi">19</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>그다음 tfrecord의 data형식을 지정해줍니다.</p>
+
+<p>저는 VOC dataset중 bounding box, label, image의 3가지 데이터를 받아올 것입니다.</p>
+
+<p>bounding box는 float형식으로,  label은 int형식으로, 이미지는 byte형식으로 받아올것 입니다.</p>
+
+<p>따라서 아래와 같이 선언해줍니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">float_list_feature</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">float_list</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">FloatList</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+	
+<span class="k">def</span> <span class="nf">int64_list_feature</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">int64_list</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Int64List</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+	
+<span class="k">def</span> <span class="nf">bytes_feature</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">bytes_list</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">BytesList</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">value</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<p>이 때 저는 bounding box를 아래와 같이 (n,4) 형식으로 선언하지는 않았습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">],</span>
+ <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">],</span>
+ <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">],</span>
+  <span class="p">...</span>                    <span class="p">]</span>
+</code></pre></div></div>
+
+<p>대신 아래와 같이 (n*4) 형식으로 선언하였습니다</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="p">...]</span>
+</code></pre></div></div>
+
+<p>이제 전처리는 끝났습니다. 이제 데이터를 저장하면 됩니다. 이때 유의하실 tf.train.Example 부분입니다.</p>
+
+<p>내가 어떠한 데이터를 어떠한 이름으로, 그리고 어떠한 데이터 형식으로 저장해 놓았는지를 기억해 놓으셔야 나중에 불러오기 편하실겁니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">write_tfrecord</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">writer</span><span class="p">):</span>
+    <span class="n">xml_files</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">file_path</span> <span class="o">+</span> <span class="s">"/Annotations"</span> <span class="o">+</span> <span class="s">"/*.xml"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">xml_files</span><span class="p">:</span>
+        <span class="c1"># xml 파일로부터 데이터 불러오기
+</span>        <span class="n">tree</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">getroot</span><span class="p">()</span>
+
+        <span class="n">img_name</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">findtext</span><span class="p">(</span><span class="s">"filename"</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span> <span class="o">+</span> <span class="s">"JPEGImages/"</span> <span class="o">+</span> <span class="n">img_name</span><span class="p">,</span><span class="s">'rb'</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
+        
+        <span class="n">ob</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"object"</span><span class="p">)</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ob</span><span class="p">:</span>
+            <span class="n">bbox</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"bndbox"</span><span class="p">).</span><span class="n">findtext</span><span class="p">(</span><span class="s">"xmin"</span><span class="p">)))</span>
+            <span class="n">bbox</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"bndbox"</span><span class="p">).</span><span class="n">findtext</span><span class="p">(</span><span class="s">"ymin"</span><span class="p">)))</span>
+            <span class="n">bbox</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"bndbox"</span><span class="p">).</span><span class="n">findtext</span><span class="p">(</span><span class="s">"xmax"</span><span class="p">)))</span>
+            <span class="n">bbox</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"bndbox"</span><span class="p">).</span><span class="n">findtext</span><span class="p">(</span><span class="s">"ymax"</span><span class="p">)))</span>
+            <span class="n">label</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">x</span><span class="p">.</span><span class="n">findtext</span><span class="p">(</span><span class="s">"name"</span><span class="p">)]))</span>
+            
+        
+        <span class="c1"># 불러온 파일을 tfrecord형식으로 저장
+</span>        <span class="n">tf_example</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Example</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Features</span><span class="p">(</span><span class="n">feature</span><span class="o">=</span><span class="p">{</span>
+          <span class="s">'image/bbox'</span><span class="p">:</span> <span class="n">float_list_feature</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span>
+          <span class="s">'image/label'</span><span class="p">:</span> <span class="n">int64_list_feature</span><span class="p">(</span><span class="n">label</span><span class="p">),</span>
+          <span class="s">'image/encoded'</span><span class="p">:</span> <span class="n">bytes_feature</span><span class="p">(</span><span class="n">img</span><span class="p">),</span>
+          <span class="s">'image/name'</span><span class="p">:</span> <span class="n">bytes_feature</span><span class="p">(</span><span class="n">img_name</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+        <span class="p">}))</span>    
+        <span class="n">writer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">tf_example</span><span class="p">.</span><span class="n">SerializeToString</span><span class="p">())</span>
+        
+
+<span class="n">tfrecord_filename</span> <span class="o">=</span> <span class="s">'Voc.tfrecord'</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">TFRecordWriter</span><span class="p">(</span><span class="n">tfrecord_filename</span><span class="p">)</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="n">write_tfrecord</span><span class="p">(</span><span class="s">"VOCdevkit/VOC2012/"</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+</code></pre></div></div>
+<p>그러면 현재 경로에  “voc.tfrecord”가 생겼을 겁니다.</p>
+
+<h1 id="tfrecord-파일-불러오기">TFRecord 파일 불러오기</h1>
+
+<p>이번에는 tfrecord 파일을 불러와 보겠습니다.</p>
+
+<p>우선 tfrecord에서는 위에서 제가 tfrecord파일의 데이터들을 어떠한 이름으로 그리고 어떠한 형식으로 저장했는지가 필요합니다.</p>
+
+<p><em>저는 image를 “image/encoded”라는 이름으로 bytes형식으로 저장했습니다.</em></p>
+
+<p><em>label은 “image/label”이라는 이름으로 int_list형식으로 저장했습니다.</em></p>
+
+<p><em>bbox는 ‘image/bbox’라는 이름으로 float_list형식으로 저장했습니다.</em></p>
+
+<p><em>파일 이름은 ‘image/name’이라는 이름으로 bytes형식으로 저장했습니다.</em></p>
+
+<p>따라서 다음과 같이 코드를 사용하시면 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">load_tfrecord</span><span class="p">(</span><span class="n">filenames</span><span class="p">):</span>
+    <span class="n">raw_dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">raw_dataset</span><span class="p">:</span>
+        <span class="n">example</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Example</span><span class="p">()</span>
+        <span class="n">example</span><span class="p">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">decode_image</span><span class="p">(</span>
+            <span class="n">contents</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/encoded'</span><span class="p">].</span><span class="n">bytes_list</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">dtypes</span><span class="p">.</span><span class="n">uint8</span>
+        <span class="p">)</span>
+        <span class="n">image_name</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/name'</span><span class="p">].</span><span class="n">bytes_list</span><span class="p">.</span><span class="n">value</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/label'</span><span class="p">].</span><span class="n">int64_list</span><span class="p">.</span><span class="n">value</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/bbox'</span><span class="p">].</span><span class="n">float_list</span><span class="p">.</span><span class="n">value</span>
+
+</code></pre></div></div>
+
+<p>그렇다면 이번에는  제대로 불러와졌는지 테스트를 해보겠습니다. 이 때는 모든 데이터를 사용하지는 않고 4개의 data만 사용하겠습니다. 그러기 위해 raw_dataset.take(4)를 사용했습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="k">def</span> <span class="nf">load_tfrecord</span><span class="p">(</span><span class="n">filenames</span><span class="p">):</span>
+    <span class="n">raw_dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+    <span class="n">raw_dataset</span> <span class="o">=</span> <span class="n">raw_dataset</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># color는 blue로 지정
+</span>    
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">raw_dataset</span><span class="p">:</span>
+        <span class="n">example</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Example</span><span class="p">()</span>
+        <span class="n">example</span><span class="p">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">decode_image</span><span class="p">(</span>
+            <span class="n">contents</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/encoded'</span><span class="p">].</span><span class="n">bytes_list</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">dtypes</span><span class="p">.</span><span class="n">uint8</span>
+        <span class="p">)</span>
+        <span class="n">image_name</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/name'</span><span class="p">].</span><span class="n">bytes_list</span><span class="p">.</span><span class="n">value</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/label'</span><span class="p">].</span><span class="n">int64_list</span><span class="p">.</span><span class="n">value</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="n">example</span><span class="p">.</span><span class="n">features</span><span class="p">.</span><span class="n">feature</span><span class="p">[</span><span class="s">'image/bbox'</span><span class="p">].</span><span class="n">float_list</span><span class="p">.</span><span class="n">value</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">uint8</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])),</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">])),</span> <span class="n">blue_color</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+        
+<span class="n">load_tfrecord</span><span class="p">(</span><span class="s">"Voc.tfrecord"</span><span class="p">)</span>        
+</code></pre></div></div>
+<p><img src="/images/etc/tfrecord/image.png" alt="alt text" /></p>
+
+</article>
+
+
+  <hr class="dingbat related mb6" />
+
+
+
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© 2021. All rights reserved.
+</small></p>
+  
+  
+    <nav class="legal"><small>
+    
+      
+      <a class="heading flip-title" href="/LICENSE/">LICENSE</a>
+      |
+    
+      
+      <a class="heading flip-title" href="/NOTICE/">NOTICE</a>
+      |
+    
+      
+      <a class="heading flip-title" href="/CHANGELOG/">CHANGELOG</a>
+      
+    
+    </small></nav>
+  
+  
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(25,55,71);background-image:url(/assets/img/sidebar-bg.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/logo.png" class="avatar" alt="MyungHak" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">MyungHak</h2></a>
+    
+    
+      <p class="">
+        해당 블로그는 머신러닝 관련 포스트를 작성하는 블로그입니다.
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/blog/"
+          class="sidebar-nav-item "
+          
+        >
+          Blog
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/projects/"
+          class="sidebar-nav-item "
+          
+        >
+          Projects
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/resume/"
+          class="sidebar-nav-item "
+          
+        >
+          Résumé*
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/docs/"
+          class="sidebar-nav-item "
+          
+        >
+          Documentation
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/kd/"
+          class="sidebar-nav-item "
+          
+        >
+          Knowledge Distillation
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/cv/"
+          class="sidebar-nav-item "
+          
+        >
+          Computer Vision
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/etc/"
+          class="sidebar-nav-item "
+          
+        >
+          Etc
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://twitter.com/<username>" title="Twitter" class="no-mark-external">
+      <span class="icon-twitter"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/<username>" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var t,n=document.createElement("script");!("noModule"in n)&&"onbeforeload"in n&&(t=!1,document.addEventListener("beforeload",function(e){if(e.target===n)t=!0;else if(!e.target.hasAttribute("nomodule")||!t)return;e.preventDefault()},!0),n.type="module",n.src=".",document.head.appendChild(n),n.remove())}();
+</script>
+  <script src="/assets/js/hydejack-9.1.6.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.1.6.js" nomodule defer></script>
+  
+
+  
+
+  <script type="module">
+    if ('serviceWorker' in navigator) {
+      /**/
+      navigator.serviceWorker.getRegistration()
+        .then(r => r.unregister())
+        .catch(() => {});
+      /**/
+    }
+  </script>
+<!--<![endif]-->
+  
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+</ul></nav>
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+  
+  
+    <template id="_dark-mode-template">
+  <button id="_dark-mode" class="nav-btn no-hover" >
+    <span class="sr-only">Dark Mode</span>
+    <span class="icon-brightness-contrast"></span>
+  </button>
+</template>
+
+  
+  
+    <template id="_search-template">
+  <button id="_search" class="nav-btn no-hover">
+    <label class="sr-only" for="_search-input">Search</label>
+    <span class="icon-search"></span>
+  </button>
+  <div id="_search-box">
+    <div class="nav-btn">
+      <span class="icon-search"></span>
+    </div>
+    <input 
+      id="_search-input"
+      type="search"
+      class="form-control form-control-lg nav-btn"
+      placeholder="Build with JEKYLL_ENV=production to enable search."
+    />
+    <button type="reset" class="nav-btn no-hover">
+      <span class="sr-only">Close</span>
+      <span class="icon-cross"></span>
+    </button>
+  </div>
+  <div id="_hits"></div>
+</template>
+
+  
+</div>
+
+</body>
+</html>
