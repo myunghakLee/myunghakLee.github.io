@@ -60,6 +60,8 @@ menu:
     url:               /kd/
   - title:             Computer Vision
     url:               /cv/
+  - title:             Quantization
+    url:               /quantization/
   - title:             Etc
     url:               /etc/
 
