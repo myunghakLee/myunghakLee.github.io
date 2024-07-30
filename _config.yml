@@ -28,7 +28,7 @@ description:           >
   해당 블로그는 머신러닝 관련 포스트를 작성하는 블로그입니다.
 
 # A shorter description for the sidebar.
-tagline:               Change `tagline` in `_config.yml`
+# tagline:               Change `tagline` in `_config.yml`
 
 # A list of keywords for your blog
 keywords:              [Machine Learning]
@@ -168,7 +168,7 @@ defaults:
         type:          WebPage
 
 kramdown:
-  math_engine:         mathjax
+  math_engine:         katex
   math_engine_opts:    {}
   footnote_backlink:   '&#x21a9;&#xfe0e;'
 
