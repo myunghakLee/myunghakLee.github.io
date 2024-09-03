@@ -4,7 +4,7 @@
 basics:
   name: "Myunghak Lee"
   label: "Machine Learning Engineer"
-  picture: "/_data/picture.png"
+  picture: "/images/picture.png"
   email: ""
   phone: "(912) 555-4321"
   website: "https://piedpiper.com"
