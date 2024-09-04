@@ -9,6 +9,12 @@ permalink: /robotics/
 
 
 ## Basic
+* [Robotics 기초]{:.heading.flip-title} --- Quantization이란.
+<!-- {:.related-posts.faded} -->
 
 ## Paper
+* 
+<!-- {:.related-posts.faded} -->
+
+[Robotics 기초]: basic
 
