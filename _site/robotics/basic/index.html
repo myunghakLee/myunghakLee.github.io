@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Robotics 기초 | MyungHak</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="Robotics 기초" />
+<meta name="author" content="<firstname> <lastname>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="본 포스팅은 Robotics의 기초 과정에 대해 간략히 정리하여 소개하고 있습니다." />
+<meta property="og:description" content="본 포스팅은 Robotics의 기초 과정에 대해 간략히 정리하여 소개하고 있습니다." />
+<link rel="canonical" href="http://localhost:4000/robotics/basic/" />
+<meta property="og:url" content="http://localhost:4000/robotics/basic/" />
+<meta property="og:site_name" content="MyungHak" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Robotics 기초" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"<firstname> <lastname>"},"description":"본 포스팅은 Robotics의 기초 과정에 대해 간략히 정리하여 소개하고 있습니다.","headline":"Robotics 기초","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"<firstname> <lastname>"},"url":"http://localhost:4000/robotics/basic/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+    <meta name="keywords" content="Machine Learning">
+  
+
+
+
+  <meta name="theme-color" content="rgb(25,55,71)">
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyungHak">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="MyungHak">
+
+<meta name="generator" content="Hydejack v9.1.6" />
+
+
+<link rel="alternate" href="http://localhost:4000/robotics/basic/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MyungHak" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+<link rel="dns-prefetch" href="/assets/js/search-worker-9.1.6.js" as="worker" id="_hrefSearch">
+
+
+
+
+
+<script>!function(r,c){"use strict";function a(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}r.loadJS=function(e,t){var n=c.createElement("script"),e=(n.src=e,t&&a(n,"load",t,{once:!0}),c.scripts[0]);return e.parentNode.insertBefore(n,e),n},r._loaded=!1,r.loadJSDeferred=function(e,t){var n=c.createElement("script");function o(){r._loaded=!0,t&&a(n,"load",t,{once:!0});var e=c.scripts[0];e.parentNode.insertBefore(n,e)}return n.src=e,r._loaded?o():a(r,"load",o,{once:!0}),n},r.setRel=r.setRelStylesheet=function(e){a(c.getElementById(e),"load",function(){this.rel="stylesheet"},{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = false;
+  w._noNavbar = false;
+  w._noToc = false;
+  w._noSearch = false;
+  w._advertise = false;
+  w._search = {
+    DATA_URL: '/assets/sitedata.json?no-cache',
+    STORAGE_KEY: 'mini-search/',
+    INDEX_KEY: 'index--2024-09-09T09:58:41+09:00',
+  };
+  w._clapButton = true;
+}(window);</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.1.6.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);--accent-color-highlight: rgba(79,177,186,0.1);--accent-color-darkened: #409ba3;--theme-color: rgb(25,55,71);--dark-mode-body-bg: #2a2d2f;--dark-mode-border-color: #363a3d}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+
+
+
+</head>
+
+<body class="no-break-layout">
+  
+<script>
+  window._sunrise = 6;
+  window._sunset =  18;
+  !function(e,s){var d="light-mode",o="dark-mode",a=(new Date).getHours();"matchMedia"in e&&e.matchMedia("(prefers-color-scheme)")||(e=(a=a<=e._sunrise||a>=e._sunset?o:d)==o?d:o,s.body.classList.add(a),s.body.classList.remove(e))}(window,document);
+
+</script>
+
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-page"
+  role="main"
+>
+  <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+    <li><a href="/">home</a></li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/robotics/">robotics</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          <span>basic</span>
+        
+      </li>
+    
+  
+</ul></nav>
+  <article class="page mb6" role="article">
+  <header>
+    <h1 class="page-title">Robotics 기초</h1>
+    
+
+
+
+  
+    <p class="note-sm" >
+      본 포스팅은 Robotics의 기초 과정에 대해 간략히 정리하여 소개하고 있습니다.
+
+    </p>
+  
+
+
+  </header>
+
+  <ul id="markdown-toc">
+  <li><a href="#robotics란" id="markdown-toc-robotics란">Robotics란?</a>    <ul>
+      <li><a href="#기구학kinematics" id="markdown-toc-기구학kinematics">기구학(Kinematics)</a>        <ul>
+          <li><a href="#필수-용어" id="markdown-toc-필수-용어">필수 용어</a></li>
+          <li><a href="#좌표계cartesian-coordinate-system" id="markdown-toc-좌표계cartesian-coordinate-system">좌표계(Cartesian Coordinate System)</a></li>
+        </ul>
+      </li>
+      <li><a href="#rosrobot-operating-system" id="markdown-toc-rosrobot-operating-system">ROS(Robot Operating System)</a>        <ul>
+          <li><a href="#용어정리" id="markdown-toc-용어정리">용어정리</a></li>
+          <li><a href="#summary" id="markdown-toc-summary">Summary</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="robotics란">Robotics란?</h2>
+
+<p>로보틱스(Robotics)는 로봇의 설계, 제작, 제어, 운영, 응용 등을 연구하는 학문 분야입니다. 본 포스팅에서는 주로 로봇의 <strong>제어</strong>와 <strong>운영</strong>에 대해 다루겠습니다.</p>
+
+<h3 id="기구학kinematics">기구학(Kinematics)</h3>
+
+<p>기구학(Kinematics)은 로봇 공학에서 중요한 역할을 하며, 로봇의 움직임을 분석하고 제어하는 데 필수적인 수학적 기초를 제공합니다. 로봇의 관절과 링크의 움직임을 계산하고, 로봇의 끝부분이 특정 위치에 도달하도록 각 관절이 어떻게 움직여야 하는지를 알아내는 것이 기구학의 핵심입니다. 기구학은 크게 <strong>정기구학(Forward Kinematics)</strong>과 <strong>역기구학(Inverse Kinematics)</strong>으로 나뉘며, 이를 이해하기 위해서는 몇 가지 중요한 개념들을 알아야 합니다.</p>
+
+<h4 id="필수-용어">필수 용어</h4>
+
+<ul>
+  <li>
+    <p>링크(Link): 로봇의 관절 사이에 위치한 강체 부분으로, 로봇의 구조를 이루는 중요한 요소입니다. 링크는 로봇의 구성 요소 중에서 움직이지 않는 부분이나, 서로 다른 관절에 의해 연결된 이동 가능한 부분을 가리킵니다.</p>
+  </li>
+  <li>관절(Joint): 두 링크를 연결하고, 한 링크가 다른 링크에 대해 움직일 수 있게 하는 부분입니다. 관절은 로봇의 이동성을 제공하는 핵심 요소로, 회전하거나 직선 이동이 가능합니다. 종류로는 아래 2가지가 있습니다.
+    <ul>
+      <li>Revolute Joint: 회전 운동이 가능한 관절</li>
+      <li>Prismatic Joint: 직선 운동이 가능한 관절</li>
+    </ul>
+  </li>
+  <li>
+    <p>엔드 이펙터(End Effector): 로봇 팔의 끝에 위치한 장치로, 특정 작업을 수행하기 위해 사용되는 도구.로봇 팔의 손과 같은 역할을 하며, 다양한 작업 환경에서 물체를 잡거나 조작하는 기능을 합니다. End Effector는 로봇이 작업을 수행하는 데 있어 중요한 역할을 하며, 그 설계는 작업의 유형에 따라 매우 다양하게 달라질 수 있다.</p>
+
+    <p><img src="/images/robotics/quantization/image.png" alt="alt text" /></p>
+  </li>
+  <li>
+    <p>자유도(Degree of Freedom, DOF): 로봇이 독립적으로 움직일 수 있는 축 또는 방향의 수.</p>
+  </li>
+  <li>
+    <p>작업공간(Workspace):로봇의 End-Effector가 도달할 수 있는 모든 위치의 집합을 말합니다. 로봇의 구조와 각 관절의 움직임 범위에 따라 작업공간이 결정됨</p>
+  </li>
+  <li>
+    <p>정방향 기구학(Forward Kinematics): 각 joint의 위치나 각도가 주어졌을 때 End-Effector의 위치와 방향을 계산하는 방법</p>
+  </li>
+  <li>
+    <p>역방향 기구학(Inverse Kinematics): End-Effector가 도달해야 할 목표 위치가 주어졌을 때 각 joint의 위치나 각도를 계산하는 과정.</p>
+  </li>
+  <li>
+    <p>DH parameter: 로봇의 링크와 관절을 수학적으로 표현하기 위한 표준화된 방법입니다. 각 링크의 위치와 회전을 수학적으로 나타내기 위해 네 가지 파라미터(link 길이, link 비틀림, joint 각도, joint 오프셋)를 사용.</p>
+  </li>
+  <li>
+    <p>특이점(Singularity): 로봇이 특정 위치에서 움직임이 불가능하거나, 매우 제약되는 상태를 나타냄.</p>
+  </li>
+  <li>
+    <p>구면 좌표계(Spherical Coordinates): 로봇의 위치나 방향을 나타내는 좌표계 중 하나로, 반경, 세로 각도, 가로 각도(예: 반경 r, 세로 각도 θ, 가로 각도 φ)로 표현됨.</p>
+
+    <p><a href="https://ko.wikipedia.org/wiki/%EA%B5%AC%EB%A9%B4%EC%A2%8C%ED%91%9C%EA%B3%84"><img src="/images/robotics/quantization/image-1.png" alt="alt text" /></a></p>
+  </li>
+  <li>
+    <p>직교 좌표계(Cartesian Coordinates): 로봇의 위치를 나타내는 기본적인 좌표계로, x, y, z 축을 기준으로 공간에서의 위치를 표현.</p>
+
+    <p><a href="https://ko.wikipedia.org/wiki/%EB%8D%B0%EC%B9%B4%EB%A5%B4%ED%8A%B8_%EC%A2%8C%ED%91%9C%EA%B3%84"><img src="../images/robotics/quantization/image-2.png" alt="alt text" /></a></p>
+  </li>
+</ul>
+
+<h4 id="좌표계cartesian-coordinate-system">좌표계(Cartesian Coordinate System)</h4>
+
+<p>기구학에서 로봇의 위치와 방향을 표현하기 위해 <strong>좌표계(Cartesian Coordinate System)</strong>가 사용됩니다. 각 로봇의 링크는 서로 다른 좌표계에 기반한 위치와 방향을 가지며, 이를 통합적으로 이해하기 위해 다음을 알아야 합니다:</p>
+
+<ul>
+  <li><strong>세계 좌표계(World Frame)</strong>: 로봇의 전체적인 움직임을 나타내는 기준 좌표계.</li>
+  <li><strong>국부 좌표계(Local Frame)</strong>: 각 링크 또는 관절에 설정된 좌표계.</li>
+  <li><strong>변환 행렬(Transformation Matrix)</strong>: 한 좌표계에서 다른 좌표계로의 변환을 나타내는 행렬.회전과 이동을 포함하며, 보통 4x4 행렬이 사용됨.</li>
+</ul>
+
+<h3 id="rosrobot-operating-system">ROS(Robot Operating System)</h3>
+
+<p>ROS는 로봇 소프트웨어 개발을 위한 오픈 소스 프레임워크입니다. ROS는 주로 로봇 제어, 센서 데이터 처리, 모션 계획 등을 쉽게 구현할 수 있도록 도와주며, 다양한 로봇 애플리케이션을 개발하고 테스트하는 데에 널리 사용됩니다. ROS는 운영 체제라기보다는 로봇 소프트웨어 개발에 필요한 기능들을 제공하는 툴킷에 가깝습니다. 모듈화된 구조 덕분에 다양한 패키지나 노드를 서로 독립적으로 개발하고 조합할 수 있어 확장성과 재사용성이 높습니다.</p>
+
+<h4 id="용어정리">용어정리</h4>
+
+<ul>
+  <li>
+    <p>노드(Node): ROS 시스템에서 기본적으로 실행되는 프로세스 단위입니다. 각 노드는 <strong>독립적</strong>으로 실행되며, 로봇의 다양한 기능을 담당합니다. 예를 들어, “arm_controller”라는 노드는 로봇의 각 joint의 위치를 받아 움직임을 제어하고, “vision_processing”이라는 노드는 카메라 데이터를 받아 물체의 위치를 추적할 수 있습니다. 이 두 노드는 서로 독립적으로 실행되며 필요한 데이터를 주고받습니다.</p>
+
+    <p><img src="/images/robotics/basic/image.png" alt="alt text" /></p>
+  </li>
+  <li>
+    <p>토픽(Topic): 노드 간에 비동기식 통신을 위한 통신 채널입니다. Publisher가 데이터를 특정 토픽에 송신하면, Subscriber는 해당 토픽을 구독하여 데이터를 수신합니다. 예를 들어, “arm_controller” 노드는 “joint_angles”라는 토픽을 통해 현재 각 관절의 위치 정보를 보내고, “vision_processing” 노드는 “detected_object”라는 토픽을 통해 인식한 물체의 위치 정보를 송신할 수 있습니다. 로봇팔 제어 시스템은 이 정보를 통해 물체를 집는 동작을 수행할 수 있습니다.
+  <img src="/images/robotics/basic/image-1.png" alt="alt text" /></p>
+  </li>
+  <li>
+    <p>서비스(Service): 노드 간의 동기식 통신을 위한 통신 채널입니다. 서비스는 요청(request)과 응답(response) 방식으로 작동하며, 특정 작업을 요청하고 그 결과를 받을 수 있는 메커니즘입니다. topic과는 다르게 1:1 통신에서만 동작합니다. 예를 들어, “move_arm” 서비스는 사용자가 로봇팔의 특정 위치로 이동하도록 요청(request)하고, 그 결과(response)로 이동이 완료되었는지 여부를 반환합니다. 이 방식은 로봇팔이 명령을 정확하게 수행하고 응답할 수 있도록 동기식으로 작동합니다.</p>
+
+    <p><img src="/images/robotics/basic/image-2.png" alt="alt text" /></p>
+  </li>
+  <li>
+    <p>액션(Action): 시간이 걸리는 작업(예: 로봇의 이동 명령)을 수행할 때 사용되는 개념입니다. 요청을 보낸 후 작업이 완료될 때까지 진행 상황을 모니터링하거나 중간에 취소할 수 있습니다. 예를 들어, “pick_and_place” 액션은 물체를 잡는 동작을 요청하고, 이 과정에서 로봇팔의 이동 경로, 물체를 잡았는지 여부 등을 지속적으로 피드백하며 완료되기까지 상태를 모니터링할 수 있습니다.</p>
+
+    <p><img src="../images/robotics/basic/image-3.png" alt="alt text" /></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th><strong>구분</strong></th>
+          <th><strong>토픽(Topic)</strong></th>
+          <th><strong>서비스(Service)</strong></th>
+          <th><strong>액션(Action)</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>기능</strong></td>
+          <td>노드 간 비동기적으로 메시지를 주고받는 통신 방식</td>
+          <td>클라이언트가 서버에 요청하고 즉시 응답을 받는 동기식 통신</td>
+          <td>시간이 걸리는 작업을 비동기적으로 처리하고 피드백 및 취소 가능</td>
+        </tr>
+        <tr>
+          <td><strong>통신 방식</strong></td>
+          <td>비동기식 (퍼블리셔와 구독자 간의 통신)</td>
+          <td>동기식 (즉시 응답 대기)</td>
+          <td>비동기식 (피드백 및 취소 가능)</td>
+        </tr>
+        <tr>
+          <td><strong>작업 예시</strong></td>
+          <td>실시간 데이터 전송 (예: 센서 데이터 스트리밍)</td>
+          <td>즉시 완료 가능한 작업 (예: 로봇팔 관절 제어)</td>
+          <td>복잡하고 시간이 걸리는 작업 (예: 물체 집기 및 이동)</td>
+        </tr>
+        <tr>
+          <td><strong>적합한 작업 유형</strong></td>
+          <td>실시간 연속적인 데이터 전송이 필요한 작업</td>
+          <td>짧고 빠르게 완료되는 작업</td>
+          <td>장시간 작업이나 상태 피드백이 필요한 작업</td>
+        </tr>
+        <tr>
+          <td><strong>피드백 제공</strong></td>
+          <td>없음</td>
+          <td>없음</td>
+          <td>작업 진행 중 피드백 가능</td>
+        </tr>
+        <tr>
+          <td><strong>작업 중단</strong></td>
+          <td>N/A</td>
+          <td>중단 불가능</td>
+          <td>작업 중단 및 취소 가능</td>
+        </tr>
+        <tr>
+          <td><strong>통신 대상</strong></td>
+          <td>N:M (다수의 publisher와 다수의 subscriber)</td>
+          <td>1:1 (클라이언트와 서버)</td>
+          <td>1:1 (클라이언트와 서버)</td>
+        </tr>
+        <tr>
+          <td><strong>주 사용 시나리오</strong></td>
+          <td>센서 데이터 수집 및 처리, 실시간 정보 전파</td>
+          <td>특정 동작을 요청하고 즉시 결과가 필요한 상황</td>
+          <td>시간이 걸리며 피드백이나 중단이 필요한 상황</td>
+        </tr>
+        <tr>
+          <td><strong>통신 관계</strong></td>
+          <td>퍼블리셔와 다수의 구독자 간의 1:N 통신</td>
+          <td>클라이언트와 서버 간 1:1 통신</td>
+          <td>클라이언트와 서버 간 1:1 통신 (피드백 가능)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>메시지(Message): 노드 간 통신에 사용되는 데이터 구조입니다. 예를 들어, 이미지, 레이저 데이터, 속도 등의 다양한 형태의 데이터가 메시지로 정의되고 주고받을 수 있습니다. 로봇 팔을 예로 들면, “JointAngles.msg”라는 메시지는 6자유도(6-DOF)를 가진 로봇팔의 각 관절의 위치를 실시간으로 업데이트하는 데이터로 정의됩니다. 이를 통해 노드 간에 데이터를 주고받을 수 있습니다.</p>
+  </li>
+  <li>
+    <p>패키지(Package): ROS 소프트웨어 구성 요소들의 집합입니다. 각 패키지는 노드, 라이브러리, 설정 파일, 런치 파일 등을 포함할 수 있으며, ROS 시스템에서 소프트웨어를 배포하고 관리하는 기본 단위입니다.</p>
+  </li>
+  <li>
+    <p>런치 파일(Launch File): 여러 노드를 한 번에 실행하거나 ROS 시스템을 설정하는 데 사용되는 XML 형식의 스크립트 파일입니다. 주로 시스템을 빠르고 일관되게 구성하는 데 사용됩니다.</p>
+  </li>
+  <li>
+    <p>TF(Transform): 좌표계 간의 변환을 관리하는 도구입니다. 예를 들어, 로봇 팔의 관절 좌표계와 로봇 본체의 좌표계를 동기화하거나, 카메라의 좌표계와 로봇의 좌표계를 연결할 때 사용됩니다. 예를 들어, 카메라에서 인식한 물체의 위치를 로봇팔이 움직이는 좌표계로 변환해야 합니다. 이 경우, TF를 사용하여 카메라와 로봇팔 사이의 상대적인 좌표 변환을 설정할 수 있습니다.</p>
+  </li>
+  <li>
+    <p>ROS Master: ROS 시스템에서 모든 노드 간의 통신을 관리하는 중심 서버 역할을 합니다. 각 노드는 매스터와 통신하여 자신의 존재를 알리고 다른 노드와의 연결을 설정합니다. 예를 들어, “arm_controller” 노드와 “vision_processing” 노드는 각각 ROS 매스터에 자신을 등록하고, 이를 통해 서로 주고받을 데이터를 쉽게 찾고 통신을 설정할 수 있습니다. ROS 매스터는 네트워크 상에서 노드 간의 통신을 관리하는 허브 역할을 합니다.</p>
+  </li>
+  <li>
+    <p>RViz: 로봇의 상태나 센서 데이터를 시각화하기 위한 도구입니다. 로봇이 인식하는 환경, 레이저 스캔, 카메라 이미지 등을 3D로 확인할 수 있습니다. 예를 들어, 로봇팔이 특정한 물체를 잡으려고 움직이는 상황에서, 각 관절의 위치, 로봇팔의 말단이 가리키는 방향, 카메라로 인식한 물체의 위치 등을 3D 시각화하여 실시간으로 볼 수 있습니다. 이를 통해 로봇팔의 동작을 직관적으로 파악할 수 있습니다.</p>
+  </li>
+  <li>
+    <p>Gazebo: ROS와 통합된 물리 기반 로봇 시뮬레이터입니다. 가상 환경에서 로봇을 제어하고 테스트할 수 있는 기능을 제공하며, 물리적인 로봇을 사용하기 전에 시뮬레이션에서 기능을 검증할 수 있습니다. 예를 들어, 가상의 환경에서 물체를 잡는 작업을 시뮬레이션하여, 로봇팔의 각 관절 움직임, 중력, 충돌 등의 물리적 요소를 고려한 동작을 테스트하고, 실제 로봇팔을 사용하기 전에 문제를 사전에 발견할 수 있습니다.</p>
+  </li>
+</ul>
+
+<h4 id="summary">Summary</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>용어</th>
+      <th>정의</th>
+      <th>사용 예</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Node</strong></td>
+      <td>ROS 시스템에서 기본적으로 실행되는 프로세스 단위</td>
+      <td>“arm_controller”라는 노드는 각 관절의 위치를 받아 움직임을 제어하고, “vision_processing”이라는 노드는 카메라 데이터를 받아 물체의 위치를 추적할 수 한다.</td>
+    </tr>
+    <tr>
+      <td><strong>Topic</strong></td>
+      <td>노드 간에 <strong>비동기식 통신</strong>을 위한 통신 채널</td>
+      <td>“arm_controller” 노드는 “joint_angles”라는 토픽을 통해 현재 각 관절의 위치 정보를 보내고, “vision_processing” 노드는 “detected_object”라는 토픽을 통해 인식한 물체의 위치 정보를 송신한다.</td>
+    </tr>
+    <tr>
+      <td><strong>Service</strong></td>
+      <td>노드 간의 <strong>동기식 통신</strong>을 위한 통신 채널</td>
+      <td>“move_arm” 서비스는 사용자가 로봇팔의 특정 위치로 이동하도록 요청(request)하고, 그 결과(response)로 이동이 완료되었는지 여부를 반환한다.</td>
+    </tr>
+    <tr>
+      <td><strong>Action</strong></td>
+      <td>시간이 걸리는 작업(예: 로봇의 이동 명령)을 수행할 때 사용되는 개념. 요청을 보낸 후 작업이 완료될 때까지 진행 상황을 모니터링하거나 중간에 취소할 수 있다.</td>
+      <td>“pick_and_place” 액션은 물체를 잡는 동작을 요청하고, 이 과정에서 로봇팔의 이동 경로, 물체를 잡았는지 여부 등을 지속적으로 피드백하며 완료되기까지 상태를 모니터링한다.</td>
+    </tr>
+    <tr>
+      <td><strong>Message</strong></td>
+      <td>노드 간 통신에 사용되는 데이터 구조</td>
+      <td>“JointAngles.msg”라는 메시지는 6자유도(6-DOF)를 가진 로봇팔의 각 관절의 위치를 실시간으로 업데이트하는 데이터 구조로 정의된다.</td>
+    </tr>
+    <tr>
+      <td><strong>Package</strong></td>
+      <td>ROS 소프트웨어 구성 요소들의 집합</td>
+      <td>로봇팔 제어를 위한 패키지에는 “arm_control_package”라는 이름으로, 관절 제어 노드, 물체 인식 노드, 메시지 정의 파일, 설정 파일 등이 포함될 수 있다.</td>
+    </tr>
+    <tr>
+      <td><strong>Launch File</strong></td>
+      <td>여러 노드를 한 번에 실행하거나 ROS 시스템을 설정하는 데 사용되는 XML 형식의 스크립트 파일</td>
+      <td>로봇팔의 모든 관절 제어와 카메라를 통한 물체 인식 노드를 동시에 실행하도록 설정할 수 있다.</td>
+    </tr>
+    <tr>
+      <td><strong>Transform</strong></td>
+      <td>좌표계 간의 변환을 관리하는 도구</td>
+      <td>카메라에서 인식한 물체의 위치를 로봇팔이 움직이는 좌표계로 변환해야 하는 경우, TF를 사용하여 카메라와 로봇팔 사이의 상대적인 좌표 변환을 설정할 수 있다.</td>
+    </tr>
+    <tr>
+      <td><strong>ROS Master</strong></td>
+      <td>ROS 시스템에서 모든 노드 간의 통신을 관리하는 중심 서버 역할</td>
+      <td>“arm_controller” 노드와 “vision_processing” 노드는 각각 ROS 매스터에 자신을 등록하고, 이를 통해 서로 주고받을 데이터를 쉽게 찾고 통신을 설정할 수 있다. ROS Master는 네트워크 상에서 노드 간의 통신을 관리하는 허브 역할을 한다.</td>
+    </tr>
+    <tr>
+      <td><strong>RViz</strong></td>
+      <td>로봇의 상태나 센서 데이터를 시각화하기 위한 도구</td>
+      <td>로봇팔이 특정한 물체를 잡으려고 움직이는 상황에서, 각 관절의 위치, 로봇팔의 말단이 가리키는 방향, 카메라로 인식한 물체의 위치 등을 3D 시각화하여 실시간으로 볼 수 있고, 이를 통해 로봇팔의 동작을 직관적으로 파악할 수 있다.</td>
+    </tr>
+    <tr>
+      <td><strong>Gazebo</strong></td>
+      <td>ROS와 통합된 물리 기반 로봇 시뮬레이터</td>
+      <td>가상의 환경에서 물체를 잡는 작업을 시뮬레이션하여, 로봇팔의 각 관절 움직임, 중력, 충돌 등의 물리적 요소를 고려한 동작을 테스트하고, 실제 로봇팔을 사용하기 전에 문제를 사전에 발견할 수 있다.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+</article>
+
+
+  <hr class="dingbat related mb6" />
+
+
+
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© 2021. All rights reserved.
+</small></p>
+  
+  
+    <nav class="legal"><small>
+    
+      
+      <a class="heading flip-title" href="/LICENSE/">LICENSE</a>
+      |
+    
+      
+      <a class="heading flip-title" href="/NOTICE/">NOTICE</a>
+      |
+    
+      
+      <a class="heading flip-title" href="/CHANGELOG/">CHANGELOG</a>
+      
+    
+    </small></nav>
+  
+  
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(25,55,71);background-image:url(/assets/img/sidebar-bg.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/logo.png" class="avatar" alt="MyungHak" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">MyungHak</h2></a>
+    
+    
+      <p class="">
+        해당 블로그는 머신러닝 관련 포스트를 작성하는 블로그입니다.
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/resume/"
+          class="sidebar-nav-item "
+          
+        >
+          Résumé*
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/projects/"
+          class="sidebar-nav-item "
+          
+        >
+          Projects
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/robotics/"
+          class="sidebar-nav-item "
+          
+        >
+          Robotics
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/kd/"
+          class="sidebar-nav-item "
+          
+        >
+          Knowledge Distillation
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/cv/"
+          class="sidebar-nav-item "
+          
+        >
+          Computer Vision
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/quantization/"
+          class="sidebar-nav-item "
+          
+        >
+          Quantization
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/etc/"
+          class="sidebar-nav-item "
+          
+        >
+          Etc
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://twitter.com/<username>" title="Twitter" class="no-mark-external">
+      <span class="icon-twitter"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/<username>" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var t,n=document.createElement("script");!("noModule"in n)&&"onbeforeload"in n&&(t=!1,document.addEventListener("beforeload",function(e){if(e.target===n)t=!0;else if(!e.target.hasAttribute("nomodule")||!t)return;e.preventDefault()},!0),n.type="module",n.src=".",document.head.appendChild(n),n.remove())}();
+</script>
+  <script src="/assets/js/hydejack-9.1.6.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.1.6.js" nomodule defer></script>
+  
+
+  
+
+  <script type="module">
+    if ('serviceWorker' in navigator) {
+      /**/
+      navigator.serviceWorker.getRegistration()
+        .then(r => r.unregister())
+        .catch(() => {});
+      /**/
+    }
+  </script>
+<!--<![endif]-->
+  
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+</ul></nav>
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+  
+  
+    <template id="_dark-mode-template">
+  <button id="_dark-mode" class="nav-btn no-hover" >
+    <span class="sr-only">Dark Mode</span>
+    <span class="icon-brightness-contrast"></span>
+  </button>
+</template>
+
+  
+  
+    <template id="_search-template">
+  <button id="_search" class="nav-btn no-hover">
+    <label class="sr-only" for="_search-input">Search</label>
+    <span class="icon-search"></span>
+  </button>
+  <div id="_search-box">
+    <div class="nav-btn">
+      <span class="icon-search"></span>
+    </div>
+    <input 
+      id="_search-input"
+      type="search"
+      class="form-control form-control-lg nav-btn"
+      placeholder="Build with JEKYLL_ENV=production to enable search."
+    />
+    <button type="reset" class="nav-btn no-hover">
+      <span class="sr-only">Close</span>
+      <span class="icon-cross"></span>
+    </button>
+  </div>
+  <div id="_hits"></div>
+</template>
+
+  
+</div>
+
+</body>
+</html>
