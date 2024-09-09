@@ -92,7 +92,7 @@ skills:
       - "etc"
       
   - name: "Machine Learning"
-    level: "Master"
+    level: "Proficient"
     keywords:
       - "Computer Vision"
       - "Knowledge Distillation, Quantization"
