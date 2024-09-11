@@ -12,6 +12,25 @@ Fill in `href`. You may have to adjust `rel`.
 <noscript><link href="<path/to/content.css>" rel="stylesheet"></noscript>
 {% endcomment %}
 
+<script type="text/javascript">
+    window.onload = function() {
+        if (window.MathJax) {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        }
+    };
+    document.addEventListener("DOMContentLoaded", function() {
+        const observer = new MutationObserver(() => {
+            if (window.MathJax) {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+
+</script>
+
+
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         TeX: {
@@ -20,10 +39,10 @@ Fill in `href`. You may have to adjust `rel`.
         }
         },
         tex2jax: {
-        inlineMath: [ ['$', '$'] ],
-        displayMath: [ ['$$', '$$'] ],
+            inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+            displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
         processEscapes: true,
-    }
+        }
     });
     MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
         alert("Math Processing Error: "+message[1]);
@@ -35,4 +54,3 @@ Fill in `href`. You may have to adjust `rel`.
 <script type="text/javascript" async
 src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
-

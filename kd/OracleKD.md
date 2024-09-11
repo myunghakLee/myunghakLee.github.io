@@ -46,7 +46,7 @@ Reinforced data를 만들고(step A), 이를 이용해 knowledge distillation을
 
 ![alt text](/images/kd/OracleKD/image-4.png)
 
-* step A: teacher model의 output과 ground truth로부터 생성된 loss를 이용해 back-propagation 시켜 input data의 loss에 대한 gradient $ df(x)/dx $ 를 구한다. 그리고 input data의 scale을 반영해주기 위해 gradient와 input data를 element wise product한 후 가중치 $$ \gamma $$를 곱해준다. 그리고 이 값을 input data에 대해 빼준다.
+* step A: teacher model의 output과 ground truth로부터 생성된 loss를 이용해 back-propagation 시켜 input data의 loss에 대한 gradient $ df(x)/dx $ 를 구한다. 그리고 input data의 scale을 반영해주기 위해 gradient와 input data를 element wise product한 후 가중치 $ \gamma $를 곱해준다. 그리고 이 값을 input data에 대해 빼준다.
 
 
 $$

@@ -99,7 +99,7 @@
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2024-09-12T00:09:09+09:00',
+    INDEX_KEY: 'index--2024-09-12T00:39:41+09:00',
   };
   w._clapButton = true;
 }(window);</script>
@@ -133,6 +133,25 @@ html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);
 
 
 
+<script type="text/javascript">
+    window.onload = function() {
+        if (window.MathJax) {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        }
+    };
+    document.addEventListener("DOMContentLoaded", function() {
+        const observer = new MutationObserver(() => {
+            if (window.MathJax) {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+
+</script>
+
+
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         TeX: {
@@ -141,10 +160,10 @@ html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);
         }
         },
         tex2jax: {
-        inlineMath: [ ['$', '$'] ],
-        displayMath: [ ['$$', '$$'] ],
+            inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+            displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
         processEscapes: true,
-    }
+        }
     });
     MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
         alert("Math Processing Error: "+message[1]);
@@ -156,8 +175,6 @@ html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);
 <script type="text/javascript" async
 src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
-
-
 
 </head>
 
@@ -285,7 +302,7 @@ Feature knowledge는 Teacher model이 입력 데이터에서 중요한 패턴을
 <p><img src="/images/kd/OracleKD/image-4.png" alt="alt text" /></p>
 
 <ul>
-  <li>step A: teacher model의 output과 ground truth로부터 생성된 loss를 이용해 back-propagation 시켜 input data의 loss에 대한 gradient $ df(x)/dx $ 를 구한다. 그리고 input data의 scale을 반영해주기 위해 gradient와 input data를 element wise product한 후 가중치 \(\gamma\)를 곱해준다. 그리고 이 값을 input data에 대해 빼준다.</li>
+  <li>step A: teacher model의 output과 ground truth로부터 생성된 loss를 이용해 back-propagation 시켜 input data의 loss에 대한 gradient $ df(x)/dx $ 를 구한다. 그리고 input data의 scale을 반영해주기 위해 gradient와 input data를 element wise product한 후 가중치 $ \gamma $를 곱해준다. 그리고 이 값을 input data에 대해 빼준다.</li>
 </ul>
 
 \[\mathbf{x^*} = \mathbf{x} - \gamma |\mathbf{x}| \odot {\partial f(\mathbf{x}) \over \partial \mathbf{x}}\]
