@@ -38,7 +38,7 @@ Knowledge distillation의 과정에서 여러 유형의 지식이 전달될 수 
 
 ## Proposed Method
 
-본 논문에서는 높은 성능과 고품질의 지식을 동시에 제공할 수 있는 새로운 방법을 제시하며, 이를 위해 reinforced data를 활용한다. 이 데이터는 adversarial example과 반대로, 입력 데이터에 쌓인 gradient를 입력 데이터에서 빼는 방식으로 생성된다. 이는 모델의 손실을 최소화하는 방향으로 입력을 수정하는 것이며, 그 결과 아래 표에서 확인할 수 있듯이 모델의 성능이 크게 향상된다.
+본 논문에서는 성능과 지식의 품질을 동시에 개선할 수 있는 새로운 방법을 제시하며, 이를 위해 reinforced data를 활용한다. Reinforced data는 adversarial example과 반대의 개념으로, 입력 데이터에서 발생한 gradient를 빼는 방식으로 생성된다. 이는 모델의 손실을 최소화하는 방향으로 입력을 수정하는 것이며, 그 결과 아래 표에서 확인할 수 있듯이 모델의 성능이 크게 향상된다.
 
 ![alt text](/images/kd/OracleKD/image-5.png)
 
@@ -46,12 +46,21 @@ Reinforced data를 만들고(step A), 이를 이용해 knowledge distillation을
 
 ![alt text](/images/kd/OracleKD/image-4.png)
 
-* step A: teacher model의 output과 ground truth로부터 생성된 loss를 이용해 back-propagation 시켜 input data의 loss에 대한 gradient $ df(x)/dx $ 를 구한다. 그리고 input data의 scale을 반영해주기 위해 gradient와 input data를 element wise product한 후 가중치 $ \gamma $를 곱해준다. 그리고 이 값을 input data에 대해 빼준다.
-
+* Step A: Teacher model의 output과 ground truth로부터 생성된 loss를 이용해 back-propagation을 수행하여, input data의 gradient $ \partial f(x)/\partial x $ 를 구한다. 그런 다음 input data의 scale을 반영해주기 위해 gradient와 input data를 element wise로 곱한 후, 가중치 $ \gamma $를 적용해 input data에서 이를 차감한다.
 
 $$
     \mathbf{x^*} = \mathbf{x} - \gamma |\mathbf{x}| \odot {\partial f(\mathbf{x}) \over \partial \mathbf{x}}
 $$
 
+* step B: Reinforced data를 Teacher model에 다시 입력하여 더 높은 정확도를 가진 response knowledge를 생성하고, 이를 Student model과 KL-divergence를 통해 비교하여 distillation loss를 구한다.
 
-* step B: 그리고 이렇게 만들어진 reinforced data를 다시한번 teacher model의 입력으로 집어 넣어 더 높은 정확도를 지닌 response knowledge를 만들어낸다. 그리고 이를 student model과 kl-divergence를 통해 비교하여 distillation loss를 구한다.
+
+$$
+    \mathcal{L}_{distill} = D_{KL}(\mathcal{P}_{\mathcal{T}} \parallel \mathcal{P}_{\mathcal{S}})
+$$
+
+Student model은 여기에 일반적인 classification loss $\mathcal{L}_{cls}$를 더해 학습하며, 이렇게 학습된 Student model은 SOTA 수준의 성능을 넘어서게 된다.
+
+![alt text](/images/kd/OracleKD/image-7.png)
+
+![alt text](/images/kd/OracleKD/image-8.png)
