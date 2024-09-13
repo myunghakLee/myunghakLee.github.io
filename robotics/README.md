@@ -10,10 +10,13 @@ permalink: /robotics/
 
 ## Basic
 * [Robotics 기초]{:.heading.flip-title} --- Robotics 기초.
+* [Topic & Service & Action]{:.heading.flip-title} --- Robotics 기초.
 <!-- {:.related-posts.faded} -->
+
 
 ## Paper
 * 
 <!-- {:.related-posts.faded} -->
 
 [Robotics 기초]: basic
+[Topic & Service & Action]: topic_service_action
