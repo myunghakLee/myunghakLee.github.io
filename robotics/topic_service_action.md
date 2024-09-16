@@ -17,10 +17,10 @@ description: >
 
 아래 그림은 subscriber와 publisher가 서로 토픽을 주고받는 상황을 나타낸 것이다.
 
-![alt text](/images/robotics/topic_message_action/image.png) [참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
+![alt text](/images/robotics/topic_message_action/image.gif) [참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
 
 Topic은 1:1 전송 외에도 1:N, N:1, N:N 전송도 지원한다.
-![alt text](/images/robotics/topic_message_action/image-1.png)[참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
+![alt text](/images/robotics/topic_message_action/image-1.gif)[참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
 
 Topic은 비동기적으로 데이터를 주고받는다. publisher는 데이터를 지속적으로 발행하고 Subscriber는 그 데이터를 필요할 때 받아서 처리한다. 대표적인 예시로 센서 데이터가 있다.
 
@@ -30,11 +30,11 @@ Topic은 비동기적으로 데이터를 주고받는다. publisher는 데이터
 
 Service는 topic과는 다르게 client가 호출할 때만 데이터를 제공한다.
 
-![alt text](/images/robotics/topic_message_action/image-2.png) [참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html)
+![alt text](/images/robotics/topic_message_action/image-2.gif) [참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html)
 
 또한, Service의 경우 topic과는 다르게 1:1 전송만 지원한다. 설령 많은 clients가 동일한 service를 사용하더라도 전송은 1:1로만 이루어진다.
 
-![alt text](/images/robotics/topic_message_action/image-3.png) [참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html)
+![alt text](/images/robotics/topic_message_action/image-3.gif) [참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html)
 
 Service는 동기적으로 데이터를 request-respond 방식으로 주고받는다. Publisher와 subscriber 구조를 이용하여 일방적인 데이터 흐름을 제공한다. 따라서 서비스는 한 번 요청과 그에 대한 응답으로 끝나는 단발성 작업에 적합하다. 즉, 요청에 대한 명확한 응답이 필요한 상황에 사용된다.
 

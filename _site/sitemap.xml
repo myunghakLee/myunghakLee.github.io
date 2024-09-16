@@ -85,6 +85,9 @@
 <loc>http://localhost:4000/etc/tfrecord/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/robotics/topic_service_action/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/etc/transfer-entropy/</loc>
 </url>
 <url>

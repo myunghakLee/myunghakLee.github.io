@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+
+
+<head>
+  
+
+
+
+
+
+
+  
+    
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Topic &amp; Message &amp; Action | MyungHak</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="Topic &amp; Message &amp; Action" />
+<meta name="author" content="<firstname> <lastname>" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="본 포스팅은 Ros2에서 사용되는 Topic에 대해 간략히 정리하여 소개하고 있습니다." />
+<meta property="og:description" content="본 포스팅은 Ros2에서 사용되는 Topic에 대해 간략히 정리하여 소개하고 있습니다." />
+<link rel="canonical" href="http://localhost:4000/robotics/topic_service_action/" />
+<meta property="og:url" content="http://localhost:4000/robotics/topic_service_action/" />
+<meta property="og:site_name" content="MyungHak" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Topic &amp; Message &amp; Action" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"<firstname> <lastname>"},"description":"본 포스팅은 Ros2에서 사용되는 Topic에 대해 간략히 정리하여 소개하고 있습니다.","headline":"Topic &amp; Message &amp; Action","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"<firstname> <lastname>"},"url":"http://localhost:4000/robotics/topic_service_action/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  
+    <meta name="keywords" content="Machine Learning">
+  
+
+
+
+  <meta name="theme-color" content="rgb(25,55,71)">
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyungHak">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="application-name" content="MyungHak">
+
+<meta name="generator" content="Hydejack v9.1.6" />
+
+
+<link rel="alternate" href="http://localhost:4000/robotics/topic_service_action/" hreflang="en">
+
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MyungHak" />
+
+
+<link rel="shortcut icon"    href="/assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+
+<link rel="manifest" href="/assets/site.webmanifest">
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+
+
+<link rel="preload" href="/assets/img/swipe.svg" as="image" id="_hrefSwipeSVG">
+
+<link rel="dns-prefetch" href="/assets/js/search-worker-9.1.6.js" as="worker" id="_hrefSearch">
+
+
+
+
+
+<script>!function(r,c){"use strict";function a(e,t,n,o){e.addEventListener?e.addEventListener(t,n,o):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n}r.loadJS=function(e,t){var n=c.createElement("script"),e=(n.src=e,t&&a(n,"load",t,{once:!0}),c.scripts[0]);return e.parentNode.insertBefore(n,e),n},r._loaded=!1,r.loadJSDeferred=function(e,t){var n=c.createElement("script");function o(){r._loaded=!0,t&&a(n,"load",t,{once:!0});var e=c.scripts[0];e.parentNode.insertBefore(n,e)}return n.src=e,r._loaded?o():a(r,"load",o,{once:!0}),n},r.setRel=r.setRelStylesheet=function(e){a(c.getElementById(e),"load",function(){this.rel="stylesheet"},{once:!0})}}(window,document);
+!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+!function(w) {
+  w._baseURL = '/';
+  w._publicPath = '/assets/js/';
+  w._noPushState = false;
+  w._noDrawer = false;
+  w._noNavbar = false;
+  w._noToc = false;
+  w._noSearch = false;
+  w._advertise = false;
+  w._search = {
+    DATA_URL: '/assets/sitedata.json?no-cache',
+    STORAGE_KEY: 'mini-search/',
+    INDEX_KEY: 'index--2024-09-16T12:18:05+09:00',
+  };
+  w._clapButton = true;
+}(window);</script>
+
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
+
+
+<!--[if gt IE 8]><!---->
+
+  
+
+
+
+
+<link rel="stylesheet" href="/assets/css/hydejack-9.1.6.css" id="_stylePreload">
+<link rel="stylesheet" href="/assets/icomoon/style.css" id="_iconsPreload">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CNoto+Sans:400,400i,700,700i&display=swap" id="_fontsPreload">
+
+
+
+  <style id="_pageStyle">
+
+html{--accent-color: rgb(79,177,186);--accent-color-faded: rgba(79,177,186,0.5);--accent-color-highlight: rgba(79,177,186,0.1);--accent-color-darkened: #409ba3;--theme-color: rgb(25,55,71);--dark-mode-body-bg: #2a2d2f;--dark-mode-border-color: #363a3d}
+
+</style>
+
+
+<!--<![endif]-->
+
+
+
+
+<script type="text/javascript">
+    window.onload = function() {
+        if (window.MathJax) {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        }
+    };
+    document.addEventListener("DOMContentLoaded", function() {
+        const observer = new MutationObserver(() => {
+            if (window.MathJax) {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+
+</script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        TeX: {
+        equationNumbers: {
+            autoNumber: "AMS"
+        }
+        },
+        tex2jax: {
+            inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+            displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
+        processEscapes: true,
+        }
+    });
+    MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+        alert("Math Processing Error: "+message[1]);
+        });
+    MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+        alert("Math Processing Error: "+message[1]);
+        });
+</script>
+<script type="text/javascript" async
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</head>
+
+<body class="no-break-layout">
+  
+
+
+<hy-push-state
+  id="_pushState"
+  replace-selector="#_main"
+  link-selector="a[href]:not([href^='/assets/']):not(.external):not(.no-push-state)"
+  script-selector="script"
+  duration="500"
+  hashchange
+>
+  
+  
+  <div id="_navbar" class="navbar fixed-top">
+  <div class="content">
+    <span class="sr-only">Jump to:</span>
+    <div class="nav-btn-bar">
+      <a id="_menu" class="nav-btn no-hover" href="#_drawer--opened">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-menu"></span>
+      </a>
+      <div class="nav-span"></div>
+    </div>
+  </div>
+</div>
+<hr class="sr-only" hidden />
+
+  <main
+  id="_main"
+  class="content layout-page"
+  role="main"
+>
+  <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+    <li><a href="/">home</a></li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/robotics/">robotics</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          <span>topic_service_action</span>
+        
+      </li>
+    
+  
+</ul></nav>
+  <article class="page mb6" role="article">
+  <header>
+    <h1 class="page-title">Topic & Message & Action</h1>
+    
+
+
+
+  
+    <p class="note-sm" >
+      본 포스팅은 Ros2에서 사용되는 Topic에 대해 간략히 정리하여 소개하고 있습니다.
+
+    </p>
+  
+
+
+  </header>
+
+  <ul id="markdown-toc">
+  <li><a href="#topic이란" id="markdown-toc-topic이란">Topic이란?</a></li>
+  <li><a href="#service란" id="markdown-toc-service란">Service란?</a></li>
+  <li><a href="#action이란" id="markdown-toc-action이란">Action이란?</a></li>
+</ul>
+
+<h2 id="topic이란">Topic이란?</h2>
+
+<p><strong>Topic</strong>은 ROS(Robot Operation System)에서 로봇이나 프로그램이 서로 정보를 주고받을 때 사용하는 통신 채널이다. 마치 사람들이 대화할 때 소리나 문자로 메시지를 주고받는 것처럼, 로봇들도 주고받는 정보를 Topic을 통해 전송한다. Node 간의 통신을 쉽게 하기 위해서 ROS에서는 publisher와 subscriber라는 개념을 사용한다.</p>
+
+<ul>
+  <li>Publisher: 특정 topic에 message를 보내는 node</li>
+  <li>Subscriber: 특정 topic으로부터 message를 받는 node</li>
+</ul>
+
+<p>아래 그림은 subscriber와 publisher가 서로 토픽을 주고받는 상황을 나타낸 것이다.</p>
+
+<p><img src="/images/robotics/topic_message_action/image.gif" alt="alt text" /> <a href="https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">참조</a></p>
+
+<p>Topic은 1:1 전송 외에도 1:N, N:1, N:N 전송도 지원한다.
+<img src="/images/robotics/topic_message_action/image-1.gif" alt="alt text" /><a href="https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">참조</a></p>
+
+<p>Topic은 비동기적으로 데이터를 주고받는다. publisher는 데이터를 지속적으로 발행하고 Subscriber는 그 데이터를 필요할 때 받아서 처리한다. 대표적인 예시로 센서 데이터가 있다.</p>
+
+<h2 id="service란">Service란?</h2>
+
+<p><strong>Service</strong>는 두 node 간의 요청-응답 방식으로 통신하는 방법이다. 즉, 하나의 node가 특정 작업을 요청하고, 다른 node가 그 요청에 응답하는 구조다. 이는 topic과 달리 실시간으로 데이터를 주고받기보다는 특정 시점에 한 번 요청을 보내고 그에 대한 응답을 받는 방식이다.</p>
+
+<p>Service는 topic과는 다르게 client가 호출할 때만 데이터를 제공한다.</p>
+
+<p><img src="/images/robotics/topic_message_action/image-2.gif" alt="alt text" /> <a href="https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">참조</a></p>
+
+<p>또한, Service의 경우 topic과는 다르게 1:1 전송만 지원한다. 설령 많은 clients가 동일한 service를 사용하더라도 전송은 1:1로만 이루어진다.</p>
+
+<p><img src="/images/robotics/topic_message_action/image-3.gif" alt="alt text" /> <a href="https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">참조</a></p>
+
+<p>Service는 동기적으로 데이터를 request-respond 방식으로 주고받는다. Publisher와 subscriber 구조를 이용하여 일방적인 데이터 흐름을 제공한다. 따라서 서비스는 한 번 요청과 그에 대한 응답으로 끝나는 단발성 작업에 적합하다. 즉, 요청에 대한 명확한 응답이 필요한 상황에 사용된다.</p>
+
+<h2 id="action이란">Action이란?</h2>
+
+<p><strong>Action</strong>은 장기 실행 작업을 위해 사용하는 것이다. 서비스는 요청-응답의 단순한 구조로 동작하는 반면, 액션은 시간이 오래 걸리는 작업(예: 로봇이 특정 위치로 이동하기)에도 적합한 통신 방식을 제공한다. 액션은 작업의 시작, 진행 중 상태, 완료 등의 여러 단계를 관리할 수 있어, 장시간 작업이나 복잡한 작업을 처리하는 데 유용하다.
+Action은 아래 3가지 정보를 포함한다.</p>
+
+<ul>
+  <li>Goal: client가 server에 보내는 목표 정보.</li>
+  <li>Feedback: Server가 client에게 주기적으로 보내는 진행 상황</li>
+  <li>Result: 작업이 완료되면 server가 보내는 최종 결과</li>
+</ul>
+
+<p><img src="/images/robotics/topic_message_action/image-4.png" alt="alt text" /></p>
+
+<p>예를 들면 로봇을 특정 위치로 이동시키라는 goal이 주어졌을 때 로봇은 목표로 이동하는 동안 계속해서 현재 위치를 client에게 feedback합니다. 그리고 로봇이 목표 지점에 도착하면 server가 작업 완료 결과를 client에게 보낸다.</p>
+
+</article>
+
+
+  <hr class="dingbat related mb6" />
+
+
+
+
+
+  
+<footer class="content" role="contentinfo">
+  <hr/>
+  
+    <p><small class="copyright">© 2021. All rights reserved.
+</small></p>
+  
+  
+    <nav class="legal"><small>
+    
+      
+      <a class="heading flip-title" href="/LICENSE/">LICENSE</a>
+      |
+    
+      
+      <a class="heading flip-title" href="/NOTICE/">NOTICE</a>
+      |
+    
+      
+      <a class="heading flip-title" href="/CHANGELOG/">CHANGELOG</a>
+      
+    
+    </small></nav>
+  
+  
+  <hr class="sr-only"/>
+</footer>
+
+
+</main>
+
+  <hy-drawer
+  id="_drawer"
+  class=""
+  side="left"
+  threshold="10"
+  noscroll
+  
+>
+  <header id="_sidebar" class="sidebar" role="banner">
+    
+
+
+
+
+<div class="sidebar-bg sidebar-overlay" style="background-color:rgb(25,55,71);background-image:url(/assets/img/sidebar-bg.jpg)"></div>
+
+    <div class="sidebar-sticky">
+  <div class="sidebar-about">
+    
+      <a class="no-hover" href="/" tabindex="-1">
+        <img src="/assets/img/logo.png" class="avatar" alt="MyungHak" width="120" height="120" loading="lazy" />
+      </a>
+    
+    <a class="sidebar-title" href="/"><h2 class="h1">MyungHak</h2></a>
+    
+    
+      <p class="">
+        해당 블로그는 머신러닝 관련 포스트를 작성하는 블로그입니다.
+
+      </p>
+    
+  </div>
+
+  <nav class="sidebar-nav heading" role="navigation">
+    <span class="sr-only">Navigation:</span>
+<ul>
+  
+    
+      
+      <li>
+        <a
+          id="_drawer--opened"
+          href="/resume/"
+          class="sidebar-nav-item "
+          
+        >
+          Résumé*
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/robotics/"
+          class="sidebar-nav-item "
+          
+        >
+          Robotics
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/kd/"
+          class="sidebar-nav-item "
+          
+        >
+          Knowledge Distillation
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/cv/"
+          class="sidebar-nav-item "
+          
+        >
+          Computer Vision
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/quantization/"
+          class="sidebar-nav-item "
+          
+        >
+          Quantization
+        </a>
+      </li>
+    
+      
+      <li>
+        <a
+          
+          href="/etc/"
+          class="sidebar-nav-item "
+          
+        >
+          Etc
+        </a>
+      </li>
+    
+  
+</ul>
+
+  </nav>
+
+  
+  <div class="sidebar-social">
+    <span class="sr-only">Social:</span>
+<ul>
+  
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://twitter.com/<username>" title="Twitter" class="no-mark-external">
+      <span class="icon-twitter"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  </li>
+
+
+    
+      
+
+
+
+  
+
+  
+  
+  
+  
+
+  
+
+  
+
+  <li>
+    <a href="https://github.com/<username>" title="GitHub" class="no-mark-external">
+      <span class="icon-github"></span>
+      <span class="sr-only">GitHub</span>
+    </a>
+  </li>
+
+
+    
+  
+</ul>
+
+  </div>
+</div>
+  </header>
+</hy-drawer>
+<hr class="sr-only" hidden />
+
+</hy-push-state>
+
+
+  <!--[if gt IE 10]><!---->
+  <script nomodule>!function(){var t,n=document.createElement("script");!("noModule"in n)&&"onbeforeload"in n&&(t=!1,document.addEventListener("beforeload",function(e){if(e.target===n)t=!0;else if(!e.target.hasAttribute("nomodule")||!t)return;e.preventDefault()},!0),n.type="module",n.src=".",document.head.appendChild(n),n.remove())}();
+</script>
+  <script src="/assets/js/hydejack-9.1.6.js" type="module"></script>
+  <script src="/assets/js/LEGACY-hydejack-9.1.6.js" nomodule defer></script>
+  
+
+  
+
+  <script type="module">
+    if ('serviceWorker' in navigator) {
+      /**/
+      navigator.serviceWorker.getRegistration()
+        .then(r => r.unregister())
+        .catch(() => {});
+      /**/
+    }
+  </script>
+<!--<![endif]-->
+  
+
+
+
+<div hidden>
+  
+  <h2 class="sr-only">Templates (for web app):</h2>
+
+  <template id="_animation-template">
+  <div class="animation-main fixed-top">
+    <nav id="breadcrumbs" class="screen-only"><ul>
+  
+  
+</ul></nav>
+    <div class="content">
+      <div class="page"></div>
+    </div>
+  </div>
+</template>
+
+  <template id="_loading-template">
+  <div class="loading nav-btn fr">
+    <span class="sr-only">Loading…</span>
+    <span class="icon-cog"></span>
+  </div>
+</template>
+
+  <template id="_error-template">
+  <div class="page">
+    <h1 class="page-title">Error</h1>
+    
+    
+    <p class="lead">
+      Sorry, an error occurred while loading <a class="this-link" href=""></a>.
+
+    </p>
+  </div>
+</template>
+
+  <template id="_permalink-template">
+  <a href="#" class="permalink">
+    <span class="sr-only">Permalink</span>
+    <span class="content-hash"></span>
+  </a>
+</template>
+
+  
+  
+    <template id="_dark-mode-template">
+  <button id="_dark-mode" class="nav-btn no-hover" >
+    <span class="sr-only">Dark Mode</span>
+    <span class="icon-brightness-contrast"></span>
+  </button>
+</template>
+
+  
+  
+    <template id="_search-template">
+  <button id="_search" class="nav-btn no-hover">
+    <label class="sr-only" for="_search-input">Search</label>
+    <span class="icon-search"></span>
+  </button>
+  <div id="_search-box">
+    <div class="nav-btn">
+      <span class="icon-search"></span>
+    </div>
+    <input 
+      id="_search-input"
+      type="search"
+      class="form-control form-control-lg nav-btn"
+      placeholder="Build with JEKYLL_ENV=production to enable search."
+    />
+    <button type="reset" class="nav-btn no-hover">
+      <span class="sr-only">Close</span>
+      <span class="icon-cross"></span>
+    </button>
+  </div>
+  <div id="_hits"></div>
+</template>
+
+  
+</div>
+
+</body>
+</html>

@@ -99,7 +99,7 @@
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2024-09-12T00:55:46+09:00',
+    INDEX_KEY: 'index--2024-09-16T12:18:05+09:00',
   };
   w._clapButton = true;
 }(window);</script>
@@ -375,10 +375,22 @@ src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
           <td>시간이 걸리는 작업을 비동기적으로 처리하고 피드백 및 취소 가능</td>
         </tr>
         <tr>
+          <td><strong>방향성</strong></td>
+          <td>단방향</td>
+          <td>양방향</td>
+          <td>양방향</td>
+        </tr>
+        <tr>
           <td><strong>통신 방식</strong></td>
           <td>비동기식 (퍼블리셔와 구독자 간의 통신)</td>
           <td>동기식 (즉시 응답 대기)</td>
           <td>비동기식 (피드백 및 취소 가능)</td>
+        </tr>
+        <tr>
+          <td><strong>다자간 연결</strong></td>
+          <td>1:1, 1:N, N:1, N:N (Publisher:Subscriber)</td>
+          <td>1:1 (Server:Client)</td>
+          <td>1:1 (Server:Client)</td>
         </tr>
         <tr>
           <td><strong>작업 예시</strong></td>

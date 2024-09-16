@@ -99,7 +99,7 @@
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2024-09-12T00:55:46+09:00',
+    INDEX_KEY: 'index--2024-09-16T12:18:05+09:00',
   };
   w._clapButton = true;
 }(window);</script>
@@ -318,6 +318,61 @@ Feature knowledge는 Teacher model이 입력 데이터에서 중요한 패턴을
 <p><img src="/images/kd/OracleKD/image-7.png" alt="alt text" /></p>
 
 <p><img src="/images/kd/OracleKD/image-8.png" alt="alt text" /></p>
+
+<h2 id="is-the-knowledge-obtained-from-our-oracle-teacher-model-good-enough">Is the Knowledge Obtained from Our Oracle Teacher Model Good Enough</h2>
+
+<p>위에서 우리는 teacher model은 고품질의 knowledge를 추출해야 한다고 서술했다. 본 논문에서는 knowledge의 품질 측정을 위해 <code class="language-plaintext highlighter-rouge">t-SNE</code>, <code class="language-plaintext highlighter-rouge">Silhouette Score</code>, <code class="language-plaintext highlighter-rouge">ECE(Expected Calibration Error)</code>와 같은 지표들을 사용하였다.</p>
+
+<h3 id="ece">ECE</h3>
+
+<p>ECE(Expected Calibration Error)는 model의 confidence score 인$conf(\cdot)$와 실제로 맞춘 정답의 비율인 $acc(\cdot)$간의 차이를 수치화한 지표이다. 즉, 모델이 예측에서 80% ~ 85%의 확률을 자신한다면, 실제로도 그 비율만큼 정답을 맞춰야 한다는 것을 의미한다. 이를 정량적으로 평가하기 위해, ECE는 다음과 같은 식으로 정의된다:</p>
+
+\[ECE = \sum_{b=1}^{B} \frac{|b|}{N} \left| acc(b) - conf(b) \right|\]
+
+<p>위 식에서 confidence score $conf(b)$와 정확도 acc(b)는 각각 아래와 같이 계산된다:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>$ conf(b) = \frac{1}{</td>
+      <td>b</td>
+      <td>} \sum_{j \in b} p_j $ : bin $b$ 내에서 예측 확률의 평균</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>$  acc(b) = \frac{1}{</td>
+      <td>b</td>
+      <td>} \sum_{j \in b} \mathbf{1}(p_j = y_j)$: bin $b$내에서 실제 정답을 맞춘 비율.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>이 정의를 통해 ECE는 모델의 예측 신뢰도가 실제 결과와 얼마나 일치하는지를 측정할 수 있다.</p>
+
+<p>ECE는 단순히 예측의 맞고 틀림을 넘어서, 모델의 예측이 얼마나 신뢰할 수 있는지에 대한 중요한 정보를 제공하며, 이를 통해 teacher model의 response knowledge의 품질을 정량화 할 수 있다.</p>
+
+<p>본 논문에서 제시한  <strong>Oracle model</strong>은 <strong>Scratch model</strong>에 비해 더 낮은 ECE 값을 보이는데, 이는 <strong>Oracle model</strong>이 더 높은 신뢰도를 가지고 있음을 의미한다.</p>
+
+<p><img src="/images/kd/OracleKD/image-9.png" alt="alt text" /></p>
+
+<h3 id="t-sne">t-SNE</h3>
+<p>t-SNE(t-distributed Stochastic Neighbor Embedding)은 고차원의 데이터를 저차원의 공간으로 효율적으로 시각화하기 위한 비선형 차원 축소 기법이다. 주로 2차원이나 3차원으로 데이터를 축소하여 시각적으로 표현하는 데 사용되며, 데이터의 클러스터링과 패턴을 식별하는 데 유용하다. 본 논문에서는 response knowledge를 2차원으로 축소하여 평면에 투영하였고 이들간의 거리를 측정하였다. 그 결과 reinforced data를 만드는 식에서 나왔던 $ \gamma$ 값을 키울 수록 군집이 더욱 잘 형성된것을 확인할 수 있다.</p>
+
+<p><img src="/images/kd/OracleKD/image-10.png" alt="alt text" /></p>
+
+<h3 id="silhouette-score">Silhouette Score</h3>
+
+<p>Silhouette score는 군집이 얼마나 잘 형성되어있는지를 나타내는 지표이다. 이 역시 일정 수준까지는 $\gamma$ 값이 높아짐에 따라 군집이 점점 더 잘 형성되는 것을 확인할 수 있다.</p>
+
+<p><img src="/images/kd/OracleKD/image-11.png" alt="alt text" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>본 논문에서는 gradient-based explainable AI를 활용하여 모델의 성능과 knowledge distillation에서의 압축률을 효과적으로 향상시켰다. 또한, teacher model에서 추출한 response knowledge의 품질을 다양한 방법으로 평가하고, 이를 통해 학습된 student model의 성능이 SOTA 성능을 초과하는 결과를 얻었다.</p>
 
 </article>
 
