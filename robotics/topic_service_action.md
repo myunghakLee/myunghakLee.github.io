@@ -47,6 +47,6 @@ Action은 아래 3가지 정보를 포함한다.
 * Feedback: Server가 client에게 주기적으로 보내는 진행 상황
 * Result: 작업이 완료되면 server가 보내는 최종 결과
 
-![alt text](/images/robotics/topic_message_action/image-4.png)
+![alt text](/images/robotics/topic_message_action/image-4.gif) [참조](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html)
 
 예를 들면 로봇을 특정 위치로 이동시키라는 goal이 주어졌을 때 로봇은 목표로 이동하는 동안 계속해서 현재 위치를 client에게 feedback합니다. 그리고 로봇이 목표 지점에 도착하면 server가 작업 완료 결과를 client에게 보낸다.
