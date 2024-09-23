@@ -11,6 +11,7 @@ permalink: /robotics/
 ## Basic
 * [Robotics 기초]{:.heading.flip-title} --- Robotics 기초.
 * [Topic & Service & Action]{:.heading.flip-title} --- Robotics 기초.
+* [D-H Parameter]{:.heading.flip-title} --- Robotics 기초.
 <!-- {:.related-posts.faded} -->
 
 
@@ -20,3 +21,4 @@ permalink: /robotics/
 
 [Robotics 기초]: basic
 [Topic & Service & Action]: topic_service_action
+[D-H Parameter]: dh_parameter
